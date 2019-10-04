@@ -7,6 +7,13 @@ public class DecodersFactory {
     public static Decoder getDecoder(String name) {
         Algorithms algorithm = Algorithms.valueOf(name);
 
-        throw new NotImplementedException(); // Replace this line
+        switch (algorithm) {
+            case MORSE:
+                return  new MorseCodec();
+            case CAESAR:
+                return  new CaesarCodec();
+            default:
+                throw  new IllegalArgumentException("Invalid decoder");
+        }
     }
 }
