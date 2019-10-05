@@ -1,8 +1,6 @@
 package org.geekhub.lesson1.coders;
 
 import org.geekhub.lesson1.util.NotImplementedException;
-
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Objects;
@@ -37,8 +35,21 @@ class MorseCodec implements Encoder, Decoder {
             put('X', "-..-");
             put('Y', "-.--");
             put('Z', "--..");
+            put('1', ".----");
+            put('2', "..---");
+            put('3', "...--");
+            put('4', "....-");
+            put('5', ".....");
+            put('6', "-....");
+            put('7', "--...");
+            put('8', "---..");
+            put('9', "----.");
+            put('0', "-----");
+            put(',', "--..--");
+            put('?', "..--..");
         }
     };
+    private boolean isLowerCase;
 
     private String encodeCharacter(char c) {
         return morseCodes.get(c);
@@ -53,8 +64,24 @@ class MorseCodec implements Encoder, Decoder {
         throw new IllegalArgumentException("Cannot find character");
     }
 
+    private void caseTest (String input) {
+        isLowerCase = Character.isLowerCase(input.charAt(0)) ? true : false;
+        for (int i = 0; i < input.length(); i++) {
+            if(isLowerCase) {
+                if(Character.isUpperCase(input.charAt(i))) {
+                    System.exit(1);
+                }
+            } else {
+                if(Character.isLowerCase(input.charAt(i))) {
+                    System.exit(1);
+                }
+            }
+        }
+    }
+
     @Override
     public String encode(String input) {
+        caseTest(input);
         String[] words = input.toUpperCase().split("\\s+");
         StringBuilder result = new StringBuilder();
         for(int i = 0; i < words.length; i++) {
@@ -84,7 +111,11 @@ class MorseCodec implements Encoder, Decoder {
             result.append(" ");
         }
         result.setLength(result.length() - 1);
-        return  result.toString().toLowerCase();
+        if(isLowerCase) {
+            return result.toString().toLowerCase();
+        } else {
+            return  result.toString();
+        }
     }
 
 }
