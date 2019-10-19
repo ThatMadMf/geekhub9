@@ -16,6 +16,8 @@ public class DecodersFactory {
                 return new Vigenere2x();
             case VIGENERE2XCOMPOSITION:
                 return new Vigenere2xComposition();
+            case VIGENEREOVERCAESAR:
+                return new VigenereOverCaesar();
             default:
                 throw new IllegalArgumentException("Invalid decoder");
         }
