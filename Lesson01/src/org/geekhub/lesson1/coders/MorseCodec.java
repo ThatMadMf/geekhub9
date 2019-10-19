@@ -6,10 +6,10 @@ import java.util.Objects;
 
 class MorseCodec implements Encoder, Decoder {
 
-    private static final Map<Character, String> morseCodes = CodesInitialize();
+    private static final Map<Character, String> morseCodes = codesInitialize();
 
 
-    private static Map CodesInitialize() {
+    private static Map codesInitialize() {
         return new Hashtable<>() {
             {
                 put('A', ".-");

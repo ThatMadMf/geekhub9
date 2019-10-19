@@ -1,8 +1,6 @@
 package org.geekhub.lesson1;
 
-import org.geekhub.lesson1.util.MainMenu;
-
-import java.util.Objects;
+import org.geekhub.lesson1.ui.MainMenu;
 
 public class Lesson1Main {
 

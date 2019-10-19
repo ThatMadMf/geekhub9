@@ -1,7 +1,5 @@
 package org.geekhub.lesson1.coders;
 
-import org.geekhub.lesson1.util.NotImplementedException;
-
 public class DecodersFactory {
 
     public static Decoder getDecoder(String name) {
@@ -9,11 +7,11 @@ public class DecodersFactory {
 
         switch (algorithm) {
             case MORSE:
-                return  new MorseCodec();
+                return new MorseCodec();
             case CAESAR:
-                return  new CaesarCodec();
+                return new CaesarCodec();
             default:
-                throw  new IllegalArgumentException("Invalid decoder");
+                throw new IllegalArgumentException("Invalid decoder");
         }
     }
 }
