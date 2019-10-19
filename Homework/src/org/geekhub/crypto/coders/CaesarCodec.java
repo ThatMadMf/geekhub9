@@ -1,13 +1,13 @@
-package org.geekhub.lesson1.coders;
+package org.geekhub.crypto.coders;
 
 class CaesarCodec implements Encoder, Decoder {
 
     private static final int SHIFT_KEY = 15;
     private static final int ALPHABET_COUNT = 26;
-    private static final int LOWERCASE_LEFT_BOUND = 65;
-    private static final int LOWERCASE_RIGHT_BOUND = 90;
-    private static final int UPPERCASE_LEFT_BOUND = 97;
-    private static final int UPPERCASE_RIGHT_BOUND = 122;
+    private static final int LOWERCASE_LEFT_BOUND = 97;
+    private static final int LOWERCASE_RIGHT_BOUND = 122;
+    private static final int UPPERCASE_LEFT_BOUND = 65;
+    private static final int UPPERCASE_RIGHT_BOUND = 90;
 
     private char performRightShift(char c, int upperBorder) {
         return c + SHIFT_KEY <= upperBorder ? (char) (c + SHIFT_KEY) : (char) (c + SHIFT_KEY - ALPHABET_COUNT);

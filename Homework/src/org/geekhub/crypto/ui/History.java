@@ -1,4 +1,4 @@
-package org.geekhub.lesson1.ui;
+package org.geekhub.crypto.ui;
 
 import java.util.Arrays;
 

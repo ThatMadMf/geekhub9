@@ -1,6 +1,6 @@
-package org.geekhub.lesson1;
+package org.geekhub.crypto;
 
-import org.geekhub.lesson1.ui.MainMenu;
+import org.geekhub.crypto.ui.MainMenu;
 
 public class Lesson1Main {
 

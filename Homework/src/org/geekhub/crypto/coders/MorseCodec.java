@@ -1,4 +1,4 @@
-package org.geekhub.lesson1.coders;
+package org.geekhub.crypto.coders;
 
 import java.util.Hashtable;
 import java.util.Map;

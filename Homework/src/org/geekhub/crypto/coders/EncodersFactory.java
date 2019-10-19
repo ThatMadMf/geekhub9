@@ -1,4 +1,4 @@
-package org.geekhub.lesson1.coders;
+package org.geekhub.crypto.coders;
 
 public class EncodersFactory {
 
@@ -10,6 +10,12 @@ public class EncodersFactory {
                 return new MorseCodec();
             case CAESAR:
                 return new CaesarCodec();
+            case VIGENERE:
+                return new VigenereCodec();
+            case VIGENERE2X:
+                return new Vigenere2x();
+            case VIGENERE2XCOMPOSITION:
+                return new Vigenere2xComposition();
             default:
                 throw new IllegalArgumentException("Invalid encoder");
         }
