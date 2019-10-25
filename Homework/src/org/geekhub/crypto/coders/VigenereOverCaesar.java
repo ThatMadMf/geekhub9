@@ -1,24 +1,28 @@
 package org.geekhub.crypto.coders;
 
 class VigenereOverCaesar implements Encoder, Decoder {
-    private VigenereCodec vigenereCodec;
-    private CaesarCodec caesarCodec;
+    private final Encoder vigenereEncoder;
+    private final Encoder caesarEncoder;
+    private final Decoder vigenereDecoder;
+    private final Decoder caesarDecoder;
 
     public VigenereOverCaesar() {
-        vigenereCodec = new VigenereCodec();
-        caesarCodec = new CaesarCodec();
+        vigenereEncoder = EncodersFactory.getEncoder("VIGENERE");
+        caesarEncoder = EncodersFactory.getEncoder("CAESAR");
+        vigenereDecoder = DecodersFactory.getDecoder("VIGENERE");
+        caesarDecoder = DecodersFactory.getDecoder("CAESAR");
     }
 
     @Override
     public String encode(String input) {
-        String result = caesarCodec.encode(input);
-        return vigenereCodec.encode(result);
+        String result = caesarEncoder.encode(input);
+        return vigenereEncoder.encode(result);
     }
 
     @Override
     public String decode(String input) {
-        String result = vigenereCodec.decode(input);
-        return caesarCodec.decode(result);
+        String result = vigenereDecoder.decode(input);
+        return caesarDecoder.decode(result);
     }
 
 

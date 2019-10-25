@@ -12,11 +12,9 @@ public class EncodersFactory {
                 return new CaesarCodec();
             case VIGENERE:
                 return new VigenereCodec();
-            case VIGENERE2X:
+            case VIGENERE_2X:
                 return new Vigenere2x();
-            case VIGENERE2XCOMPOSITION:
-                return new Vigenere2xComposition();
-            case VIGENEREOVERCAESAR:
+            case VIGENERE_OVER_CAESAR:
                 return new VigenereOverCaesar();
             default:
                 throw new IllegalArgumentException("Invalid encoder");

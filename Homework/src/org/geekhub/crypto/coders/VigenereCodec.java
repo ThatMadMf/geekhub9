@@ -1,31 +1,44 @@
 package org.geekhub.crypto.coders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class VigenereCodec implements Encoder, Decoder {
     private static final String SHIFT_KEY = "keyword";
     private static final int ALPHABET_COUNT = 26;
-    private static final int LOWERCASE_LEFT_BOUND = 97;
-    private static final int LOWERCASE_RIGHT_BOUND = 122;
-    private static final int UPPERCASE_LEFT_BOUND = 65;
-    private static final int UPPERCASE_RIGHT_BOUND = 90;
+    private final List<Character> alphabet;
 
-    private char performRightShift(char c, int upperBorder, int lowerBorder, char keywordChar) {
-        if (upperBorder == 90) {
-            keywordChar = Character.toUpperCase(keywordChar);
-        }
-        int encoded = c + keywordChar - lowerBorder;
-        if (encoded <= upperBorder) {
-            return (char) (encoded);
-        } else {
-            return (char) (encoded + lowerBorder - upperBorder - 1);
-        }
+    public VigenereCodec() {
+        alphabet = initializeAlphabet();
     }
 
-    private char performLeftShift(char c, int lowerBorder, char keywordChar) {
-        if (lowerBorder == 65) {
-            keywordChar = Character.toUpperCase(keywordChar);
+    private List<Character> initializeAlphabet() {
+        List<Character> result = new ArrayList<>();
+        for (char c = 'a'; c <= 'z'; c++) {
+            result.add(c);
         }
-        int shift = (c - keywordChar + ALPHABET_COUNT) % ALPHABET_COUNT;
-        return (char) (shift + lowerBorder);
+        return result;
+    }
+
+    private char encodeLetter(char input, int keywordIndex) {
+        if (Character.isLetter(input)) {
+            int charIndex = alphabet.indexOf(Character.toLowerCase(input));
+            int encodedIndex = (charIndex + keywordIndex) % ALPHABET_COUNT;
+            return alphabet.get(encodedIndex);
+        } else {
+            return input;
+        }
+
+    }
+
+    private char decodeLetter(char input, int keywordIndex) {
+        if (Character.isLetter(input)) {
+            int charIndex = alphabet.indexOf(Character.toLowerCase(input));
+            int decodedIndex = (charIndex - keywordIndex + ALPHABET_COUNT) % ALPHABET_COUNT;
+            return alphabet.get(decodedIndex);
+        } else {
+            return input;
+        }
     }
 
     @Override
@@ -33,18 +46,9 @@ class VigenereCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            if (symbol >= LOWERCASE_LEFT_BOUND && symbol <= LOWERCASE_RIGHT_BOUND) {
-                result.append(performRightShift(symbol, LOWERCASE_RIGHT_BOUND, LOWERCASE_LEFT_BOUND, SHIFT_KEY.charAt(keywordCount)));
-                keywordCount++;
-            } else if (symbol >= UPPERCASE_LEFT_BOUND && symbol <= UPPERCASE_RIGHT_BOUND) {
-                result.append(performRightShift(symbol, UPPERCASE_RIGHT_BOUND, UPPERCASE_LEFT_BOUND, SHIFT_KEY.charAt(keywordCount)));
-                keywordCount++;
-            } else {
-                result.append(symbol);
-            }
-            if (keywordCount == SHIFT_KEY.length()) {
-                keywordCount = 0;
-            }
+            result.append(encodeLetter(symbol, alphabet.indexOf(SHIFT_KEY.charAt(keywordCount))));
+            keywordCount = result.charAt(result.length() - 1) == symbol ? keywordCount : keywordCount + 1;
+            keywordCount = keywordCount <= SHIFT_KEY.length() ? keywordCount : 0;
         }
         return result.toString();
     }
@@ -54,18 +58,9 @@ class VigenereCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            if (symbol >= LOWERCASE_LEFT_BOUND && symbol <= LOWERCASE_RIGHT_BOUND) {
-                result.append(performLeftShift(symbol, LOWERCASE_LEFT_BOUND, SHIFT_KEY.charAt(keywordCount)));
-                keywordCount++;
-            } else if (symbol >= UPPERCASE_LEFT_BOUND && symbol <= UPPERCASE_RIGHT_BOUND) {
-                result.append(performLeftShift(symbol, UPPERCASE_LEFT_BOUND, SHIFT_KEY.charAt(keywordCount)));
-                keywordCount++;
-            } else {
-                result.append(symbol);
-            }
-            if (keywordCount == SHIFT_KEY.length()) {
-                keywordCount = 0;
-            }
+            result.append(decodeLetter(symbol, alphabet.indexOf(SHIFT_KEY.charAt(keywordCount))));
+            keywordCount = result.charAt(result.length() - 1) == symbol ? keywordCount : keywordCount + 1;
+            keywordCount = keywordCount <= SHIFT_KEY.length() ? keywordCount : 0;
         }
         return result.toString();
     }

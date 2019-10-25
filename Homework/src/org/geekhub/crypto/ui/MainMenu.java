@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private Scanner scanner;
-    private History history;
+    private final Scanner scanner;
+    private final History history;
 
     public MainMenu() {
         scanner = new Scanner(System.in);
@@ -52,7 +52,7 @@ public class MainMenu {
                 break;
             case "3":
                 history.addToHistory("History", "3");
-                history.showHistory();
+                history.printInConsole();
                 break;
             case "4":
                 scanner.close();

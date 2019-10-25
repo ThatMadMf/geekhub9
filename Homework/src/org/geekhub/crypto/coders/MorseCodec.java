@@ -1,68 +1,22 @@
 package org.geekhub.crypto.coders;
 
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Objects;
-
 class MorseCodec implements Encoder, Decoder {
 
-    private static final Map<Character, String> morseCodes = codesInitialize();
-
-
-    private static Map codesInitialize() {
-        return new Hashtable<>() {
-            {
-                put('A', ".-");
-                put('B', "-...");
-                put('C', "-.-.");
-                put('D', "-..");
-                put('E', ".");
-                put('F', "..-.");
-                put('G', "--.");
-                put('H', "....");
-                put('I', "..");
-                put('J', ".---");
-                put('K', "-.-");
-                put('L', ".-..");
-                put('M', "--");
-                put('N', "-.");
-                put('O', "---");
-                put('P', ".--.");
-                put('Q', "--.-");
-                put('R', ".-.");
-                put('S', "...");
-                put('T', "-");
-                put('U', "..-");
-                put('V', "...-");
-                put('W', ".--");
-                put('X', "-..-");
-                put('Y', "-.--");
-                put('Z', "--..");
-                put('1', ".----");
-                put('2', "..---");
-                put('3', "...--");
-                put('4', "....-");
-                put('5', ".....");
-                put('6', "-....");
-                put('7', "--...");
-                put('8', "---..");
-                put('9', "----.");
-                put('0', "-----");
-                put(',', "--..--");
-                put('?', "..--..");
-                put('-', "-....-");
-            }
-        };
-    }
+    private static final char[] alphabet = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8',
+            '9', '0'};
+    private static final String[] codes = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
+            ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
+            "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"};
 
     private String encodeCharacter(char c) {
-        return morseCodes.get(c);
+        return codes[new String(alphabet).indexOf(c)];
     }
 
     private char decodeCharacter(String string) {
-        for (Map.Entry<Character, String> entry : morseCodes.entrySet()) {
-            if (Objects.equals(string, entry.getValue())) {
-                return entry.getKey();
+        for (int i = 0; i < codes.length; i++) {
+            if (codes[i].equals(string)) {
+                return alphabet[i];
             }
         }
         throw new IllegalArgumentException("Cannot find character");
@@ -73,7 +27,7 @@ class MorseCodec implements Encoder, Decoder {
         char[] word = input.toCharArray();
 
         for (int j = 0; j < word.length; j++) {
-            if (j != 0 && j < word.length) {
+            if (j != 0) {
                 codedWord.append(" ");
             }
             codedWord.append(encodeCharacter(word[j]));
@@ -101,7 +55,7 @@ class MorseCodec implements Encoder, Decoder {
             }
         }
 
-        String[] words = input.toUpperCase().split("\\s+");
+        String[] words = input.split("\\s+");
         StringBuilder result = new StringBuilder();
 
         for (String word : words) {
