@@ -3,7 +3,7 @@ package org.geekhub.crypto.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-public class History implements HistoryPrinter {
+public class History {
     private final List<HistoryRecord> array;
     private int operationIndex;
 
@@ -12,15 +12,27 @@ public class History implements HistoryPrinter {
         operationIndex = 1;
     }
 
-    @Override
+    void addToHistory(String operationName, String userInput) {
+        array.add(new HistoryRecord(operationIndex, operationName, userInput));
+        operationIndex++;
+    }
+
     public void printInConsole() {
+        if(array.isEmpty()) {
+            System.out.println("History is empty");
+            return;
+        }
         for (HistoryRecord record : array) {
             System.out.println(record);
         }
     }
 
-    void addToHistory(String operationName, String userInput) {
-        array.add(new HistoryRecord(operationIndex, operationName, userInput));
-        operationIndex++;
+    void clearHistory() {
+        array.clear();
+    }
+
+    void removeLastRecord() {
+        array.remove(array.size() - 1);
+        operationIndex--;
     }
 }

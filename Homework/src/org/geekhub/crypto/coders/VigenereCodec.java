@@ -28,7 +28,6 @@ class VigenereCodec implements Encoder, Decoder {
         } else {
             return input;
         }
-
     }
 
     private char decodeLetter(char input, int keywordIndex) {
@@ -41,14 +40,22 @@ class VigenereCodec implements Encoder, Decoder {
         }
     }
 
+    private char restoreCase(char input, char processedChar) {
+        if(Character.isUpperCase(input)) {
+            return Character.toUpperCase(processedChar);
+        }
+        return processedChar;
+    }
+
     @Override
     public String encode(String input) {
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            result.append(encodeLetter(symbol, alphabet.indexOf(SHIFT_KEY.charAt(keywordCount))));
+            char encodedChar = encodeLetter(symbol, alphabet.indexOf(SHIFT_KEY.charAt(keywordCount)));
+            result.append(restoreCase(symbol, encodedChar));
             keywordCount = result.charAt(result.length() - 1) == symbol ? keywordCount : keywordCount + 1;
-            keywordCount = keywordCount <= SHIFT_KEY.length() ? keywordCount : 0;
+            keywordCount = keywordCount < SHIFT_KEY.length() ? keywordCount : 0;
         }
         return result.toString();
     }
@@ -58,12 +65,12 @@ class VigenereCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            result.append(decodeLetter(symbol, alphabet.indexOf(SHIFT_KEY.charAt(keywordCount))));
+            char decodedChar = decodeLetter(symbol, alphabet.indexOf(SHIFT_KEY.charAt(keywordCount)));
+            result.append(restoreCase(symbol, decodedChar));
             keywordCount = result.charAt(result.length() - 1) == symbol ? keywordCount : keywordCount + 1;
-            keywordCount = keywordCount <= SHIFT_KEY.length() ? keywordCount : 0;
+            keywordCount = keywordCount < SHIFT_KEY.length() ? keywordCount : 0;
         }
         return result.toString();
     }
-
 
 }

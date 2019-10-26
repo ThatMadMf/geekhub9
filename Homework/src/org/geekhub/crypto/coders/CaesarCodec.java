@@ -21,6 +21,13 @@ class CaesarCodec implements Encoder, Decoder {
         return result;
     }
 
+    private char restoreCase(char input, char processedChar) {
+        if (Character.isUpperCase(input)) {
+            return Character.toUpperCase(processedChar);
+        }
+        return processedChar;
+    }
+
     private char encodeLetter(char c) {
         int encodedChar = alphabet.indexOf(Character.toLowerCase(c)) + SHIFT_KEY;
         return alphabet.get(encodedChar % ALPHABET_COUNT);
@@ -36,7 +43,7 @@ class CaesarCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         for (char symbol : input.toCharArray()) {
             if (Character.isLetter(symbol)) {
-                result.append(encodeLetter(symbol));
+                result.append(restoreCase(symbol, encodeLetter(symbol)));
             } else {
                 result.append(symbol);
             }
@@ -49,7 +56,7 @@ class CaesarCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         for (char symbol : input.toCharArray()) {
             if (Character.isLetter(symbol)) {
-                result.append(decodeLetter(symbol));
+                result.append(restoreCase(symbol, decodeLetter(symbol)));
             } else {
                 result.append(symbol);
             }
