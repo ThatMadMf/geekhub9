@@ -3,7 +3,7 @@ package org.geekhub.crypto.coders;
 public class EncodersFactory {
 
     public static Encoder getEncoder(String name) {
-        Algorithms algorithm = Algorithms.valueOf(name);
+        Algorithm algorithm = Algorithm.valueOf(name);
 
         switch (algorithm) {
             case MORSE:
