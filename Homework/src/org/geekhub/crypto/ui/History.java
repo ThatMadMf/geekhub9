@@ -13,7 +13,7 @@ class History {
         historyRecords = new LinkedList<>();
     }
 
-    void addToHistory(String operationName, String userInput) {
+    void addToHistory(Operations operationName, String userInput) {
         historyRecords.add(new HistoryRecord(historyRecords.size(), operationName, userInput));
     }
 

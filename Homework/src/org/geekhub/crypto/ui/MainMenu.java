@@ -30,26 +30,26 @@ public class MainMenu {
         String input = scanner.nextLine();
         switch (input) {
             case "1":
-                history.addToHistory("Encode", "1");
+                history.addToHistory(Operations.ENCODE, "1");
                 String encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
-                history.addToHistory("Codec name", encoderAlgorithm);
+                history.addToHistory(Operations.CODEC_NAME, encoderAlgorithm);
 
                 System.out.println("Enter text to encode:");
                 String textToEncode = scanner.nextLine();
-                history.addToHistory("Text to encode", textToEncode);
+                history.addToHistory(Operations.TEXT_TO_ENCODE, textToEncode);
 
                 System.out.println("Encoded:");
                 Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
                 System.out.println(encoder.encode(textToEncode));
                 break;
             case "2":
-                history.addToHistory("Decode", "2");
+                history.addToHistory(Operations.DECODE, "2");
                 String decoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
-                history.addToHistory("Codec name", decoderAlgorithm);
+                history.addToHistory(Operations.CODEC_NAME, decoderAlgorithm);
 
                 System.out.println("Enter text to decode:");
                 String textToDecode = scanner.nextLine();
-                history.addToHistory("Text to decode", textToDecode);
+                history.addToHistory(Operations.TEXT_TO_DECODE, textToDecode);
 
                 System.out.println("Decoded:");
                 Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);

@@ -5,5 +5,6 @@ public enum Algorithms {
     MORSE,
     VIGENERE,
     VIGENERE_2X,
+    VIGENERE_2X_COMPOSITION,
     VIGENERE_OVER_CAESAR
 }

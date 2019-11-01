@@ -14,6 +14,8 @@ public class DecodersFactory {
                 return new VigenereCodec();
             case VIGENERE_2X:
                 return new Vigenere2x();
+            case VIGENERE_2X_COMPOSITION:
+                return new Vigenere2xComposition();
             case VIGENERE_OVER_CAESAR:
                 return new VigenereOverCaesar();
             default:

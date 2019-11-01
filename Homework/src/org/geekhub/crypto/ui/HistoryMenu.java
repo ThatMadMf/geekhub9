@@ -11,7 +11,7 @@ class HistoryMenu {
         switch (input) {
             case "1":
                 new HistoryConsolePrinter().print(history.getHistoryRecords());
-                history.addToHistory("Show History", "1");
+                history.addToHistory(Operations.SHOW_HISTORY, "1");
                 break;
             case "2":
                 history.removeLastRecord();

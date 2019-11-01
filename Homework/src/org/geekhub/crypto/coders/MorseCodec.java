@@ -9,8 +9,45 @@ class MorseCodec implements Encoder, Decoder {
             ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
             "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"};
 
+    @Override
+    public String encode(String input) {
+        for (char c : input.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                System.out.println("Error. You have to use characters of single case.");
+                System.exit(1);
+            }
+        }
+
+        String[] words = input.split("\\s+");
+        StringBuilder result = new StringBuilder();
+        int wordCount = 0;
+
+        for (String word : words) {
+            result.append(encodeWord(word));
+            if(wordCount < words.length - 1) {
+                result.append("......./");
+            }
+            wordCount++;
+        }
+        return result.toString();
+    }
+
+    @Override
+    public String decode(String input) {
+        String[] words = input.split("/(\\.){7}/");
+        StringBuilder result = new StringBuilder();
+
+        for (String str : words) {
+            result.append(decodeWord(str));
+            result.append(" ");
+        }
+
+        result.setLength(result.length() - 1);
+        return result.toString().toLowerCase();
+    }
+
     private String encodeCharacter(char c) {
-        return codes[new String(alphabet).indexOf(c)];
+        return codes[new String(alphabet).indexOf(c)] + "/";
     }
 
     private char decodeCharacter(String string) {
@@ -26,58 +63,21 @@ class MorseCodec implements Encoder, Decoder {
         StringBuilder codedWord = new StringBuilder();
         char[] word = input.toCharArray();
 
-        for (int j = 0; j < word.length; j++) {
-            if (j != 0) {
-                codedWord.append(" ");
-            }
-            codedWord.append(encodeCharacter(word[j]));
+        for (char c : word) {
+            codedWord.append(encodeCharacter(c));
         }
         return codedWord.toString();
     }
 
-    private String decodedWord(String input) {
+    private String decodeWord(String input) {
         StringBuilder decodedWord = new StringBuilder();
-        String[] codedChars = input.split("\\s+");
+        String[] codedChars = input.split("/");
 
         for (String codedChar : codedChars) {
             decodedWord.append(decodeCharacter(codedChar));
         }
-
         return decodedWord.toString();
     }
 
-    @Override
-    public String encode(String input) {
-        for (char c : input.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                System.out.println("Error. You have to use characters of single case.");
-                System.exit(1);
-            }
-        }
 
-        String[] words = input.split("\\s+");
-        StringBuilder result = new StringBuilder();
-
-        for (String word : words) {
-            result.append(encodeWord(word));
-            result.append(" / ");
-        }
-
-        result.setLength(result.length() - 3);
-        return result.toString();
-    }
-
-    @Override
-    public String decode(String input) {
-        String[] words = input.split("(\\s+\\/\\s)");
-        StringBuilder result = new StringBuilder();
-
-        for (String str : words) {
-            result.append(decodedWord(str));
-            result.append(" ");
-        }
-
-        result.setLength(result.length() - 1);
-        return result.toString().toLowerCase();
-    }
 }
