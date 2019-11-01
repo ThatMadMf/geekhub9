@@ -1,38 +1,27 @@
 package org.geekhub.crypto.ui;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
-public class History {
-    private final List<HistoryRecord> array;
-    private int operationIndex;
+class History {
+    private final LinkedList<HistoryRecord> historyRecords;
+
+    public LinkedList<HistoryRecord> getHistoryRecords() {
+        return historyRecords;
+    }
 
     public History() {
-        array = new ArrayList<>();
-        operationIndex = 1;
+        historyRecords = new LinkedList<>();
     }
 
     void addToHistory(String operationName, String userInput) {
-        array.add(new HistoryRecord(operationIndex, operationName, userInput));
-        operationIndex++;
-    }
-
-    public void printInConsole() {
-        if(array.isEmpty()) {
-            System.out.println("History is empty");
-            return;
-        }
-        for (HistoryRecord record : array) {
-            System.out.println(record);
-        }
+        historyRecords.add(new HistoryRecord(historyRecords.size(), operationName, userInput));
     }
 
     void clearHistory() {
-        array.clear();
+        historyRecords.clear();
     }
 
     void removeLastRecord() {
-        array.remove(array.size() - 1);
-        operationIndex--;
+        historyRecords.pollLast();
     }
 }

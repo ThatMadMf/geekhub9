@@ -1,5 +1,10 @@
 package org.geekhub.crypto.ui;
 
+import org.geekhub.crypto.coders.Decoder;
+import org.geekhub.crypto.coders.DecodersFactory;
+import org.geekhub.crypto.coders.Encoder;
+import org.geekhub.crypto.coders.EncodersFactory;
+
 import java.util.Scanner;
 
 public class MainMenu {
@@ -18,27 +23,6 @@ public class MainMenu {
         }
     }
 
-    void historyMenu() {
-        System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
-        String input = scanner.nextLine();
-
-        switch (input) {
-            case "1":
-                history.printInConsole();
-                history.addToHistory("Show History", "1");
-                break;
-            case "2":
-                history.removeLastRecord();
-                break;
-            case "3":
-                history.clearHistory();
-                break;
-            default:
-                System.out.println("Invalid input.");
-                break;
-        }
-    }
-
     private void displayMenu() {
         System.out.println("Select operation");
         System.out.println("1. Encode \n2. Decode \n3. History \n4. Exit");
@@ -46,9 +30,8 @@ public class MainMenu {
         String input = scanner.nextLine();
         switch (input) {
             case "1":
-                CipherAlgorithm encoder = new CipherAlgorithm();
                 history.addToHistory("Encode", "1");
-                String encoderAlgorithm = encoder.getCodecMethod(scanner);
+                String encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
                 history.addToHistory("Codec name", encoderAlgorithm);
 
                 System.out.println("Enter text to encode:");
@@ -56,12 +39,12 @@ public class MainMenu {
                 history.addToHistory("Text to encode", textToEncode);
 
                 System.out.println("Encoded:");
-                System.out.println(encoder.encode(encoderAlgorithm, textToEncode));
+                Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
+                System.out.println(encoder.encode(textToEncode));
                 break;
             case "2":
-                CipherAlgorithm decoder = new CipherAlgorithm();
                 history.addToHistory("Decode", "2");
-                String decoderAlgorithm = decoder.getCodecMethod(scanner);
+                String decoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
                 history.addToHistory("Codec name", decoderAlgorithm);
 
                 System.out.println("Enter text to decode:");
@@ -69,10 +52,11 @@ public class MainMenu {
                 history.addToHistory("Text to decode", textToDecode);
 
                 System.out.println("Decoded:");
-                System.out.println(decoder.decode(decoderAlgorithm, textToDecode));
+                Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
+                System.out.println(decoder.decode(textToDecode));
                 break;
             case "3":
-                historyMenu();
+                HistoryMenu.displayMenu(scanner, history);
                 break;
             case "4":
                 scanner.close();
