@@ -12,15 +12,15 @@ class MorseCodec implements Encoder, Decoder {
             ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
             "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"};
 
-    private static Map<Character, String> charMap;
-    private static Map<String, Character> codeMap;
+    private static final Map<Character, String> CHAR_MAP;
+    private static final Map<String, Character> CODE_MAP;
 
     static {
-        charMap = new HashMap<>();
-        codeMap = new HashMap<>();
+        CHAR_MAP = new HashMap<>();
+        CODE_MAP = new HashMap<>();
         for (int i = 0; i < ALPHABET.length; i++) {
-            charMap.put(ALPHABET[i], CODES[i]);
-            codeMap.put(CODES[i], ALPHABET[i]);
+            CHAR_MAP.put(ALPHABET[i], CODES[i]);
+            CODE_MAP.put(CODES[i], ALPHABET[i]);
         }
     }
 
@@ -62,11 +62,11 @@ class MorseCodec implements Encoder, Decoder {
     }
 
     private String encodeCharacter(char c) {
-        return charMap.get(c) + "/";
+        return CHAR_MAP.get(c) + "/";
     }
 
     private char decodeCharacter(String string) {
-        return codeMap.get(string);
+        return CODE_MAP.get(string);
     }
 
     private String encodeWord(String input) {

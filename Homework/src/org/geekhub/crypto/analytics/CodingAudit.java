@@ -56,7 +56,7 @@ public class CodingAudit {
         return entry.getKey();
     }
 
-    private Map<String, Integer> checkWords(Map<String, Integer> result, String[] words) {
+    private void checkWords(Map<String, Integer> result, String[] words) {
         for (String word : words) {
             if (result.containsKey(word)) {
                 result.put(word, result.get(word) + 1);
@@ -64,6 +64,5 @@ public class CodingAudit {
                 result.put(word, 1);
             }
         }
-        return result;
     }
 }

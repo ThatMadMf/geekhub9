@@ -4,12 +4,9 @@ import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.history.CodingHistory;
 
-import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Scanner;
 
-public class AnalyticsMenu {
+class AnalyticsMenu {
     public static void displayMenu(Scanner scanner, CodingHistory history) {
         System.out.println("1 - Count inputs\n2 - Count by date\n3 - The most popular algorithm");
         String input = scanner.nextLine();

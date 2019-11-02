@@ -5,7 +5,7 @@ import org.geekhub.crypto.history.HistoryConsolePrinter;
 
 import java.util.Scanner;
 
-public class HistoryMenu {
+class HistoryMenu {
 
     public static void displayMenu(Scanner scanner, CodingHistory history) {
         System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
