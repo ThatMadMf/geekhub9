@@ -2,9 +2,10 @@ package org.geekhub.crypto.analytics;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.*;
 
 public class CodingAudit {
     private final CodingHistory codingHistory;
@@ -13,32 +14,56 @@ public class CodingAudit {
         this.codingHistory = codingHistory;
     }
 
-    /**
-     * Find words repetitions across all encoding inputs in descending order.
-     *
-     * @return Map<Word, OccurrenceCount>
-     */
-    Map<String, Integer> countEncodingInputs() {
-        throw new IllegalArgumentException();
+    public Map<String, Integer> countEncodingInputs() {
+        List<HistoryRecord> encodeOperations = codingHistory.getHistoryRecords(CodecUsecase.ENCODING);
+        Map<String, Integer> result = new TreeMap<>(Collections.reverseOrder());
+
+        for (HistoryRecord record : encodeOperations) {
+            String[] words = record.getUserInput().split(" ");
+            checkWords(result, words);
+        }
+        return result;
     }
 
-    /**
-     * Count operations done per day.
-     *
-     * @param usecase - type of coding operation: encoding/decoding
-     * @return -  Map<Date, OperationsCount>
-     */
-    Map<LocalDate, Long> countCodingsByDate(CodecUsecase usecase) {
-        throw new IllegalArgumentException();
+    public Map<LocalDate, Long> countCodingsByDate(CodecUsecase usecase) {
+        List<HistoryRecord> operations = codingHistory.getHistoryRecords(usecase);
+        Map<LocalDate, Long> result = new HashMap<>();
+
+        for (HistoryRecord record : operations) {
+            LocalDate date = record.getOperationDate();
+            if (result.containsKey(date)) {
+                result.put(date, result.get(date) + 1);
+            } else {
+                result.put(date, 1L);
+            }
+        }
+        return result;
     }
 
-    /**
-     * Find the algorithm used the most times for usecase.
-     *
-     * @param usecase - type of coding operation: encoding/decoding
-     * @return - top used algorithm
-     */
-    Algorithm findMostPopularCodec(CodecUsecase usecase) {
-        throw new IllegalArgumentException();
+    public Algorithm findMostPopularCodec(CodecUsecase usecase) {
+        List<HistoryRecord> operations = codingHistory.getHistoryRecords(usecase);
+        Map<Algorithm, Integer> result = new TreeMap<>();
+
+        for (HistoryRecord record : operations) {
+            Algorithm algorithm = record.getCodec();
+            if (result.containsKey(algorithm)) {
+                result.put(algorithm, result.get(algorithm) + 1);
+            } else {
+                result.put(algorithm, 1);
+            }
+        }
+        Map.Entry<Algorithm, Integer> entry = result.entrySet().iterator().next();
+        return entry.getKey();
+    }
+
+    private Map<String, Integer> checkWords(Map<String, Integer> result, String[] words) {
+        for (String word : words) {
+            if (result.containsKey(word)) {
+                result.put(word, result.get(word) + 1);
+            } else {
+                result.put(word, 1);
+            }
+        }
+        return result;
     }
 }

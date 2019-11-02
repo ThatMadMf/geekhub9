@@ -1,4 +1,7 @@
-package org.geekhub.crypto.history;
+package org.geekhub.crypto.ui;
+
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryConsolePrinter;
 
 import java.util.Scanner;
 
@@ -11,7 +14,6 @@ public class HistoryMenu {
         switch (input) {
             case "1":
                 new HistoryConsolePrinter().print(history.getHistoryRecords());
-                history.addToHistory(Operations.SHOW_HISTORY, "1");
                 break;
             case "2":
                 history.removeLastRecord();

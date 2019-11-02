@@ -1,6 +1,6 @@
 package org.geekhub.crypto.history;
 
-public enum Operations {
+public enum Operation {
     ENCODE,
     DECODE,
     CODEC_NAME,

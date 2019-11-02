@@ -1,11 +1,11 @@
 package org.geekhub.crypto.history;
 
-import java.util.LinkedList;
+import java.util.List;
 
-class HistoryConsolePrinter implements HistoryPrinter {
+public class HistoryConsolePrinter implements HistoryPrinter {
 
     @Override
-    public void print(LinkedList<HistoryRecord> history) {
+    public void print(List<HistoryRecord> history) {
         if (history.isEmpty()) {
             System.out.println("History is empty");
             return;

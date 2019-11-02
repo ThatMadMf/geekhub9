@@ -1,27 +1,43 @@
 package org.geekhub.crypto.history;
 
+import org.geekhub.crypto.analytics.CodecUsecase;
+import org.geekhub.crypto.coders.Algorithm;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class CodingHistory {
     private final LinkedList<HistoryRecord> historyRecords;
 
-    public LinkedList<HistoryRecord> getHistoryRecords() {
+    public List<HistoryRecord> getHistoryRecords() {
         return historyRecords;
+    }
+
+    public List<HistoryRecord> getHistoryRecords(CodecUsecase operation) {
+        List<HistoryRecord> result = new ArrayList<>();
+        for (HistoryRecord record : historyRecords) {
+            if (record.getOperation() == operation) {
+                result.add(record);
+            }
+        }
+        return result;
     }
 
     public CodingHistory() {
         historyRecords = new LinkedList<>();
     }
 
-    public void addToHistory(Operations operationName, String userInput) {
-        historyRecords.add(new HistoryRecord(historyRecords.size(), operationName, userInput));
+    public void addToHistory(CodecUsecase operationName, String userInput, Algorithm codec) {
+        historyRecords.add(new HistoryRecord(historyRecords.size(), operationName, userInput, codec));
     }
 
-    void clearHistory() {
+    public void clearHistory() {
         historyRecords.clear();
     }
 
-    void removeLastRecord() {
+    public void removeLastRecord() {
         historyRecords.pollLast();
     }
+
 }

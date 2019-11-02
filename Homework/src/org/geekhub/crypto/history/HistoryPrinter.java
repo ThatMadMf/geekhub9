@@ -1,7 +1,7 @@
 package org.geekhub.crypto.history;
 
-import java.util.LinkedList;
+import java.util.List;
 
 interface HistoryPrinter {
-    void print(LinkedList<HistoryRecord> history);
+    void print(List<HistoryRecord> history);
 }
