@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui;
+package org.geekhub.crypto.history;
 
 public enum Operations {
     ENCODE,

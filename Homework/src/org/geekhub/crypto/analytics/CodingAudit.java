@@ -2,7 +2,6 @@ package org.geekhub.crypto.analytics;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
-import org.geekhub.crypto.util.NotImplementedException;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class CodingAudit {
      * @return Map<Word, OccurrenceCount>
      */
     Map<String, Integer> countEncodingInputs() {
-        throw new NotImplementedException();
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -30,7 +29,7 @@ public class CodingAudit {
      * @return -  Map<Date, OperationsCount>
      */
     Map<LocalDate, Long> countCodingsByDate(CodecUsecase usecase) {
-        throw new NotImplementedException();
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -40,6 +39,6 @@ public class CodingAudit {
      * @return - top used algorithm
      */
     Algorithm findMostPopularCodec(CodecUsecase usecase) {
-        throw new NotImplementedException();
+        throw new IllegalArgumentException();
     }
 }

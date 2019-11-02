@@ -1,13 +1,28 @@
 package org.geekhub.crypto.coders;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class MorseCodec implements Encoder, Decoder {
 
-    private static final char[] alphabet = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    private static final char[] ALPHABET = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8',
             '9', '0'};
-    private static final String[] codes = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
+    private static final String[] CODES = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
             ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
             "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"};
+
+    private static Map<Character, String> charMap;
+    private static Map<String, Character> codeMap;
+
+    static {
+        charMap = new HashMap<>();
+        codeMap = new HashMap<>();
+        for (int i = 0; i < ALPHABET.length; i++) {
+            charMap.put(ALPHABET[i], CODES[i]);
+            codeMap.put(CODES[i], ALPHABET[i]);
+        }
+    }
 
     @Override
     public String encode(String input) {
@@ -24,7 +39,7 @@ class MorseCodec implements Encoder, Decoder {
 
         for (String word : words) {
             result.append(encodeWord(word));
-            if(wordCount < words.length - 1) {
+            if (wordCount < words.length - 1) {
                 result.append("......./");
             }
             wordCount++;
@@ -47,16 +62,11 @@ class MorseCodec implements Encoder, Decoder {
     }
 
     private String encodeCharacter(char c) {
-        return codes[new String(alphabet).indexOf(c)] + "/";
+        return charMap.get(c) + "/";
     }
 
     private char decodeCharacter(String string) {
-        for (int i = 0; i < codes.length; i++) {
-            if (codes[i].equals(string)) {
-                return alphabet[i];
-            }
-        }
-        throw new IllegalArgumentException("Cannot find character");
+        return codeMap.get(string);
     }
 
     private String encodeWord(String input) {

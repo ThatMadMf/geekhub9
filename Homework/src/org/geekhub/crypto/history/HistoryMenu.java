@@ -1,10 +1,10 @@
-package org.geekhub.crypto.ui;
+package org.geekhub.crypto.history;
 
 import java.util.Scanner;
 
-class HistoryMenu {
+public class HistoryMenu {
 
-    static void displayMenu(Scanner scanner, History history) {
+    public static void displayMenu(Scanner scanner, CodingHistory history) {
         System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
         String input = scanner.nextLine();
 

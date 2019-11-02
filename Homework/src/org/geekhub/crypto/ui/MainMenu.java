@@ -4,17 +4,20 @@ import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.DecodersFactory;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.coders.EncodersFactory;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryMenu;
+import org.geekhub.crypto.history.Operations;
 
 import java.util.Scanner;
 
 public class MainMenu {
 
     private final Scanner scanner;
-    private final History history;
+    private final CodingHistory history;
 
     public MainMenu() {
         scanner = new Scanner(System.in);
-        history = new History();
+        history = new CodingHistory();
     }
 
     public void run() {
