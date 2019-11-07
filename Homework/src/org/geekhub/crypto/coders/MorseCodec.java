@@ -3,26 +3,88 @@ package org.geekhub.crypto.coders;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Map.entry;
+
 class MorseCodec implements Encoder, Decoder {
 
-    private static final char[] ALPHABET = new char[]{' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8',
-            '9', '0'};
-    private static final String[] CODES = new String[]{".......", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
-            ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
-            "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"};
-
-    private static final Map<Character, String> CHAR_MAP;
-    private static final Map<String, Character> CODE_MAP;
-
-    static {
-        CHAR_MAP = new HashMap<>();
-        CODE_MAP = new HashMap<>();
-        for (int i = 0; i < ALPHABET.length; i++) {
-            CHAR_MAP.put(ALPHABET[i], CODES[i]);
-            CODE_MAP.put(CODES[i], ALPHABET[i]);
-        }
-    }
+    private static final Map<Character, String> CHAR_MAP = Map.ofEntries(
+            entry(' ', "......."),
+            entry('a', ".-"),
+            entry('b', "-..."),
+            entry('c', "-.-."),
+            entry('d', "-.."),
+            entry('e', "."),
+            entry('f', "..-."),
+            entry('g', "--."),
+            entry('h', "...."),
+            entry('i', ".."),
+            entry('j', ".---"),
+            entry('k', "-.-"),
+            entry('l', ".-.."),
+            entry('m', "--"),
+            entry('n', "-."),
+            entry('o', "---"),
+            entry('p', ".--."),
+            entry('q', "--.-"),
+            entry('r', ".-."),
+            entry('s', "..."),
+            entry('t', "-"),
+            entry('u', "..-"),
+            entry('v', "...-"),
+            entry('w', ".--"),
+            entry('x', "-..-"),
+            entry('y', "-.--"),
+            entry('z', "--.."),
+            entry('1', ".----"),
+            entry('2', "..---"),
+            entry('3', "...--"),
+            entry('4', "....-"),
+            entry('5', "....."),
+            entry('6', "-...."),
+            entry('7', "--..."),
+            entry('8', "---.."),
+            entry('9', "----."),
+            entry('0', "-----")
+    );
+    private static final Map<String, Character> CODE_MAP = Map.ofEntries(
+            entry(".......", ' '),
+            entry(".-", 'a'),
+            entry("-...", 'b'),
+            entry("-.-.", 'c'),
+            entry("-..", 'd'),
+            entry(".", 'e'),
+            entry("..-.", 'f'),
+            entry("--.", 'g'),
+            entry("....", 'h'),
+            entry("..", 'i'),
+            entry(".---", 'j'),
+            entry("-.-", 'k'),
+            entry(".-..", 'l'),
+            entry("--", 'm'),
+            entry("-.", 'n'),
+            entry("---", 'o'),
+            entry(".--.", 'p'),
+            entry("--.-", 'q'),
+            entry(".-.", 'r'),
+            entry("...", 's'),
+            entry("-", 't'),
+            entry("..-", 'u'),
+            entry("...-", 'v'),
+            entry(".--", 'w'),
+            entry("-..-", 'x'),
+            entry("-.--", 'y'),
+            entry("--..", 'z'),
+            entry(".----", '1'),
+            entry("..---", '2'),
+            entry("...--", '3'),
+            entry("....-", '4'),
+            entry(".....", '5'),
+            entry("-....", '6'),
+            entry("--...", '7'),
+            entry("---..", '8'),
+            entry("----.", '9'),
+            entry("-----", '0')
+    );
 
     @Override
     public String encode(String input) {
