@@ -14,10 +14,10 @@ public class CodingHistory {
         return historyRecords;
     }
 
-    public List<HistoryRecord> getHistoryRecords(CodecUsecase operation) {
+    public List<HistoryRecord> getHistoryRecords(CodecUsecase usecase) {
         List<HistoryRecord> result = new ArrayList<>();
         for (HistoryRecord record : historyRecords) {
-            if (record.getOperation() == operation) {
+            if (record.getOperation() == Operation.usecaseToOperation(usecase)) {
                 result.add(record);
             }
         }
@@ -28,7 +28,7 @@ public class CodingHistory {
         historyRecords = new LinkedList<>();
     }
 
-    public void addToHistory(CodecUsecase operationName, String userInput, Algorithm codec) {
+    public void addToHistory(Operation operationName, String userInput, Algorithm codec) {
         historyRecords.add(new HistoryRecord(historyRecords.size(), operationName, userInput, codec));
     }
 

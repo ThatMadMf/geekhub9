@@ -1,12 +1,23 @@
 package org.geekhub.crypto.history;
 
+import org.geekhub.crypto.analytics.CodecUsecase;
+
 public enum Operation {
     ENCODE,
     DECODE,
-    CODEC_NAME,
-    TEXT_TO_ENCODE,
-    TEXT_TO_DECODE,
-    SHOW_HISTORY;
+    SHOW_HISTORY,
+    ANALYTICS;
+
+    public static Operation usecaseToOperation(CodecUsecase usecase) {
+        switch (usecase) {
+            case ENCODING:
+                return ENCODE;
+            case DECODING:
+                return DECODE;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
 
     @Override
     public String toString() {
@@ -15,16 +26,12 @@ public enum Operation {
                 return "Encode";
             case DECODE:
                 return "Decode";
-            case CODEC_NAME:
-                return "Codec name";
-            case TEXT_TO_ENCODE:
-                return "Text to encode";
-            case TEXT_TO_DECODE:
-                return "Text to decode";
             case SHOW_HISTORY:
                 return "Show history";
+            case ANALYTICS:
+                return "Show analytics";
             default:
-                throw  new IllegalArgumentException();
+                throw new IllegalArgumentException();
         }
     }
 }

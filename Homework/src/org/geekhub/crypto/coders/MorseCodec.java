@@ -5,10 +5,10 @@ import java.util.Map;
 
 class MorseCodec implements Encoder, Decoder {
 
-    private static final char[] ALPHABET = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    private static final char[] ALPHABET = new char[]{' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8',
             '9', '0'};
-    private static final String[] CODES = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
+    private static final String[] CODES = new String[]{".......", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
             ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
             "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"};
 
@@ -40,7 +40,7 @@ class MorseCodec implements Encoder, Decoder {
         for (String word : words) {
             result.append(encodeWord(word));
             if (wordCount < words.length - 1) {
-                result.append("......./");
+                result.append(encodeCharacter(' '));
             }
             wordCount++;
         }

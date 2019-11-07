@@ -20,7 +20,7 @@ public class CodingAudit {
 
         for (HistoryRecord record : encodeOperations) {
             String[] words = record.getUserInput().split(" ");
-            checkWords(result, words);
+            result = checkWords(result, words);
         }
         return result;
     }
@@ -52,11 +52,17 @@ public class CodingAudit {
                 result.put(algorithm, 1);
             }
         }
-        Map.Entry<Algorithm, Integer> entry = result.entrySet().iterator().next();
-        return entry.getKey();
+
+        if (result.isEmpty()) {
+            return null;
+        } else {
+            Map.Entry<Algorithm, Integer> entry = result.entrySet().iterator().next();
+            return entry.getKey();
+        }
     }
 
-    private void checkWords(Map<String, Integer> result, String[] words) {
+    private Map<String, Integer> checkWords(Map<String, Integer> input, String[] words) {
+        Map<String, Integer> result = new HashMap<>();
         for (String word : words) {
             if (result.containsKey(word)) {
                 result.put(word, result.get(word) + 1);
@@ -64,5 +70,6 @@ public class CodingAudit {
                 result.put(word, 1);
             }
         }
+        return result;
     }
 }
