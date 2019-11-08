@@ -1,6 +1,5 @@
 package org.geekhub.crypto.coders;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -150,6 +149,4 @@ class MorseCodec implements Encoder, Decoder {
         }
         return decodedWord.toString();
     }
-
-
 }

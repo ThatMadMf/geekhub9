@@ -64,7 +64,7 @@ public class CodingAudit {
     private Map<String, Integer> checkWords(Map<String, Integer> input, String[] words) {
         Map<String, Integer> result = new HashMap<>();
         for (String word : words) {
-            if (result.containsKey(word)) {
+            if (input.containsKey(word)) {
                 result.put(word, result.get(word) + 1);
             } else {
                 result.put(word, 1);

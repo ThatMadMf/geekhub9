@@ -22,6 +22,7 @@ class HistoryMenu {
                 break;
             case "3":
                 history.clearHistory();
+                history.addToHistory(Operation.CLEAR_HISTORY, null, null);
                 break;
             default:
                 System.out.println("Invalid input.");

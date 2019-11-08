@@ -6,6 +6,7 @@ public enum Operation {
     ENCODE,
     DECODE,
     SHOW_HISTORY,
+    CLEAR_HISTORY,
     ANALYTICS;
 
     public static Operation usecaseToOperation(CodecUsecase usecase) {
@@ -28,6 +29,8 @@ public enum Operation {
                 return "Decode";
             case SHOW_HISTORY:
                 return "Show history";
+            case CLEAR_HISTORY:
+                return "Clear history";
             case ANALYTICS:
                 return "Show analytics";
             default:
