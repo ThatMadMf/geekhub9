@@ -4,6 +4,7 @@ import main.java.org.geekhub.crypto.analytics.CodecUsecase;
 import main.java.org.geekhub.crypto.analytics.CodingAudit;
 import main.java.org.geekhub.crypto.coders.Algorithm;
 import main.java.org.geekhub.crypto.history.CodingHistory;
+import main.java.org.geekhub.crypto.history.HistoryRecord;
 import main.java.org.geekhub.crypto.history.Operation;
 
 import java.util.Scanner;
@@ -17,7 +18,7 @@ class AnalyticsMenu {
         switch (input) {
             case "1":
                 System.out.println(audit.countEncodingInputs());
-                history.addToHistory(Operation.ANALYTICS, null, null);
+                history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             case "2":
                 System.out.println("Encoding;");
@@ -26,7 +27,7 @@ class AnalyticsMenu {
                 System.out.println("Decoding:");
                 System.out.println(audit.countCodingsByDate(CodecUsecase.DECODING));
 
-                history.addToHistory(Operation.ANALYTICS, null, null);
+                history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             case "3":
                 Algorithm encodeCodec = audit.findMostPopularCodec(CodecUsecase.ENCODING);
@@ -37,7 +38,7 @@ class AnalyticsMenu {
                 System.out.println("Decoding:");
                 System.out.println(decodeCodec == null ? "Empty" : decodeCodec.name());
 
-                history.addToHistory(Operation.ANALYTICS, null, null);
+                history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             default:
                 System.out.println("Invalid input.");

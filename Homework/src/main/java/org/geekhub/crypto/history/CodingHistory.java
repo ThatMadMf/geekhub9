@@ -28,8 +28,8 @@ public class CodingHistory {
         historyRecords = new LinkedList<>();
     }
 
-    public void addToHistory(Operation operationName, String userInput, Algorithm codec) {
-        historyRecords.add(new HistoryRecord(historyRecords.size(), operationName, userInput, codec));
+    public void addToHistory(HistoryRecord record) {
+        historyRecords.add(record);
     }
 
     public void clearHistory() {

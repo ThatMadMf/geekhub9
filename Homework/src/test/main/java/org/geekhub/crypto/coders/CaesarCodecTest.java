@@ -41,9 +41,9 @@ public class CaesarCodecTest {
 
     @Test(groups = "encode")
     void encode_of_multiple_words_was_successs() {
-        String encodedWords = encoder.encode("geekhub three words");
+        String encodedWords = encoder.encode("geekhub THREE words");
 
-        assertEquals(encodedWords, "vttzwjq iwgtt ldgsh");
+        assertEquals(encodedWords, "vttzwjq IWGTT ldgsh");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "decode")
@@ -67,8 +67,8 @@ public class CaesarCodecTest {
 
     @Test(groups = "decode")
     void decode_of_multiple_words_was_successs() {
-        String decodedWords = decoder.decode("vttzwjq iwgtt ldgsh");
+        String decodedWords = decoder.decode("vttzwjq IWGTT ldgsh");
 
-        assertEquals(decodedWords, "geekhub three words");
+        assertEquals(decodedWords, "geekhub THREE words");
     }
 }

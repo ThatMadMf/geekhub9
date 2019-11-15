@@ -1,8 +1,9 @@
 package main.java.org.geekhub.crypto.ui;
 
 import main.java.org.geekhub.crypto.coders.*;
-import main.java.org.geekhub.crypto.history.Operation;
 import main.java.org.geekhub.crypto.history.CodingHistory;
+import main.java.org.geekhub.crypto.history.HistoryRecord;
+import main.java.org.geekhub.crypto.history.Operation;
 
 import java.util.Scanner;
 
@@ -32,7 +33,9 @@ public class MainMenu {
                 String decoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
                 System.out.println("Enter text to decode:");
                 String textToDecode = scanner.nextLine();
-                history.addToHistory(Operation.DECODE, textToDecode, Algorithm.valueOf(decoderAlgorithm));
+                history.addToHistory(
+                        new HistoryRecord(Operation.DECODE, textToDecode, Algorithm.valueOf(decoderAlgorithm))
+                );
 
                 System.out.println("Decoded:");
                 Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
@@ -42,7 +45,9 @@ public class MainMenu {
                 String encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
                 System.out.println("Enter text to encode:");
                 String textToEncode = scanner.nextLine();
-                history.addToHistory(Operation.ENCODE, textToEncode, Algorithm.valueOf(encoderAlgorithm));
+                history.addToHistory(
+                        new HistoryRecord(Operation.ENCODE, textToEncode, Algorithm.valueOf(encoderAlgorithm))
+                );
 
                 System.out.println("Encoded:");
                 Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);

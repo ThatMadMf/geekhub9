@@ -11,7 +11,7 @@ public class MorseCodecTest {
     private Decoder decoder;
 
     @BeforeGroups("encode")
-     void initialiseEncode() {
+    void initialiseEncode() {
         encoder = EncodersFactory.getEncoder("MORSE");
     }
 

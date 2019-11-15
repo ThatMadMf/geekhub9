@@ -10,6 +10,10 @@ import java.util.*;
 public class CodingAudit {
     private final CodingHistory codingHistory;
 
+    public CodingHistory getCodingHistory() {
+        return codingHistory;
+    }
+
     public CodingAudit(CodingHistory codingHistory) {
         this.codingHistory = codingHistory;
     }
@@ -62,9 +66,9 @@ public class CodingAudit {
     }
 
     private Map<String, Integer> checkWords(Map<String, Integer> input, String[] words) {
-        Map<String, Integer> result = new HashMap<>();
+        Map<String, Integer> result = input;
         for (String word : words) {
-            if (input.containsKey(word)) {
+            if (result.containsKey(word)) {
                 result.put(word, result.get(word) + 1);
             } else {
                 result.put(word, 1);

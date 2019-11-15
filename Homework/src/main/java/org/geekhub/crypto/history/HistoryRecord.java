@@ -5,18 +5,37 @@ import main.java.org.geekhub.crypto.coders.Algorithm;
 import java.time.LocalDate;
 
 public class HistoryRecord {
-    private final int index;
     private final Operation operation;
     private final String userInput;
     private final Algorithm codec;
     private final LocalDate operationDate;
 
-    public HistoryRecord(int index, Operation operation, String input, Algorithm codec) {
-        this.index = index;
+    public HistoryRecord(Operation operation, String input, Algorithm codec) {
         this.operation = operation;
         this.codec = codec;
         userInput = input;
         operationDate = LocalDate.now();
+    }
+
+    public HistoryRecord(Operation operation, String input, Algorithm codec, LocalDate date)  {
+        this.operation = operation;
+        this.codec = codec;
+        userInput = input;
+        operationDate = date;
+    }
+
+    public HistoryRecord(Operation operation) {
+        this.operation = operation;
+        operationDate = LocalDate.now();
+        userInput = null;
+        codec = null;
+    }
+
+    public HistoryRecord(Operation operation, LocalDate date) {
+        this.operation = operation;
+        operationDate = date;
+        userInput = null;
+        codec = null;
     }
 
     public Operation getOperation() {
@@ -37,7 +56,7 @@ public class HistoryRecord {
 
     @Override
     public String toString() {
-        return index + ". " + operation.toString() + " - " + userInput + " : " + operationDate;
+        return operation.toString() + " - " + userInput + " : " + operationDate;
     }
 
 }

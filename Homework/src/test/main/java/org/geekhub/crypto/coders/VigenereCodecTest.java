@@ -3,7 +3,8 @@ package main.java.org.geekhub.crypto.coders;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class VigenereCodecTest {
     private Encoder encoder;
@@ -40,9 +41,9 @@ public class VigenereCodecTest {
 
     @Test(groups = "encode")
     void encode_of_multiple_words_was_successs() {
-        String encodedWords = encoder.encode("geekhub three words");
+        String encodedWords = encoder.encode("geekhub THREE words");
 
-        assertEquals(encodedWords, "qicgvle dlpas nrbhq");
+        assertEquals(encodedWords, "qicgvle DLPAS nrbhq");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "decode")
@@ -66,8 +67,8 @@ public class VigenereCodecTest {
 
     @Test(groups = "decode")
     void decode_of_multiple_words_was_successs() {
-        String decodedWords = decoder.decode("qicgvle dlpas nrbhq");
+        String decodedWords = decoder.decode("qicgvle DLPAS nrbhq");
 
-        assertEquals(decodedWords, "geekhub three words");
+        assertEquals(decodedWords, "geekhub THREE words");
     }
 }

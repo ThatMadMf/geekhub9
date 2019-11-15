@@ -2,6 +2,7 @@ package main.java.org.geekhub.crypto.ui;
 
 import main.java.org.geekhub.crypto.history.HistoryConsolePrinter;
 import main.java.org.geekhub.crypto.history.CodingHistory;
+import main.java.org.geekhub.crypto.history.HistoryRecord;
 import main.java.org.geekhub.crypto.history.Operation;
 
 import java.util.Scanner;
@@ -15,14 +16,14 @@ class HistoryMenu {
         switch (input) {
             case "1":
                 new HistoryConsolePrinter().print(history.getHistoryRecords());
-                history.addToHistory(Operation.SHOW_HISTORY, null, null);
+                history.addToHistory(new HistoryRecord(Operation.SHOW_HISTORY, null, null));
                 break;
             case "2":
                 history.removeLastRecord();
                 break;
             case "3":
                 history.clearHistory();
-                history.addToHistory(Operation.CLEAR_HISTORY, null, null);
+                history.addToHistory(new HistoryRecord(Operation.CLEAR_HISTORY, null, null));
                 break;
             default:
                 System.out.println("Invalid input.");
