@@ -11,17 +11,17 @@ public class CaesarCodecTest {
     private Decoder decoder;
 
     @BeforeGroups("encode")
-    public void initialiseEncode() {
+    void initialiseEncode() {
         encoder = EncodersFactory.getEncoder("CAESAR");
     }
 
     @BeforeGroups("decode")
-    public void initialiseDecode() {
+    void initialiseDecode() {
         decoder = DecodersFactory.getDecoder("CAESAR");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
-    public void encode_fails_when_input_is_null() {
+    void encode_fails_when_input_is_null() {
         encoder.encode(null);
     }
 
@@ -47,7 +47,7 @@ public class CaesarCodecTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "decode")
-    public void decode_fails_when_input_is_null() {
+    void decode_fails_when_input_is_null() {
         decoder.decode(null);
     }
 

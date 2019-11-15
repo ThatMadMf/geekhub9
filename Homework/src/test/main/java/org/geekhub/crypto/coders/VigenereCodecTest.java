@@ -3,31 +3,25 @@ package main.java.org.geekhub.crypto.coders;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
-public class MorseCodecTest {
+public class VigenereCodecTest {
     private Encoder encoder;
     private Decoder decoder;
 
     @BeforeGroups("encode")
-     void initialiseEncode() {
-        encoder = EncodersFactory.getEncoder("MORSE");
+    void initialiseEncode() {
+        encoder = EncodersFactory.getEncoder("VIGENERE");
     }
 
     @BeforeGroups("decode")
     void initialiseDecode() {
-        decoder = DecodersFactory.getDecoder("MORSE");
+        decoder = DecodersFactory.getDecoder("VIGENERE");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
     void encode_fails_when_input_is_null() {
         encoder.encode(null);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
-    void encode_fails_when_input_not_in_single_case() {
-        encoder.encode("WOrd");
     }
 
     @Test(groups = "encode")
@@ -41,14 +35,14 @@ public class MorseCodecTest {
     void encode_of_single_word_was_success() {
         String encodedWord = encoder.encode("geekhub");
 
-        assertEquals(encodedWord, "--./././-.-/..../..-/-.../");
+        assertEquals(encodedWord, "qicgvle");
     }
 
     @Test(groups = "encode")
     void encode_of_multiple_words_was_successs() {
-        String encodedWords = encoder.encode("geekhub words");
+        String encodedWords = encoder.encode("geekhub three words");
 
-        assertEquals(encodedWords, "--./././-.-/..../..-/-.../......./.--/---/.-./-../.../");
+        assertEquals(encodedWords, "qicgvle dlpas nrbhq");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "decode")
@@ -65,16 +59,15 @@ public class MorseCodecTest {
 
     @Test(groups = "decode")
     void decode_of_single_word_was_success() {
-        String decodedWord = decoder.decode("--./././-.-/..../..-/-.../");
+        String decodedWord = decoder.decode("qicgvle");
 
         assertEquals(decodedWord, "geekhub");
     }
 
     @Test(groups = "decode")
     void decode_of_multiple_words_was_successs() {
-        String decodedWords = decoder.decode("--./././-.-/..../..-/-.../......./.--/---/.-./-../.../");
+        String decodedWords = decoder.decode("qicgvle dlpas nrbhq");
 
-        assertEquals(decodedWords, "geekhub words");
+        assertEquals(decodedWords, "geekhub three words");
     }
-
 }

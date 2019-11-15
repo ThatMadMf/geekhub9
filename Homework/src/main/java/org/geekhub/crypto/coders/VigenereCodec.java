@@ -9,6 +9,9 @@ class VigenereCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
+        if(input == null) {
+            throw new IllegalArgumentException();
+        }
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
@@ -22,6 +25,9 @@ class VigenereCodec implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
+        if(input == null) {
+            throw new IllegalArgumentException();
+        }
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
