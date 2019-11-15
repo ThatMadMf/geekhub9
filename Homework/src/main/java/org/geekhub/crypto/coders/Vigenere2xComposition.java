@@ -1,4 +1,4 @@
-package main.java.org.geekhub.crypto.coders;
+package org.geekhub.crypto.coders;
 
 class Vigenere2xComposition implements Encoder, Decoder {
     private final Encoder vigenereEncoder;

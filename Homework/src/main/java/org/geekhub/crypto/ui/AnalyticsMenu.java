@@ -1,11 +1,11 @@
-package main.java.org.geekhub.crypto.ui;
+package org.geekhub.crypto.ui;
 
-import main.java.org.geekhub.crypto.analytics.CodecUsecase;
-import main.java.org.geekhub.crypto.analytics.CodingAudit;
-import main.java.org.geekhub.crypto.coders.Algorithm;
-import main.java.org.geekhub.crypto.history.CodingHistory;
-import main.java.org.geekhub.crypto.history.HistoryRecord;
-import main.java.org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.analytics.CodecUsecase;
+import org.geekhub.crypto.analytics.CodingAudit;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 
 import java.util.Scanner;
 

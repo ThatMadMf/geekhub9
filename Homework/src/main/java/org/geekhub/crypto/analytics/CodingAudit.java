@@ -1,8 +1,8 @@
-package main.java.org.geekhub.crypto.analytics;
+package org.geekhub.crypto.analytics;
 
-import main.java.org.geekhub.crypto.coders.Algorithm;
-import main.java.org.geekhub.crypto.history.CodingHistory;
-import main.java.org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
 
 import java.time.LocalDate;
 import java.util.*;

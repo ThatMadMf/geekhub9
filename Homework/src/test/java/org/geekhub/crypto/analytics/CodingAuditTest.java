@@ -1,9 +1,9 @@
-package main.java.org.geekhub.crypto.analytics;
+package org.geekhub.crypto.analytics;
 
-import main.java.org.geekhub.crypto.coders.Algorithm;
-import main.java.org.geekhub.crypto.history.CodingHistory;
-import main.java.org.geekhub.crypto.history.HistoryRecord;
-import main.java.org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

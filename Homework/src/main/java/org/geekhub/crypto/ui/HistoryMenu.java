@@ -1,9 +1,9 @@
-package main.java.org.geekhub.crypto.ui;
+package org.geekhub.crypto.ui;
 
-import main.java.org.geekhub.crypto.history.HistoryConsolePrinter;
-import main.java.org.geekhub.crypto.history.CodingHistory;
-import main.java.org.geekhub.crypto.history.HistoryRecord;
-import main.java.org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.history.HistoryConsolePrinter;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 
 import java.util.Scanner;
 

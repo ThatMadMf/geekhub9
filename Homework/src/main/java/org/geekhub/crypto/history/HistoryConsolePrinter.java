@@ -1,4 +1,4 @@
-package main.java.org.geekhub.crypto.history;
+package org.geekhub.crypto.history;
 
 import java.util.List;
 

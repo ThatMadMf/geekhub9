@@ -1,6 +1,6 @@
-package main.java.org.geekhub.crypto.history;
+package org.geekhub.crypto.history;
 
-import main.java.org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Algorithm;
 
 import java.time.LocalDate;
 

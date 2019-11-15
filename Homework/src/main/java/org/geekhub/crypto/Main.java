@@ -1,6 +1,6 @@
-package main.java.org.geekhub.crypto;
+package org.geekhub.crypto;
 
-import main.java.org.geekhub.crypto.ui.MainMenu;
+import org.geekhub.crypto.ui.MainMenu;
 
 class Main {
 

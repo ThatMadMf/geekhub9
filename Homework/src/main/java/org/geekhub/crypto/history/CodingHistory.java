@@ -1,7 +1,6 @@
-package main.java.org.geekhub.crypto.history;
+package org.geekhub.crypto.history;
 
-import main.java.org.geekhub.crypto.analytics.CodecUsecase;
-import main.java.org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.analytics.CodecUsecase;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
