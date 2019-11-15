@@ -87,13 +87,10 @@ class MorseCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        for (char c : input.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                System.out.println("Error. You have to use characters of single case.");
-                System.exit(1);
-            }
+        if(input == null) {
+            throw new IllegalArgumentException();
         }
-
+        validateCaseOfInput(input);
         String[] words = input.split("\\s+");
         StringBuilder result = new StringBuilder();
         int wordCount = 0;
@@ -110,6 +107,9 @@ class MorseCodec implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
+        if(input == null) {
+            throw new IllegalArgumentException();
+        }
         String[] words = input.split("/(\\.){7}/");
         StringBuilder result = new StringBuilder();
 
@@ -120,6 +120,21 @@ class MorseCodec implements Encoder, Decoder {
 
         result.setLength(result.length() - 1);
         return result.toString().toLowerCase();
+    }
+
+    private void validateCaseOfInput (String input) {
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        for (char c : input.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            }  else if(Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            }
+            if(hasLowerCase && hasUpperCase) {
+                throw new IllegalArgumentException("Text has to be in single case");
+            }
+        }
     }
 
     private String encodeCharacter(char c) {
@@ -145,7 +160,9 @@ class MorseCodec implements Encoder, Decoder {
         String[] codedChars = input.split("/");
 
         for (String codedChar : codedChars) {
-            decodedWord.append(decodeCharacter(codedChar));
+            if(!codedChar.equals("")) {
+                decodedWord.append(decodeCharacter(codedChar));
+            }
         }
         return decodedWord.toString();
     }
