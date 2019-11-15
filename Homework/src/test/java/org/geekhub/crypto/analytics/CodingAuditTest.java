@@ -26,7 +26,7 @@ public class CodingAuditTest {
     }
 
     @Test
-    void When_CodingHistoryIsEmpty_Expect_Empty_WordCountMap() {
+    void When_CodingHistoryIsEmpty_Expect_EmptyWordCountMap() {
         Map actualResult = codingAudit.countEncodingInputs();
 
         assertTrue(actualResult.isEmpty());

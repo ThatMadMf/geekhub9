@@ -28,6 +28,9 @@ public class CodingHistory {
     }
 
     public void addToHistory(HistoryRecord record) {
+        if(record == null) {
+            throw new IllegalArgumentException();
+        }
         historyRecords.add(record);
     }
 

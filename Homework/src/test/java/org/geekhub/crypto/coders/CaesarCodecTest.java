@@ -21,52 +21,52 @@ public class CaesarCodecTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
-    void encode_fails_when_input_is_null() {
+    void When_InputIsNull_Expect_EncodeFail() {
         encoder.encode(null);
     }
 
     @Test(groups = "encode")
-    void encode_of_empty_word_was_success() {
+    void When_EncodeEmptyWord_Expect_Success() {
         String encodedWord = encoder.encode("");
 
         assertTrue(encodedWord.isEmpty());
     }
 
     @Test(groups = "encode")
-    void encode_of_single_word_was_success() {
+    void When_EncodeWord_Expect_Success() {
         String encodedWord = encoder.encode("geekhub");
 
         assertEquals(encodedWord, "vttzwjq");
     }
 
     @Test(groups = "encode")
-    void encode_of_multiple_words_was_successs() {
+    void When_EncodeText_Expect_Success() {
         String encodedWords = encoder.encode("geekhub THREE words");
 
         assertEquals(encodedWords, "vttzwjq IWGTT ldgsh");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "decode")
-    void decode_fails_when_input_is_null() {
+    void When_InputIsNull_Expect_DecodeFail() {
         decoder.decode(null);
     }
 
     @Test(groups = "decode")
-    void decode_of_empty_word_was_success() {
+    void When_DecodeEmptyWord_Expect_Success() {
         String decodedWord = decoder.decode("");
 
         assertTrue(decodedWord.isEmpty());
     }
 
     @Test(groups = "decode")
-    void decode_of_single_word_was_success() {
+    void When_DecodeWord_Expect_Success() {
         String decodedWord = decoder.decode("vttzwjq");
 
         assertEquals(decodedWord, "geekhub");
     }
 
     @Test(groups = "decode")
-    void decode_of_multiple_words_was_successs() {
+    void When_DecodeText_Expect_Success() {
         String decodedWords = decoder.decode("vttzwjq IWGTT ldgsh");
 
         assertEquals(decodedWords, "geekhub THREE words");
