@@ -10,12 +10,12 @@ public class MorseCodecTest {
     private Encoder encoder;
     private Decoder decoder;
 
-    @BeforeGroups("encode")
+    @BeforeGroups(groups = "encode")
     void initialiseEncode() {
         encoder = EncodersFactory.getEncoder("MORSE");
     }
 
-    @BeforeGroups("decode")
+    @BeforeGroups(groups = "decode")
     void initialiseDecode() {
         decoder = DecodersFactory.getDecoder("MORSE");
     }

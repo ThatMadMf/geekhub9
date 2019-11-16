@@ -3,7 +3,6 @@ package org.geekhub.crypto.ui;
 import org.geekhub.crypto.coders.*;
 import org.geekhub.crypto.history.Operation;
 
-import org.geekhub.crypto.coders.*;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 

@@ -11,8 +11,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import static java.util.Map.entry;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class CodingAuditTest {
 
@@ -96,7 +95,7 @@ public class CodingAuditTest {
     void When_CodingHistoryEmpty_Expect_Null() {
         Algorithm actualResult = codingAudit.findMostPopularCodec(CodecUsecase.ENCODING);
 
-        assertEquals(actualResult, null);
+        assertNull(actualResult);
     }
 
     @Test
