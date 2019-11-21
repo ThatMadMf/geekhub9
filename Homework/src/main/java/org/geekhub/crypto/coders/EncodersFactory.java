@@ -3,6 +3,10 @@ package org.geekhub.crypto.coders;
 public class EncodersFactory {
 
     public static Encoder getEncoder(String name) {
+        if(name == null) {
+            throw new IllegalArgumentException();
+        }
+
         Algorithm algorithm = Algorithm.valueOf(name);
 
         switch (algorithm) {

@@ -12,6 +12,7 @@ class Vigenere2x extends VigenereCodec {
     @Override
     public String decode(String input) {
         String decoded = super.decode(input);
-        return super.decode(decoded);
+        decoded = super.decode(decoded);
+        return decoded;
     }
 }
