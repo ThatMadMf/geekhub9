@@ -26,7 +26,7 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryIsEmpty_Expect_EmptyWordCountMap() {
-        Map actualResult = codingAudit.countEncodingInputs();
+        Map<String, Integer> actualResult = codingAudit.countEncodingInputs();
 
         assertTrue(actualResult.isEmpty());
     }
@@ -35,7 +35,7 @@ public class CodingAuditTest {
     void When_CodingHistoryContainsOneWord_Expect_Success() {
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE));
 
-        Map actualResult = codingAudit.countEncodingInputs();
+        Map<String, Integer> actualResult = codingAudit.countEncodingInputs();
 
         assertEquals(actualResult, Map.ofEntries(
                 entry("word", 1)
@@ -48,7 +48,7 @@ public class CodingAuditTest {
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
 
-        Map actualResult = codingAudit.countEncodingInputs();
+        Map<String, Integer> actualResult = codingAudit.countEncodingInputs();
 
         assertEquals(actualResult, Map.ofEntries(
                 entry("geekhub", 2),
@@ -58,7 +58,7 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryIsEmpty_Expect_EmptyDateCountMap() {
-        Map actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
+        Map<LocalDate, Long> actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
 
         assertTrue(actualResult.isEmpty());
     }
@@ -67,10 +67,11 @@ public class CodingAuditTest {
     void When_CodingHistoryContainsOneDate_Expect_Success() {
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE, LocalDate.now()));
 
-        Map actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
-        Map expectedResult = Map.ofEntries(
+        Map<LocalDate, Long> actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
+        Map<LocalDate, Long> expectedResult = Map.ofEntries(
                 entry(LocalDate.now(), 1L)
         );
+
         assertEquals(actualResult, expectedResult);
     }
 
@@ -82,8 +83,8 @@ public class CodingAuditTest {
                 new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE, LocalDate.now().plusDays(1))
         );
 
-        Map actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
-        Map expectedResult = Map.ofEntries(
+        Map<LocalDate, Long> actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
+        Map<LocalDate, Long> expectedResult = Map.ofEntries(
                 entry(LocalDate.now(), 2L),
                 entry(LocalDate.now().plusDays(1), 1L)
         );

@@ -32,8 +32,6 @@ public class CodingHistoryTest {
 
     @Test
     void When_ClearingEmptyHistory_Expect_Success() {
-        assertTrue(history.getHistoryRecords().isEmpty());
-
         history.clearHistory();
 
         assertTrue(history.getHistoryRecords().isEmpty());
@@ -43,7 +41,6 @@ public class CodingHistoryTest {
     void When_ClearingNotEmptyHistory_Expect_Success() {
         history.addToHistory(new HistoryRecord(Operation.ENCODE));
         history.addToHistory(new HistoryRecord(Operation.DECODE));
-        assertFalse(history.getHistoryRecords().isEmpty());
 
         history.clearHistory();
 
@@ -52,8 +49,6 @@ public class CodingHistoryTest {
 
     @Test
     void When_RemovingLastElementWithEmptyHistory_Expect_Success() {
-        assertTrue(history.getHistoryRecords().isEmpty());
-
         history.removeLastRecord();
 
         assertTrue(history.getHistoryRecords().isEmpty());

@@ -49,13 +49,6 @@ public class HistoryRecord {
         codec = null;
     }
 
-    public HistoryRecord(Operation operation, LocalDate date) {
-        this.operation = operation;
-        operationDate = date;
-        userInput = null;
-        codec = null;
-    }
-
     public Operation getOperation() {
         return operation;
     }
