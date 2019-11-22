@@ -11,34 +11,38 @@ class CaesarCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        if(input == null) {
-            throw new IllegalArgumentException();
-        }
+        nullCheck(input);
         StringBuilder result = new StringBuilder();
-        for (char symbol : input.toCharArray()) {
-            if (Character.isLetter(symbol)) {
-                result.append(restoreCase(symbol, encodeLetter(symbol)));
+
+        input.chars().forEachOrdered(c -> {
+            if (Character.isLetter(c)) {
+                result.append(restoreCase((char) c, encodeLetter.apply((char) c)));
             } else {
-                result.append(symbol);
+                result.append((char) c);
             }
-        }
+        });
         return result.toString();
     }
 
     @Override
     public String decode(String input) {
-        if(input == null) {
+        nullCheck(input);
+        StringBuilder result = new StringBuilder();
+
+        input.chars().forEachOrdered(c -> {
+            if (Character.isLetter(c)) {
+                result.append(restoreCase((char) c, decodeLetter.apply((char) c)));
+            } else {
+                result.append((char) c);
+            }
+        });
+        return result.toString();
+    }
+
+    private void nullCheck(String input) {
+        if (input == null) {
             throw new IllegalArgumentException();
         }
-        StringBuilder result = new StringBuilder();
-        for (char symbol : input.toCharArray()) {
-            if (Character.isLetter(symbol)) {
-                result.append(restoreCase(symbol, decodeLetter(symbol)));
-            } else {
-                result.append(symbol);
-            }
-        }
-        return result.toString();
     }
 
     private char restoreCase(char input, char processedChar) {
@@ -48,15 +52,13 @@ class CaesarCodec implements Encoder, Decoder {
         return processedChar;
     }
 
-    private char encodeLetter(char c) {
+    private Function<Character, Character> encodeLetter = c -> {
         int encodedChar = ALPHABET.indexOf(Character.toLowerCase(c)) + SHIFT_KEY;
         return ALPHABET.get(encodedChar % ALPHABET.size());
-    }
+    };
 
-    private char decodeLetter(char c) {
+    private Function<Character, Character> decodeLetter = c -> {
         int decodedChar = ALPHABET.indexOf(Character.toLowerCase(c)) - SHIFT_KEY;
         return ALPHABET.get(decodedChar >= 0 ? decodedChar : decodedChar + ALPHABET.size());
-    }
-
-
+    };
 }
