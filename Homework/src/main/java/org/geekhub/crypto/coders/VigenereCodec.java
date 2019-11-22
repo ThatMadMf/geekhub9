@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 class VigenereCodec implements Encoder, Decoder {
     private static final String SHIFT_KEY = "keyword";
@@ -13,6 +14,7 @@ class VigenereCodec implements Encoder, Decoder {
             throw new IllegalArgumentException();
         }
         StringBuilder result = new StringBuilder();
+
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
             char encodedChar = encodeLetter(symbol, ALPHABET.indexOf(SHIFT_KEY.charAt(keywordCount)));

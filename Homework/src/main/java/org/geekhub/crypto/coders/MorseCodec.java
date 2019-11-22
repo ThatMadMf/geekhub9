@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -87,83 +88,61 @@ class MorseCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        if(input == null) {
-            throw new IllegalArgumentException();
-        }
-        validateCaseOfInput(input);
-        String[] words = input.split("\\s+");
+        nullCheck(input);
+        checkCaseOfInput(input);
         StringBuilder result = new StringBuilder();
-        int wordCount = 0;
 
-        for (String word : words) {
-            result.append(encodeWord(word));
-            if (wordCount < words.length - 1) {
-                result.append(encodeCharacter(' '));
-            }
-            wordCount++;
-        }
-        return result.toString();
+        Arrays.stream(input.split("\\s+")).forEach(word -> {
+            word.chars().forEachOrdered(c -> result.append((CHAR_MAP.get((char) c)) + '/'));
+            result.append(CHAR_MAP.get(' ') + '/');
+        });
+
+        return trimIfNotEmpty(result).toString();
     }
 
     @Override
     public String decode(String input) {
-        if(input == null) {
-            throw new IllegalArgumentException();
+        nullCheck(input);
+        if (input.isEmpty()) {
+            return "";
         }
         String[] words = input.split("/(\\.){7}/");
         StringBuilder result = new StringBuilder();
 
-        for (String str : words) {
-            result.append(decodeWord(str));
+        Arrays.stream(words).forEach(word -> {
+            Arrays.stream(word.split("/")).forEach(w -> result.append(CODE_MAP.get(w)));
             result.append(" ");
-        }
+        });
 
         result.setLength(result.length() - 1);
         return result.toString().toLowerCase();
     }
 
-    private void validateCaseOfInput (String input) {
+    private void checkCaseOfInput(String input) {
         boolean hasUpperCase = false;
         boolean hasLowerCase = false;
         for (char c : input.toCharArray()) {
             if (Character.isUpperCase(c)) {
                 hasUpperCase = true;
-            }  else if(Character.isLowerCase(c)) {
+            } else if (Character.isLowerCase(c)) {
                 hasLowerCase = true;
             }
-            if(hasLowerCase && hasUpperCase) {
+            if (hasLowerCase && hasUpperCase) {
                 throw new IllegalArgumentException("Text has to be in single case");
             }
         }
     }
 
-    private String encodeCharacter(char c) {
-        return CHAR_MAP.get(c) + "/";
-    }
-
-    private char decodeCharacter(String string) {
-        return CODE_MAP.get(string);
-    }
-
-    private String encodeWord(String input) {
-        StringBuilder codedWord = new StringBuilder();
-        char[] word = input.toCharArray();
-
-        for (char c : word) {
-            codedWord.append(encodeCharacter(c));
+    private void nullCheck(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException();
         }
-        return codedWord.toString();
     }
 
-    private String decodeWord(String input) {
-        StringBuilder decodedWord = new StringBuilder();
-        String[] codedChars = input.split("/");
-
-        for (String codedChar : codedChars) {
-            if(!codedChar.equals("")) {
-                decodedWord.append(decodeCharacter(codedChar));
-            }
+    private StringBuilder trimIfNotEmpty(StringBuilder input) {
+        if (input.length() > 0) {
+            input.setLength(input.length() - 8);
         }
-        return decodedWord.toString();
+        return input;
     }
 }

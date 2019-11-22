@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import java.util.List;
+import java.util.function.Function;
 
 class CaesarCodec implements Encoder, Decoder {
 
