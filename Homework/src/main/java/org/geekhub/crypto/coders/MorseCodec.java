@@ -1,11 +1,8 @@
 package org.geekhub.crypto.coders;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import static java.util.Map.entry;
 
@@ -97,10 +94,10 @@ class MorseCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
 
         Arrays.stream(input.split("\\s+")).forEach(word -> {
-            result.append(performOperation(word, encodeWord));
-            result.append(CHAR_MAP.get(' ') + '/');
+            result.append(performOperation(word, MorseCodec::encodeWord));
+            result.append(CHAR_MAP.get(' '));
+            result.append('/');
         });
-
         return trimIfNotEmpty(result).toString();
     }
 
@@ -110,11 +107,8 @@ class MorseCodec implements Encoder, Decoder {
         if (input.isEmpty()) {
             return "";
         }
-        String[] words = input.split("/(\\.){7}/");
-        StringBuilder result = new StringBuilder();
-        result.append(performOperation(input, decodeWord));
-
-        return result.toString().toLowerCase();
+        String result = performOperation(input, MorseCodec::decodeWord);
+        return result.toLowerCase();
     }
 
     private void checkCaseOfInput(String input) {
@@ -145,21 +139,21 @@ class MorseCodec implements Encoder, Decoder {
         return input;
     }
 
-    private Function<String, String> encodeWord = input -> {
+    private static String encodeWord(String input) {
         StringBuilder result = new StringBuilder();
-        input.chars().forEachOrdered(c -> result.append((CHAR_MAP.get((char) c)) + '/'));
+        input.chars().forEachOrdered(c -> result.append(CHAR_MAP.get((char) c)).append('/'));
 
         return result.toString();
-    };
+    }
 
-    private Function<String, String> decodeWord = input -> {
+    private static String decodeWord(String input) {
         StringBuilder result = new StringBuilder();
         Arrays.stream(input.split("/")).forEach(w -> result.append(CODE_MAP.get(w)));
 
         return result.toString();
-    };
+    }
 
-    private String performOperation(String text, Function<String, String> function) {
+    private String performOperation(String text, UnaryOperator<String> function) {
         return function.apply(text);
     }
 }

@@ -17,7 +17,7 @@ class VigenereCodec implements Encoder, Decoder {
 
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            result.append(codeWithCase(symbol, getIndex(keywordCount), encodeLetter));
+            result.append(codeWithCase(symbol, getIndex(keywordCount), VigenereCodec::encodeLetter));
             keywordCount = getNextKeyIndex(keywordCount, result, symbol);
         }
         return result.toString();
@@ -31,7 +31,7 @@ class VigenereCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            result.append(codeWithCase(symbol, getIndex(keywordCount), decodeLetter));
+            result.append(codeWithCase(symbol, getIndex(keywordCount), VigenereCodec::decodeLetter));
             keywordCount = getNextKeyIndex(keywordCount, result, symbol);
         }
         return result.toString();
@@ -47,7 +47,7 @@ class VigenereCodec implements Encoder, Decoder {
         return keywordCount;
     }
 
-    private BiFunction<Character, Integer, Character> encodeLetter = (input, keywordIndex) -> {
+    private static char encodeLetter(char input, int keywordIndex) {
         if (Character.isLetter(input)) {
             int charIndex = ALPHABET.indexOf(Character.toLowerCase(input));
             int encodedIndex = (charIndex + keywordIndex) % ALPHABET.size();
@@ -55,9 +55,9 @@ class VigenereCodec implements Encoder, Decoder {
         } else {
             return input;
         }
-    };
+    }
 
-    private BiFunction<Character, Integer, Character> decodeLetter = (input, keywordIndex) -> {
+    private static char decodeLetter(char input, int keywordIndex) {
         if (Character.isLetter(input)) {
             int charIndex = ALPHABET.indexOf(Character.toLowerCase(input));
             int decodedIndex = (charIndex - keywordIndex + ALPHABET.size()) % ALPHABET.size();
@@ -65,7 +65,7 @@ class VigenereCodec implements Encoder, Decoder {
         } else {
             return input;
         }
-    };
+    }
 
     private char codeWithCase(char input, int key, BiFunction<Character, Integer, Character> function) {
         if (Character.isUpperCase(input)) {
