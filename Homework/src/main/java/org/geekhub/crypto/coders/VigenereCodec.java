@@ -1,7 +1,6 @@
 package org.geekhub.crypto.coders;
 
 import java.util.List;
-import java.util.function.BiFunction;
 
 class VigenereCodec implements Encoder, Decoder {
     private static final String SHIFT_KEY = "keyword";
@@ -10,7 +9,7 @@ class VigenereCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        if(input == null) {
+        if (input == null) {
             throw new IllegalArgumentException();
         }
         StringBuilder result = new StringBuilder();
@@ -27,7 +26,7 @@ class VigenereCodec implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
-        if(input == null) {
+        if (input == null) {
             throw new IllegalArgumentException();
         }
         StringBuilder result = new StringBuilder();

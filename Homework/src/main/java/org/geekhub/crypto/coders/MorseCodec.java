@@ -1,7 +1,11 @@
 package org.geekhub.crypto.coders;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.util.Map.entry;
 
@@ -93,7 +97,7 @@ class MorseCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
 
         Arrays.stream(input.split("\\s+")).forEach(word -> {
-            word.chars().forEachOrdered(c -> result.append((CHAR_MAP.get((char) c)) + '/'));
+            result.append(performOperation(word, encodeWord));
             result.append(CHAR_MAP.get(' ') + '/');
         });
 
@@ -108,13 +112,8 @@ class MorseCodec implements Encoder, Decoder {
         }
         String[] words = input.split("/(\\.){7}/");
         StringBuilder result = new StringBuilder();
+        result.append(performOperation(input, decodeWord));
 
-        Arrays.stream(words).forEach(word -> {
-            Arrays.stream(word.split("/")).forEach(w -> result.append(CODE_MAP.get(w)));
-            result.append(" ");
-        });
-
-        result.setLength(result.length() - 1);
         return result.toString().toLowerCase();
     }
 
@@ -144,5 +143,23 @@ class MorseCodec implements Encoder, Decoder {
             input.setLength(input.length() - 8);
         }
         return input;
+    }
+
+    private Function<String, String> encodeWord = input -> {
+        StringBuilder result = new StringBuilder();
+        input.chars().forEachOrdered(c -> result.append((CHAR_MAP.get((char) c)) + '/'));
+
+        return result.toString();
+    };
+
+    private Function<String, String> decodeWord = input -> {
+        StringBuilder result = new StringBuilder();
+        Arrays.stream(input.split("/")).forEach(w -> result.append(CODE_MAP.get(w)));
+
+        return result.toString();
+    };
+
+    private String performOperation(String text, Function<String, String> function) {
+        return function.apply(text);
     }
 }

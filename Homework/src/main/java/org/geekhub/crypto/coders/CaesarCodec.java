@@ -16,7 +16,7 @@ class CaesarCodec implements Encoder, Decoder {
 
         input.chars().forEachOrdered(c -> {
             if (Character.isLetter(c)) {
-                result.append(restoreCase((char) c, encodeLetter.apply((char) c)));
+                result.append(codeWithCase((char) c, encodeLetter));
             } else {
                 result.append((char) c);
             }
@@ -31,7 +31,7 @@ class CaesarCodec implements Encoder, Decoder {
 
         input.chars().forEachOrdered(c -> {
             if (Character.isLetter(c)) {
-                result.append(restoreCase((char) c, decodeLetter.apply((char) c)));
+                result.append(codeWithCase((char) c, decodeLetter));
             } else {
                 result.append((char) c);
             }
@@ -45,11 +45,11 @@ class CaesarCodec implements Encoder, Decoder {
         }
     }
 
-    private char restoreCase(char input, char processedChar) {
+    private char codeWithCase(char input, Function<Character, Character> function) {
         if (Character.isUpperCase(input)) {
-            return Character.toUpperCase(processedChar);
+            return Character.toUpperCase(function.apply(input));
         }
-        return processedChar;
+        return function.apply(input);
     }
 
     private Function<Character, Character> encodeLetter = c -> {
