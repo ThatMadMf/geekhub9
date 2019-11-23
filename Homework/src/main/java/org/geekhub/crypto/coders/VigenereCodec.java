@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 class VigenereCodec implements Encoder, Decoder {
     private static final String SHIFT_KEY = "keyword";
@@ -16,10 +17,8 @@ class VigenereCodec implements Encoder, Decoder {
 
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            char encodedChar = encodeLetter(symbol, ALPHABET.indexOf(SHIFT_KEY.charAt(keywordCount)));
-            result.append(restoreCase(symbol, encodedChar));
-            keywordCount = result.charAt(result.length() - 1) == symbol ? keywordCount : keywordCount + 1;
-            keywordCount = keywordCount < SHIFT_KEY.length() ? keywordCount : 0;
+            result.append(codeWithCase(symbol, getIndex(keywordCount), encodeLetter));
+            keywordCount = getNextKeyIndex(keywordCount, result, symbol);
         }
         return result.toString();
     }
@@ -32,15 +31,23 @@ class VigenereCodec implements Encoder, Decoder {
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
-            char decodedChar = decodeLetter(symbol, ALPHABET.indexOf(SHIFT_KEY.charAt(keywordCount)));
-            result.append(restoreCase(symbol, decodedChar));
-            keywordCount = result.charAt(result.length() - 1) == symbol ? keywordCount : keywordCount + 1;
-            keywordCount = keywordCount < SHIFT_KEY.length() ? keywordCount : 0;
+            result.append(codeWithCase(symbol, getIndex(keywordCount), decodeLetter));
+            keywordCount = getNextKeyIndex(keywordCount, result, symbol);
         }
         return result.toString();
     }
 
-    private char encodeLetter(char input, int keywordIndex) {
+    private int getIndex(int keyIndex) {
+        return ALPHABET.indexOf(SHIFT_KEY.charAt(keyIndex));
+    }
+
+    private int getNextKeyIndex(int keywordCount, StringBuilder result, char lastChar) {
+        keywordCount = result.charAt(result.length() - 1) == lastChar ? keywordCount : keywordCount + 1;
+        keywordCount = keywordCount < SHIFT_KEY.length() ? keywordCount : 0;
+        return keywordCount;
+    }
+
+    private BiFunction<Character, Integer, Character> encodeLetter = (input, keywordIndex) -> {
         if (Character.isLetter(input)) {
             int charIndex = ALPHABET.indexOf(Character.toLowerCase(input));
             int encodedIndex = (charIndex + keywordIndex) % ALPHABET.size();
@@ -48,9 +55,9 @@ class VigenereCodec implements Encoder, Decoder {
         } else {
             return input;
         }
-    }
+    };
 
-    private char decodeLetter(char input, int keywordIndex) {
+    private BiFunction<Character, Integer, Character> decodeLetter = (input, keywordIndex) -> {
         if (Character.isLetter(input)) {
             int charIndex = ALPHABET.indexOf(Character.toLowerCase(input));
             int decodedIndex = (charIndex - keywordIndex + ALPHABET.size()) % ALPHABET.size();
@@ -58,13 +65,12 @@ class VigenereCodec implements Encoder, Decoder {
         } else {
             return input;
         }
-    }
+    };
 
-    private char restoreCase(char input, char processedChar) {
+    private char codeWithCase(char input, int key, BiFunction<Character, Integer, Character> function) {
         if (Character.isUpperCase(input)) {
-            return Character.toUpperCase(processedChar);
+            return Character.toUpperCase(function.apply(input, key));
         }
-        return processedChar;
+        return function.apply(input, key);
     }
-
 }
