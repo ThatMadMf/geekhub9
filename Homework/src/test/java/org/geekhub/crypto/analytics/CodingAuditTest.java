@@ -107,7 +107,7 @@ public class CodingAuditTest {
 
         Algorithm actualResult = codingAudit.findMostPopularCodec(CodecUsecase.ENCODING);
 
-        assertEquals(actualResult, Algorithm.CAESAR);
+        assertEquals(actualResult, Algorithm.VIGENERE);
     }
 
     @Test
@@ -116,9 +116,15 @@ public class CodingAuditTest {
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.CAESAR));
         history.addToHistory(new HistoryRecord(Operation.DECODE, "word", Algorithm.CAESAR));
         history.addToHistory(new HistoryRecord(Operation.DECODE, "word", Algorithm.CAESAR));
+        history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
+        history.addToHistory(new HistoryRecord(Operation.DECODE, "geekhub", Algorithm.MORSE));
+        history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
+        history.addToHistory(new HistoryRecord(Operation.DECODE, "geekhub", Algorithm.MORSE));
+        history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
+        history.addToHistory(new HistoryRecord(Operation.DECODE, "geekhub", Algorithm.MORSE));
 
         Algorithm actualResult = codingAudit.findMostPopularCodec(CodecUsecase.DECODING);
 
-        assertEquals(actualResult, Algorithm.CAESAR);
+        assertEquals(actualResult, Algorithm.MORSE);
     }
 }
