@@ -92,12 +92,13 @@ class MorseCodec implements Encoder, Decoder {
         nullCheck(input);
         checkCaseOfInput(input);
         StringBuilder result = new StringBuilder();
+        String[] words = input.split("\\s+");
 
-        Arrays.stream(input.split("\\s+")).forEach(word -> {
+        for(String word : words) {
             result.append(performOperation(word, MorseCodec::encodeWord));
             result.append(CHAR_MAP.get(' '));
             result.append('/');
-        });
+        }
         return trimIfNotEmpty(result).toString();
     }
 
@@ -128,7 +129,7 @@ class MorseCodec implements Encoder, Decoder {
 
     private void nullCheck(String input) {
         if (input == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Input should not be null");
         }
     }
 

@@ -17,8 +17,7 @@ class CaesarCodec implements Encoder, Decoder {
 
         input.chars().forEachOrdered(c -> {
             if (Character.isLetter(c)) {
-                result.append(codeWithCase((char) c, symbol ->
-                        ALPHABET.get((getIndex(symbol) + SHIFT_KEY) % ALPHABET.size())));
+                result.append(codeWithCase((char) c, CaesarCodec::encodeLetter));
             } else {
                 result.append((char) c);
             }
@@ -43,7 +42,7 @@ class CaesarCodec implements Encoder, Decoder {
 
     private void nullCheck(String input) {
         if (input == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Input should not be null");
         }
     }
 
@@ -54,12 +53,13 @@ class CaesarCodec implements Encoder, Decoder {
         return function.apply(input);
     }
 
+    private static char encodeLetter(char input) {
+        int encodedChar = ALPHABET.indexOf(Character.toLowerCase(input)) + SHIFT_KEY;
+        return ALPHABET.get(encodedChar < ALPHABET.size() ? encodedChar : encodedChar - ALPHABET.size());
+    }
+
     private static char decodeLetter(char input) {
         int decodedChar = ALPHABET.indexOf(Character.toLowerCase(input)) - SHIFT_KEY;
         return ALPHABET.get(decodedChar >= 0 ? decodedChar : decodedChar + ALPHABET.size());
-    }
-
-    private int getIndex(char c) {
-        return ALPHABET.indexOf(Character.toLowerCase(c));
     }
 }

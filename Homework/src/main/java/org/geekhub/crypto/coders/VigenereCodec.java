@@ -26,7 +26,7 @@ class VigenereCodec implements Encoder, Decoder {
     @Override
     public String decode(String input) {
         if (input == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Input should not be null");
         }
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
