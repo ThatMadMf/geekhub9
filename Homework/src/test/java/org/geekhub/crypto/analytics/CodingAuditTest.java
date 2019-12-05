@@ -107,7 +107,7 @@ public class CodingAuditTest {
 
         Algorithm actualResult = codingAudit.findMostPopularCodec(CodecUsecase.ENCODING);
 
-        assertEquals(actualResult, Algorithm.VIGENERE);
+        assertEquals(actualResult, Algorithm.CAESAR);
     }
 
     @Test
