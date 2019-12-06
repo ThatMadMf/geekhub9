@@ -15,13 +15,13 @@ class CaesarCodec implements Encoder, Decoder {
         nullCheck(input);
         StringBuilder result = new StringBuilder();
 
-        input.chars().forEachOrdered(c -> {
+        for(char c : input.toCharArray()) {
             if (Character.isLetter(c)) {
-                result.append(codeWithCase((char) c, CaesarCodec::encodeLetter));
+                result.append(codeWithCase(c, CaesarCodec::encodeLetter));
             } else {
-                result.append((char) c);
+                result.append(c);
             }
-        });
+        }
         return result.toString();
     }
 
@@ -30,13 +30,13 @@ class CaesarCodec implements Encoder, Decoder {
         nullCheck(input);
         StringBuilder result = new StringBuilder();
 
-        input.chars().forEachOrdered(c -> {
+        for(char c : input.toCharArray()) {
             if (Character.isLetter(c)) {
-                result.append(codeWithCase((char) c, CaesarCodec::decodeLetter));
+                result.append(codeWithCase(c, CaesarCodec::decodeLetter));
             } else {
-                result.append((char) c);
+                result.append(c);
             }
-        });
+        }
         return result.toString();
     }
 

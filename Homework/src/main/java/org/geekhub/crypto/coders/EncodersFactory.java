@@ -22,6 +22,8 @@ public class EncodersFactory {
                 return new Vigenere2xComposition();
             case VIGENERE_OVER_CAESAR:
                 return new VigenereOverCaesar();
+            case UKRAINIAN_ENGLISH:
+                return new UkrainianEnglish();
             default:
                 throw new IllegalArgumentException("Invalid encoder");
         }
