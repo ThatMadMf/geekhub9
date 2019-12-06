@@ -1,5 +1,7 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.util.CodecUnsupportedException;
+
 public class EncodersFactory {
 
     public static Encoder getEncoder(String name) {
@@ -25,7 +27,7 @@ public class EncodersFactory {
             case UKRAINIAN_ENGLISH:
                 return new UkrainianEnglish();
             default:
-                throw new IllegalArgumentException("Invalid encoder");
+                throw new CodecUnsupportedException("Unsupported encoder[" + name + "]");
         }
     }
 }

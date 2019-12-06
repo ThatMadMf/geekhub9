@@ -4,6 +4,7 @@ import org.geekhub.crypto.history.HistoryConsolePrinter;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
 
@@ -26,8 +27,7 @@ class HistoryMenu {
                 history.addToHistory(new HistoryRecord(Operation.CLEAR_HISTORY, null, null));
                 break;
             default:
-                System.out.println("Invalid input.");
-                break;
+                throw new OperationUnsupportedException("Operation is not supported");
         }
     }
 }

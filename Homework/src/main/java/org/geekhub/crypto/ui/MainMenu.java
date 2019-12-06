@@ -5,6 +5,8 @@ import org.geekhub.crypto.history.Operation;
 
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
 
@@ -20,7 +22,11 @@ public class MainMenu {
 
     public void run() {
         while (true) {
-            displayMenu();
+            try {
+                displayMenu();
+            } catch (OperationUnsupportedException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -40,7 +46,11 @@ public class MainMenu {
 
                 System.out.println("Decoded:");
                 Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
-                System.out.println(decoder.decode(textToDecode));
+                try {
+                    System.out.println(decoder.decode(textToDecode));
+                } catch (IllegalArgumentException | IllegalCharacterException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "2":
                 String encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
@@ -52,7 +62,11 @@ public class MainMenu {
 
                 System.out.println("Encoded:");
                 Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
-                System.out.println(encoder.encode(textToEncode));
+                try {
+                    System.out.println(encoder.encode(textToEncode));
+                } catch (IllegalArgumentException | IllegalCharacterException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "3":
                 AnalyticsMenu.displayMenu(scanner, history);
@@ -65,8 +79,7 @@ public class MainMenu {
                 System.exit(0);
                 break;
             default:
-                System.out.println("Invalid input. Try again.");
-                break;
+                throw new OperationUnsupportedException("Operation is not supported");
         }
     }
 

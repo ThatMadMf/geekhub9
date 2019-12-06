@@ -1,10 +1,10 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.util.IllegalCharacterException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class MorseCodecTest {
     private Encoder encoder;
@@ -25,16 +25,14 @@ public class MorseCodecTest {
         encoder.encode(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
+    @Test(expectedExceptions = IllegalCharacterException.class, groups = "encode")
     void When_InputNotInSingleCase_Expect_EncodeFail() {
         encoder.encode("WOrd");
     }
 
-    @Test(groups = "encode")
+    @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
     void When_EncodeEmptyWord_Expect_Success() {
-        String encodedWord = encoder.encode("");
-
-        assertTrue(encodedWord.isEmpty());
+        encoder.encode("");
     }
 
     @Test(groups = "encode")
@@ -56,11 +54,9 @@ public class MorseCodecTest {
         decoder.decode(null);
     }
 
-    @Test(groups = "decode")
+    @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
     void When_DecodeEmptyWord_Expect_Success() {
-        String decodedWord = decoder.decode("");
-
-        assertTrue(decodedWord.isEmpty());
+        decoder.decode("");
     }
 
     @Test(groups = "decode")

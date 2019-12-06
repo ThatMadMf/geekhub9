@@ -16,7 +16,7 @@ class UkrainianEnglish implements Encoder, Decoder {
         }
         try {
             return Arrays.stream(input.split(WHITE_SPACE))
-                    .map(w -> DICTIONARY.getEnglish(w))
+                    .map(DICTIONARY::getEnglish)
                     .collect(Collectors.joining(WHITE_SPACE));
         } catch (IllegalCharacterException e) {
             return e.getMessage();
@@ -30,7 +30,7 @@ class UkrainianEnglish implements Encoder, Decoder {
         }
         try {
             return Arrays.stream(input.split(WHITE_SPACE))
-                    .map(w -> DICTIONARY.getUkrainian(w))
+                    .map(DICTIONARY::getUkrainian)
                     .collect(Collectors.joining(WHITE_SPACE));
         } catch (IllegalCharacterException e) {
             return e.getMessage();

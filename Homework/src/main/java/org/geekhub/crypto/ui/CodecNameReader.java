@@ -1,6 +1,7 @@
 package org.geekhub.crypto.ui;
 
 import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
 
@@ -17,8 +18,7 @@ class CodecNameReader {
         if (Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= Algorithm.values().length) {
             return Algorithm.values()[Integer.parseInt(input) - 1].toString();
         } else {
-            System.out.println("Invalid input");
-            throw new IllegalArgumentException();
+            throw new OperationUnsupportedException("Operation is not supported");
         }
 
     }

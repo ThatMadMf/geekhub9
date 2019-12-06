@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders;
 
-import java.util.Arrays;
+import org.geekhub.crypto.util.IllegalCharacterException;
+
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
@@ -89,68 +90,54 @@ class MorseCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        nullCheck(input);
+        inputCheck(input);
         checkCaseOfInput(input);
         StringBuilder result = new StringBuilder();
         String[] words = input.split("\\s+");
 
-        for(String word : words) {
+        for (String word : words) {
             result.append(performOperation(word, MorseCodec::encodeWord));
             result.append(CHAR_MAP.get(' '));
             result.append('/');
         }
-        return trimIfNotEmpty(result).toString();
+        return result.toString().substring(0, result.length() - 8);
     }
 
     @Override
     public String decode(String input) {
-        nullCheck(input);
-        if (input.isEmpty()) {
-            return "";
-        }
+        inputCheck(input);
         String result = performOperation(input, MorseCodec::decodeWord);
         return result.toLowerCase();
     }
 
     private void checkCaseOfInput(String input) {
-        boolean hasUpperCase = false;
-        boolean hasLowerCase = false;
         for (char c : input.toCharArray()) {
             if (Character.isUpperCase(c)) {
-                hasUpperCase = true;
-            } else if (Character.isLowerCase(c)) {
-                hasLowerCase = true;
-            }
-            if (hasLowerCase && hasUpperCase) {
-                throw new IllegalArgumentException("Text has to be in single case");
+                throw new IllegalCharacterException("Text should be in lower case");
             }
         }
     }
 
-    private void nullCheck(String input) {
-        if (input == null) {
-            throw new IllegalArgumentException("Input should not be null");
+    private void inputCheck(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("Input should not be blank");
         }
-    }
-
-    private StringBuilder trimIfNotEmpty(StringBuilder input) {
-        if (input.length() > 0) {
-            input.setLength(input.length() - 8);
-        }
-        return input;
     }
 
     private static String encodeWord(String input) {
         StringBuilder result = new StringBuilder();
-        input.chars().forEachOrdered(c -> result.append(CHAR_MAP.get((char) c)).append('/'));
-
+        for (char c : input.toCharArray()) {
+            result.append(CHAR_MAP.get(c));
+            result.append("/");
+        }
         return result.toString();
     }
 
     private static String decodeWord(String input) {
         StringBuilder result = new StringBuilder();
-        Arrays.stream(input.split("/")).forEach(w -> result.append(CODE_MAP.get(w)));
-
+        for (String str : input.split("/")) {
+            result.append(CODE_MAP.get(str));
+        }
         return result.toString();
     }
 

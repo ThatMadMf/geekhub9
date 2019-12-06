@@ -3,6 +3,7 @@ package org.geekhub.crypto.analytics;
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.util.EmptyHistoryException;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -48,6 +49,6 @@ public class CodingAudit {
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
-                .orElse(null);
+                .orElseThrow(() -> new EmptyHistoryException("History is empty"));
     }
 }

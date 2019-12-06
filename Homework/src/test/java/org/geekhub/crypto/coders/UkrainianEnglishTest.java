@@ -62,7 +62,7 @@ public class UkrainianEnglishTest {
 
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
     void When_InputDecodeIsBlank_Expect_Exception() {
-        String decoded = decoder.decode("");
+        decoder.decode("");
     }
 
     @Test(groups = "decode")

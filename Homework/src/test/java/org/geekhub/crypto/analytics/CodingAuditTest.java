@@ -4,6 +4,7 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.util.EmptyHistoryException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -11,7 +12,8 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import static java.util.Map.entry;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class CodingAuditTest {
 
@@ -92,16 +94,14 @@ public class CodingAuditTest {
         assertEquals(actualResult, expectedResult);
     }
 
-    @Test
-    void When_CodingHistoryEmpty_Expect_Null() {
-        Algorithm actualResult = codingAudit.findMostPopularCodec(CodecUsecase.ENCODING);
-
-        assertNull(actualResult);
+    @Test(expectedExceptions = EmptyHistoryException.class)
+    void When_CodingHistoryEmpty_Expect_Exception() {
+        codingAudit.findMostPopularCodec(CodecUsecase.ENCODING);
     }
 
     @Test
     void When_CodingHistoryContainsOneCodecUsecase_Expect_Success() {
-        history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.VIGENERE));
+        history.addToHistory(new HistoryRecord(Operation.DECODE, "word", Algorithm.VIGENERE));
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.CAESAR));
 
 

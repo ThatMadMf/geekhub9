@@ -6,6 +6,8 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.util.EmptyHistoryException;
+import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
 
@@ -30,19 +32,21 @@ class AnalyticsMenu {
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             case "3":
-                Algorithm encodeCodec = audit.findMostPopularCodec(CodecUsecase.ENCODING);
-                System.out.println("Encoding:");
-                System.out.println(encodeCodec == null ? "Empty" : encodeCodec.name());
+                try {
+                    Algorithm encodeCodec = audit.findMostPopularCodec(CodecUsecase.ENCODING);
+                    System.out.println("Encoding:");
+                    System.out.println(encodeCodec.name());
 
-                Algorithm decodeCodec = audit.findMostPopularCodec(CodecUsecase.DECODING);
-                System.out.println("Decoding:");
-                System.out.println(decodeCodec == null ? "Empty" : decodeCodec.name());
-
+                    Algorithm decodeCodec = audit.findMostPopularCodec(CodecUsecase.DECODING);
+                    System.out.println("Decoding:");
+                    System.out.println(decodeCodec.name());
+                } catch (EmptyHistoryException e) {
+                    System.out.println(e.getMessage());
+                }
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             default:
-                System.out.println("Invalid input.");
-                break;
+                throw new OperationUnsupportedException("Invalid input.");
         }
     }
 
