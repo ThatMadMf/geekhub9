@@ -127,7 +127,7 @@ class MorseCodec implements Encoder, Decoder {
     private static String encodeWord(String input) {
         StringBuilder result = new StringBuilder();
         for (char c : input.toCharArray()) {
-            result.append(CHAR_MAP.get(c));
+            result.append(tryGetCode(c));
             result.append("/");
         }
         return result.toString();
@@ -136,9 +136,26 @@ class MorseCodec implements Encoder, Decoder {
     private static String decodeWord(String input) {
         StringBuilder result = new StringBuilder();
         for (String str : input.split("/")) {
-            result.append(CODE_MAP.get(str));
+            result.append(tryGetChar(str));
         }
         return result.toString();
+    }
+
+    private static String tryGetCode(char c) {
+        String code = CHAR_MAP.get(c);
+        if(code == null) {
+            throw new IllegalCharacterException("Character[" + c + "] is not supported");
+        }
+        return code;
+    }
+
+    private static char tryGetChar(String code) {
+        try {
+            char c = CODE_MAP.get(code);
+            return c;
+        } catch (NullPointerException e) {
+            throw new IllegalCharacterException("Cannot decode[" + code + "]");
+        }
     }
 
     private String performOperation(String text, UnaryOperator<String> function) {

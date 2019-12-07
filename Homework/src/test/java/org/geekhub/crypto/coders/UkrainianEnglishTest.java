@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.util.IllegalCharacterException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -29,10 +30,9 @@ public class UkrainianEnglishTest {
         encoder.encode("");
     }
 
-    @Test(groups = "encode")
+    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
     void When_EncodeNotSupportedWord_Expect_Exception() {
-        String encoded = encoder.encode("непідтримуємеслово");
-        assertEquals("Unsupported word[непідтримуємеслово]", encoded);
+        encoder.encode("непідтримуємеслово");
     }
 
     @Test(groups = "encode")
@@ -54,10 +54,9 @@ public class UkrainianEnglishTest {
         decoder.decode(null);
     }
 
-    @Test(groups = "decode")
+    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
     void When_DecodeNotSupportedWord_Expect_Exception() {
-        String decoded = decoder.decode("notsupportedword");
-        assertEquals("Unsupported word[notsupportedword]", decoded);
+        decoder.decode("notsupportedword");
     }
 
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
