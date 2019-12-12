@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.util.IllegalCharacterException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -10,13 +11,13 @@ public class MorseCodecTest {
     private Decoder decoder;
 
     @BeforeGroups(groups = "encode")
-    void initialiseEncode() {
-        encoder = EncodersFactory.getEncoder("MORSE");
+    public void initialiseEncode() {
+        encoder = new MorseCodec();
     }
 
     @BeforeGroups(groups = "decode")
-    void initialiseDecode() {
-        decoder = DecodersFactory.getDecoder("MORSE");
+    public void initialiseDecode() {
+        decoder = new MorseCodec();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
@@ -32,6 +33,11 @@ public class MorseCodecTest {
     @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
     void When_EncodeEmptyWord_Expect_Success() {
         encoder.encode("");
+    }
+
+    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
+    void When_EncodeNotSupportedCharacter_Expect_Exception() {
+        encoder.encode("*un_supported%");
     }
 
     @Test(groups = "encode")
@@ -56,6 +62,11 @@ public class MorseCodecTest {
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
     void When_DecodeEmptyWord_Expect_Success() {
         decoder.decode("");
+    }
+
+    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
+    void When_DecodeNotSupportedCharacter_Expect_Exception() {
+        decoder.decode("*un_supported%");
     }
 
     @Test(groups = "decode")

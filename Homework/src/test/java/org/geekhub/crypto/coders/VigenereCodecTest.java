@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.util.IllegalCharacterException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -10,13 +11,13 @@ public class VigenereCodecTest {
     private Decoder decoder;
 
     @BeforeGroups(groups = "encode")
-    void initialiseEncode() {
-        encoder = EncodersFactory.getEncoder("VIGENERE");
+    public void initialiseEncode() {
+        encoder = new VigenereCodec();
     }
 
     @BeforeGroups(groups = "decode")
-    void initialiseDecode() {
-        decoder = DecodersFactory.getDecoder("VIGENERE");
+    public void initialiseDecode() {
+        decoder = new VigenereCodec();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
@@ -27,6 +28,11 @@ public class VigenereCodecTest {
     @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
     void When_EncodeEmptyWord_Expect_Success() {
         encoder.encode("");
+    }
+
+    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
+    void When_EncodeNotSupportedCharacter_Expect_Exception() {
+        encoder.encode("*un_supported%");
     }
 
     @Test(groups = "encode")
@@ -51,6 +57,11 @@ public class VigenereCodecTest {
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
     void When_DecodeEmptyWord_Expect_Exception() {
         decoder.decode("");
+    }
+
+    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
+    void When_DecodeNotSupportedCharacter_Expect_Exception() {
+        decoder.decode("*un_supported%");
     }
 
     @Test(groups = "decode")

@@ -5,17 +5,17 @@ import org.testng.annotations.Test;
 public class DecodersFactoryTest {
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    void When_InputIsNull_ThrowingException() {
+    void When_InputIsNull_Expect_Exception() {
         DecodersFactory.getDecoder(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    void When_InputIsEmpty_ThrowingException() {
+    void When_InputIsEmpty_Expect_Exception() {
         DecodersFactory.getDecoder("");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    void When_InputIsNotExistingElement_ThrowingException() {
+    void When_InputIsNotExistingElement_Expect_Exception() {
         DecodersFactory.getDecoder("NotExistingAlgorithm");
     }
 

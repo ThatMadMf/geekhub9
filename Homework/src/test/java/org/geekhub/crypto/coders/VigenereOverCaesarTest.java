@@ -10,13 +10,13 @@ public class VigenereOverCaesarTest {
     private Decoder decoder;
 
     @BeforeGroups(groups = "encode")
-    void initialiseEncode() {
-        encoder = EncodersFactory.getEncoder("VIGENERE_OVER_CAESAR");
+    public void initialiseEncode() {
+        encoder = new VigenereOverCaesar();
     }
 
     @BeforeGroups(groups = "decode")
     void initialiseDecode() {
-        decoder = DecodersFactory.getDecoder("VIGENERE_OVER_CAESAR");
+        decoder = new VigenereOverCaesar();
     }
 
     @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)

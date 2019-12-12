@@ -10,13 +10,13 @@ public class Vigenere2xCompositionTest {
     private Decoder decoder;
 
     @BeforeGroups(groups = "encode")
-    void initialiseEncode() {
-        encoder = EncodersFactory.getEncoder("VIGENERE_2X_COMPOSITION");
+    public void initialiseEncode() {
+        encoder = new Vigenere2xComposition();
     }
 
     @BeforeGroups(groups = "decode")
-    void initialiseDecode() {
-        decoder = DecodersFactory.getDecoder("VIGENERE_2X_COMPOSITION");
+    public void initialiseDecode() {
+        decoder = new Vigenere2xComposition();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")

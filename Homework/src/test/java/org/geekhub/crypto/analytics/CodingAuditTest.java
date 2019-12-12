@@ -21,7 +21,7 @@ public class CodingAuditTest {
     private CodingHistory history;
 
     @BeforeMethod
-    void initialise() {
+    public void initialise() {
         codingAudit = new CodingAudit(new CodingHistory());
         history = codingAudit.getCodingHistory();
     }

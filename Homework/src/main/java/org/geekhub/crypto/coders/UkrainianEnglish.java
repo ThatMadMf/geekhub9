@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
-    private static final String WHITE_SPACE = " ";
     private static final String splitRegex = "[,.!?:]?\\s";
     private int currentMark = 0;
 
@@ -15,7 +14,6 @@ class UkrainianEnglish implements Encoder, Decoder {
     public String encode(String input) {
         inputCheck(input);
         String[] dividers = getPunctuationMarks(input);
-        String[] words = getWords(input);
         return Arrays.stream(getWords(input))
                 .map(DICTIONARY::getEnglish)
                 .collect(Collectors.joining(getCurrentMark(dividers)));
@@ -49,7 +47,7 @@ class UkrainianEnglish implements Encoder, Decoder {
     }
 
     private String getCurrentMark(String[] dividers) {
-        if(dividers.length == 0) {
+        if (dividers.length == 0) {
             return "";
         }
         return dividers[currentMark++];

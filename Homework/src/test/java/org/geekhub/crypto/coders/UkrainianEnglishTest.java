@@ -11,13 +11,13 @@ public class UkrainianEnglishTest {
     private Decoder decoder;
 
     @BeforeGroups(groups = "encode")
-    void initialiseEncode() {
-        encoder = EncodersFactory.getEncoder("UKRAINIAN_ENGLISH");
+    public void initialiseEncode() {
+        encoder = new UkrainianEnglish();
     }
 
     @BeforeGroups(groups = "decode")
-    void initialiseDecode() {
-        decoder = DecodersFactory.getDecoder("UKRAINIAN_ENGLISH");
+    public void initialiseDecode() {
+        decoder = new UkrainianEnglish();
     }
 
     @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)

@@ -4,43 +4,33 @@ import org.geekhub.crypto.util.IllegalCharacterException;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 class CaesarCodec implements Encoder, Decoder {
 
     private static final int SHIFT_KEY = 15;
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
-    private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-');
+    private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
 
 
     @Override
     public String encode(String input) {
         inputCheck(input);
-        StringBuilder result = new StringBuilder();
 
-        for (char c : input.toCharArray()) {
-            if (Character.isLetter(c)) {
-                result.append(codeWithCase(c, CaesarCodec::encodeLetter));
-            } else {
-                result.append(c);
-            }
-        }
-        return result.toString();
+        return input.chars()
+                .map(c -> codeWithCase((char)c, CaesarCodec::encodeLetter))
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
     @Override
     public String decode(String input) {
         inputCheck(input);
-        StringBuilder result = new StringBuilder();
 
-        for (char c : input.toCharArray()) {
-            if (Character.isLetter(c)) {
-                result.append(codeWithCase(c, CaesarCodec::decodeLetter));
-            } else {
-                result.append(c);
-            }
-        }
-        return result.toString();
+        return input.chars()
+                .map(c -> codeWithCase((char)c, CaesarCodec::decodeLetter))
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
     private void inputCheck(String input) {
