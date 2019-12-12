@@ -41,7 +41,7 @@ class AnalyticsMenu {
                     System.out.println("Decoding:");
                     System.out.println(decodeCodec.name());
                 } catch (EmptyHistoryException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Cannot perform operation. History is empty");
                 }
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;

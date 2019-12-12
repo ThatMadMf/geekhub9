@@ -113,14 +113,14 @@ class MorseCodec implements Encoder, Decoder {
     private void checkCaseOfInput(String input) {
         for (char c : input.toCharArray()) {
             if (Character.isUpperCase(c)) {
-                throw new IllegalCharacterException("Text should be in lower case");
+                throw new IllegalArgumentException("Text should be in lower case");
             }
         }
     }
 
     private void inputCheck(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("Input should not be blank");
+            throw new IllegalArgumentException("Input have to contain text");
         }
     }
 
@@ -143,8 +143,8 @@ class MorseCodec implements Encoder, Decoder {
 
     private static String tryGetCode(char c) {
         String code = CHAR_MAP.get(c);
-        if(code == null) {
-            throw new IllegalCharacterException("Character[" + c + "] is not supported");
+        if (code == null) {
+            throw new IllegalCharacterException("Unsupported character: " + c);
         }
         return code;
     }
@@ -154,7 +154,7 @@ class MorseCodec implements Encoder, Decoder {
             char c = CODE_MAP.get(code);
             return c;
         } catch (NullPointerException e) {
-            throw new IllegalCharacterException("Cannot decode[" + code + "]");
+            throw new IllegalCharacterException("Unsupported character: " + code);
         }
     }
 

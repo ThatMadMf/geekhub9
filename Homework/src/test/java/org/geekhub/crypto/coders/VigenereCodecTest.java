@@ -4,7 +4,6 @@ import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class VigenereCodecTest {
     private Encoder encoder;
@@ -25,11 +24,9 @@ public class VigenereCodecTest {
         encoder.encode(null);
     }
 
-    @Test(groups = "encode")
+    @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
     void When_EncodeEmptyWord_Expect_Success() {
-        String encodedWord = encoder.encode("");
-
-        assertTrue(encodedWord.isEmpty());
+        encoder.encode("");
     }
 
     @Test(groups = "encode")
@@ -51,11 +48,9 @@ public class VigenereCodecTest {
         decoder.decode(null);
     }
 
-    @Test(groups = "decode")
-    void When_DecodeEmptyWord_Expect_Success() {
-        String decodedWord = decoder.decode("");
-
-        assertTrue(decodedWord.isEmpty());
+    @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
+    void When_DecodeEmptyWord_Expect_Exception() {
+        decoder.decode("");
     }
 
     @Test(groups = "decode")

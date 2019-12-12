@@ -1,6 +1,5 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.IllegalCharacterException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -25,7 +24,7 @@ public class MorseCodecTest {
         encoder.encode(null);
     }
 
-    @Test(expectedExceptions = IllegalCharacterException.class, groups = "encode")
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
     void When_InputNotInSingleCase_Expect_EncodeFail() {
         encoder.encode("WOrd");
     }

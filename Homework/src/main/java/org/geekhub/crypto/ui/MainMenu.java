@@ -49,7 +49,7 @@ public class MainMenu {
                 try {
                     System.out.println(decoder.decode(textToDecode));
                 } catch (IllegalArgumentException | IllegalCharacterException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Invalid input, try again");
                 }
                 break;
             case "2":
@@ -65,7 +65,7 @@ public class MainMenu {
                 try {
                     System.out.println(encoder.encode(textToEncode));
                 } catch (IllegalArgumentException | IllegalCharacterException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Invalid input, try again");
                 }
                 break;
             case "3":

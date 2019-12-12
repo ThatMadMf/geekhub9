@@ -4,7 +4,6 @@ import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class CaesarCodecTest {
     private Encoder encoder;
@@ -25,11 +24,9 @@ public class CaesarCodecTest {
         encoder.encode(null);
     }
 
-    @Test(groups = "encode")
-    void When_EncodeEmptyWord_Expect_Success() {
-        String encodedWord = encoder.encode("");
-
-        assertTrue(encodedWord.isEmpty());
+    @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
+    void When_EncodeEmptyWord_Expect_Exception() {
+        encoder.encode("");
     }
 
     @Test(groups = "encode")
@@ -51,11 +48,9 @@ public class CaesarCodecTest {
         decoder.decode(null);
     }
 
-    @Test(groups = "decode")
-    void When_DecodeEmptyWord_Expect_Success() {
-        String decodedWord = decoder.decode("");
-
-        assertTrue(decodedWord.isEmpty());
+    @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
+    void When_DecodeEmptyWord_Expect_Exception() {
+        decoder.decode("");
     }
 
     @Test(groups = "decode")

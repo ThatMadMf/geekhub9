@@ -1020,17 +1020,17 @@ public class Dictionary {
 
     public String getUkrainian(String input) {
         String translated = ENGLISH_UKRAINIAN.get(input);
-        if(translated == null) {
-            throw new IllegalCharacterException("Unsupported word[" + input + "]");
+        if (translated == null) {
+            throw new IllegalCharacterException("Word is absent in dictionary: " + input);
         }
         return translated;
     }
 
     public String getEnglish(String input) {
         String translated = UKRAINIAN_ENGLISH.get(input);
-        if(translated == null) {
-            throw new IllegalCharacterException("Unsupported word[" + input + "]");
+        if (translated == null) {
+            throw new IllegalCharacterException("Word is absent in dictionary: " + input);
         }
-        return UKRAINIAN_ENGLISH.get(input);
+        return translated;
     }
 }

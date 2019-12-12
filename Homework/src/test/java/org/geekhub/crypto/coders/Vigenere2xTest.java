@@ -24,8 +24,8 @@ public class Vigenere2xTest {
         encoder.encode(null);
     }
 
-    @Test(groups = "encode")
-    void When_EncodeEmptyWord_Expect_Success() {
+    @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
+    void When_EncodeEmptyWord_Expect_Exception() {
         String encodedWord = encoder.encode("");
 
         assertTrue(encodedWord.isEmpty());
@@ -50,11 +50,9 @@ public class Vigenere2xTest {
         decoder.decode(null);
     }
 
-    @Test(groups = "decode")
-    void When_DecodeEmptyWord_Expect_Success() {
-        String decodedWord = decoder.decode("");
-
-        assertTrue(decodedWord.isEmpty());
+    @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
+    void When_DecodeEmptyWord_Expect_Exception() {
+        decoder.decode("");
     }
 
     @Test(groups = "decode")
