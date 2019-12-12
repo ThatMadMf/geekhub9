@@ -1,17 +1,21 @@
 package org.geekhub.crypto.history;
 
+import org.geekhub.crypto.util.ConsoleLogger;
+import org.geekhub.crypto.util.Logger;
+
 import java.util.List;
 
 public class HistoryConsolePrinter implements HistoryPrinter {
 
     @Override
     public void print(List<HistoryRecord> history) {
+        Logger consoleLogger = new ConsoleLogger();
         if (history.isEmpty()) {
-            System.out.println("History is empty");
+            consoleLogger.log("History is empty");
             return;
         }
         for (HistoryRecord record : history) {
-            System.out.println(record);
+            consoleLogger.log(record.toString());
         }
     }
 }

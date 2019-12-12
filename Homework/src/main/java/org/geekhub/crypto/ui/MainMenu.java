@@ -5,7 +5,9 @@ import org.geekhub.crypto.history.Operation;
 
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.util.ConsoleLogger;
 import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.util.Logger;
 import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
@@ -14,10 +16,12 @@ public class MainMenu {
 
     private final Scanner scanner;
     private final CodingHistory history;
+    private final Logger consoleLogger;
 
     public MainMenu() {
         scanner = new Scanner(System.in);
         history = new CodingHistory();
+        consoleLogger = new ConsoleLogger();
     }
 
     public void run() {
@@ -25,47 +29,47 @@ public class MainMenu {
             try {
                 displayMenu();
             } catch (OperationUnsupportedException e) {
-                System.out.println(e.getMessage());
+                consoleLogger.warn("Operation is not supported");
             }
         }
     }
 
     private void displayMenu() {
-        System.out.println("Select operation");
-        System.out.println("1. Decode \n2. Encode \n3. Analytics \n4. History\n5. Exit");
+        consoleLogger.log("Select operation");
+        consoleLogger.log("1. Decode \n2. Encode \n3. Analytics \n4. History\n5. Exit");
 
         String input = scanner.nextLine();
         switch (input) {
             case "1":
                 String decoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
-                System.out.println("Enter text to decode:");
+                consoleLogger.log("Enter text to decode:");
                 String textToDecode = scanner.nextLine();
                 history.addToHistory(
                         new HistoryRecord(Operation.DECODE, textToDecode, Algorithm.valueOf(decoderAlgorithm))
                 );
 
-                System.out.println("Decoded:");
+                consoleLogger.log("Decoded:");
                 Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
                 try {
-                    System.out.println(decoder.decode(textToDecode));
+                    consoleLogger.log(decoder.decode(textToDecode));
                 } catch (IllegalArgumentException | IllegalCharacterException e) {
-                    System.out.println("Invalid input, try again");
+                    consoleLogger.warn("Invalid input, try again");
                 }
                 break;
             case "2":
                 String encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
-                System.out.println("Enter text to encode:");
+                consoleLogger.log("Enter text to encode:");
                 String textToEncode = scanner.nextLine();
                 history.addToHistory(
                         new HistoryRecord(Operation.ENCODE, textToEncode, Algorithm.valueOf(encoderAlgorithm))
                 );
 
-                System.out.println("Encoded:");
+                consoleLogger.log("Encoded:");
                 Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
                 try {
-                    System.out.println(encoder.encode(textToEncode));
+                    consoleLogger.log(encoder.encode(textToEncode));
                 } catch (IllegalArgumentException | IllegalCharacterException e) {
-                    System.out.println("Invalid input, try again");
+                    consoleLogger.warn("Invalid input, try again");
                 }
                 break;
             case "3":

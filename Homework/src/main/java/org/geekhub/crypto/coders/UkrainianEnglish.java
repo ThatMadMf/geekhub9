@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
-    private static final String splitRegex = "[,.!?:]?\\s";
+    private static final String SPLIT_REGEX = "[,.!?:]?\\s";
     private int currentMark = 0;
 
     @Override
@@ -35,11 +35,11 @@ class UkrainianEnglish implements Encoder, Decoder {
     }
 
     private String[] getWords(String input) {
-        return input.split(splitRegex);
+        return input.split(SPLIT_REGEX);
     }
 
     private String[] getPunctuationMarks(String input) {
-        return Pattern.compile(splitRegex)
+        return Pattern.compile(SPLIT_REGEX)
                 .matcher(input)
                 .results()
                 .map(MatchResult::group)

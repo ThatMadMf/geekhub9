@@ -4,8 +4,6 @@ import org.geekhub.crypto.util.IllegalCharacterException;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 class CaesarCodec implements Encoder, Decoder {
 
@@ -20,7 +18,7 @@ class CaesarCodec implements Encoder, Decoder {
         inputCheck(input);
 
         return input.chars()
-                .map(c -> codeWithCase((char)c, CaesarCodec::encodeLetter))
+                .map(c -> codeWithCase((char) c, CaesarCodec::encodeLetter))
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
@@ -29,7 +27,7 @@ class CaesarCodec implements Encoder, Decoder {
         inputCheck(input);
 
         return input.chars()
-                .map(c -> codeWithCase((char)c, CaesarCodec::decodeLetter))
+                .map(c -> codeWithCase((char) c, CaesarCodec::decodeLetter))
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 

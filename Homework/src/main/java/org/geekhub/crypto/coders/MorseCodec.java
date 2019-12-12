@@ -151,8 +151,7 @@ class MorseCodec implements Encoder, Decoder {
 
     private static char tryGetChar(String code) {
         try {
-            char c = CODE_MAP.get(code);
-            return c;
+            return CODE_MAP.get(code);
         } catch (NullPointerException e) {
             throw new IllegalCharacterException("Unsupported character: " + code);
         }

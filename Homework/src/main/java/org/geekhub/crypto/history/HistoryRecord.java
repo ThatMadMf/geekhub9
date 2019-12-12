@@ -2,11 +2,15 @@ package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.coders.Algorithm;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class HistoryRecord {
+public class HistoryRecord implements Serializable {
     private final Operation operation;
+    private final String userInput;
+    private final Algorithm codec;
+    private final LocalDate operationDate;
 
     @Override
     public boolean equals(Object o) {
@@ -24,10 +28,6 @@ public class HistoryRecord {
         return Objects.hash(operation, userInput, codec, operationDate);
     }
 
-    private final String userInput;
-    private final Algorithm codec;
-    private final LocalDate operationDate;
-
     public HistoryRecord(Operation operation, String input, Algorithm codec) {
         this.operation = operation;
         this.codec = codec;
@@ -35,7 +35,7 @@ public class HistoryRecord {
         operationDate = LocalDate.now();
     }
 
-    public HistoryRecord(Operation operation, String input, Algorithm codec, LocalDate date)  {
+    public HistoryRecord(Operation operation, String input, Algorithm codec, LocalDate date) {
         this.operation = operation;
         this.codec = codec;
         userInput = input;
