@@ -4,6 +4,26 @@ Select operation
 3. Analytics 
 4. History
 5. Exit
+Enter codec method:
+1. CAESAR
+2. MORSE
+3. VIGENERE
+4. VIGENERE_2X
+5. VIGENERE_2X_COMPOSITION
+6. VIGENERE_OVER_CAESAR
+7. UKRAINIAN_ENGLISH
+Enter text to encode:
+Encoded:
+{
+  "data": {
+    "translations": [
+      {
+        "translatedText": "Здравствуйте"
+      }
+    ]
+  }
+}
+
 Select operation
 1. Decode 
 2. Encode 

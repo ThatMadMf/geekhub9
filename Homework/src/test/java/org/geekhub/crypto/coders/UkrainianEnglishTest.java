@@ -32,7 +32,7 @@ public class UkrainianEnglishTest {
 
     @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
     void When_EncodeNotSupportedWord_Expect_Exception() {
-        encoder.encode("непідтримуємеслово");
+        encoder.encode("#@$O@#$#@$@#$");
     }
 
     @Test(groups = "encode")
@@ -56,7 +56,7 @@ public class UkrainianEnglishTest {
 
     @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
     void When_DecodeNotSupportedWord_Expect_Exception() {
-        decoder.decode("notsupportedword");
+        decoder.decode("#@$O@#$#@$@#$");
     }
 
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)

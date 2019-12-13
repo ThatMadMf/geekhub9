@@ -1,4 +1,4 @@
-﻿package org.geekhub.crypto.util;
+package org.geekhub.crypto.util;
 
 public class LogManager {
     private static final ConsoleLogger consoleLogger = new ConsoleLogger();
@@ -20,14 +20,6 @@ public class LogManager {
     public static void error(String message) {
         consoleLogger.warn(message);
         fileLogger.warn(message);
-    }
-
-    public static void warnInConsole(String message) {
-        consoleLogger.log(message);
-    }
-
-    public static void errorInConsole(String message) {
-        consoleLogger.log(message);
     }
 
     public static void close() {
