@@ -1,8 +1,7 @@
 package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
-import org.geekhub.crypto.util.ConsoleLogger;
-import org.geekhub.crypto.util.Logger;
+import org.geekhub.crypto.util.LogManager;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -54,37 +53,29 @@ public class CodingHistory {
     }
 
     private void saveHistory() {
-        Logger consoleLogger = new ConsoleLogger();
         Path path = Paths.get("Homework/history.ser").toAbsolutePath();
         try (OutputStream fileOutputStream = Files.newOutputStream(path);
-             ObjectOutputStream stream = new ObjectOutputStream(fileOutputStream);
+             ObjectOutputStream stream = new ObjectOutputStream(fileOutputStream)
         ) {
-            if (historyRecords instanceof Serializable) {
-                stream.writeObject(historyRecords);
-            } else {
-                System.out.println("Break");
-            }
+            stream.writeObject(historyRecords);
         } catch (IOException e) {
-            consoleLogger.error("Saving object failed");
+            LogManager.error("Saving object failed");
         }
     }
 
     private LinkedList<HistoryRecord> readHistory() {
-        Logger consoleLogger = new ConsoleLogger();
         Path path = Paths.get("Homework/history.ser").toAbsolutePath();
-
         try (InputStream fileInputStream = Files.newInputStream(path);
              BufferedInputStream bis = new BufferedInputStream(fileInputStream);
-             ObjectInputStream in = new ObjectInputStream(bis);
+             ObjectInputStream in = new ObjectInputStream(bis)
         ) {
-            Object object = in.readObject();
-            return (LinkedList<HistoryRecord>) object;
+            return (LinkedList<HistoryRecord>) in.readObject();
         } catch (NoSuchFileException e) {
-            consoleLogger.warn("Cannot find the file to read from");
-        } catch (ClassNotFoundException e) {
-            consoleLogger.warn("File contains invalid data");
+            LogManager.warn("Cannot find the file to read from");
+        } catch (NullPointerException | ClassNotFoundException e) {
+            LogManager.warn("File contains invalid data");
         } catch (IOException e) {
-            consoleLogger.error("Error while trying to read the file");
+            LogManager.error("Error while trying to read the file");
         }
         return null;
     }

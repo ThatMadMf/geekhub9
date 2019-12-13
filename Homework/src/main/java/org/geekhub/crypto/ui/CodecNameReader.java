@@ -1,8 +1,7 @@
 package org.geekhub.crypto.ui;
 
 import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.util.ConsoleLogger;
-import org.geekhub.crypto.util.Logger;
+import org.geekhub.crypto.util.LogManager;
 import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
@@ -10,11 +9,10 @@ import java.util.Scanner;
 class CodecNameReader {
 
     static String getCodecMethod(Scanner scanner) {
-        Logger consoleLogger = new ConsoleLogger();
         int i = 1;
-        consoleLogger.log("Enter codec method:");
+        LogManager.log("Enter codec method:");
         for (Algorithm method : Algorithm.values()) {
-            consoleLogger.log(i + ". " + method);
+            LogManager.log(i + ". " + method);
             i++;
         }
         String input = scanner.nextLine();

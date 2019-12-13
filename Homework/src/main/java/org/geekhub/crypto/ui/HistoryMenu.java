@@ -4,8 +4,7 @@ import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryConsolePrinter;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.ConsoleLogger;
-import org.geekhub.crypto.util.Logger;
+import org.geekhub.crypto.util.LogManager;
 import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
@@ -13,8 +12,7 @@ import java.util.Scanner;
 class HistoryMenu {
 
     public static void displayMenu(Scanner scanner, CodingHistory history) {
-        Logger consoleLogger = new ConsoleLogger();
-        consoleLogger.log("1 - Show History\n2 - Remove last record\n3 - Clear history");
+        LogManager.log("1 - Show History\n2 - Remove last record\n3 - Clear history");
         String input = scanner.nextLine();
 
         switch (input) {
