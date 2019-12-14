@@ -6,7 +6,8 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.*;
+import org.geekhub.crypto.util.EmptyHistoryException;
+import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;
 
@@ -31,13 +32,16 @@ class AnalyticsMenu {
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             case "3":
+                LogManager.log("Encoding:");
                 try {
                     Algorithm encodeCodec = audit.findMostPopularCodec(CodecUsecase.ENCODING);
-                    LogManager.log("Encoding:");
                     LogManager.log(encodeCodec.name());
-
+                } catch (EmptyHistoryException e) {
+                    LogManager.log("Cannot perform operation. History is empty");
+                }
+                LogManager.log("Decoding:");
+                try {
                     Algorithm decodeCodec = audit.findMostPopularCodec(CodecUsecase.DECODING);
-                    LogManager.log("Decoding:");
                     LogManager.log(decodeCodec.name());
                 } catch (EmptyHistoryException e) {
                     LogManager.log("Cannot perform operation. History is empty");

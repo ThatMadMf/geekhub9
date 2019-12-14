@@ -14,10 +14,6 @@ import java.util.stream.Collectors;
 public class CodingAudit {
     private final CodingHistory codingHistory;
 
-    public CodingHistory getCodingHistory() {
-        return codingHistory;
-    }
-
     public CodingAudit(CodingHistory codingHistory) {
         this.codingHistory = codingHistory;
     }

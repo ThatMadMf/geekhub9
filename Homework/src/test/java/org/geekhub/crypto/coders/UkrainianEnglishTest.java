@@ -49,6 +49,22 @@ public class UkrainianEnglishTest {
         assertEquals(encoded, "test word see");
     }
 
+    @Test(groups = "encode")
+    void When_EncodeWordOffline_Expect_Success() {
+        Encoder offlineEncoder = new UkrainianEnglish("notExistingKey");
+
+        String encoded = offlineEncoder.encode("тест слово побачити");
+
+        assertEquals(encoded, "test word see");
+    }
+
+    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
+    void When_EncodeUnsupportedWordOffline_Expect_Exception() {
+        Encoder offlineEncoder = new UkrainianEnglish("notExistingKey");
+
+        offlineEncoder.encode("notSupportedWord");
+    }
+
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
     void When_InputDecodeIsNull_Expect_Exception() {
         decoder.decode(null);
@@ -75,6 +91,23 @@ public class UkrainianEnglishTest {
     void When_DecodeText_Expect_Success() {
         String decoded = decoder.decode("test word see");
 
+        assertEquals(decoded, "тестове слово див");
+    }
+
+
+    @Test(groups = "decode")
+    void When_DecodeTextOffline_Expect_Success() {
+        Decoder offlineDecoder = new UkrainianEnglish("notExistingKey");
+
+        String decoded = offlineDecoder.decode("test word see");
+
         assertEquals(decoded, "тест слово побачити");
+    }
+
+    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
+    void When_DecodeUnsupportedWordOffline_Expect_Exception() {
+        Decoder offlineDecoder = new UkrainianEnglish("notExistingKey");
+
+        offlineDecoder.decode("notSupportedWord");
     }
 }

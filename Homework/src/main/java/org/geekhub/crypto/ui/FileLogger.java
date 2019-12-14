@@ -10,11 +10,10 @@ public class FileLogger implements Logger {
     private OutputStream fileOutputStream;
     private PrintStream printStream;
     private static final Logger consoleLogger = new ConsoleLogger();
-    private static final String WARNING_MESSAGE = "Error during writing to log file";
 
-    public FileLogger() {
+    public FileLogger(String home) {
         try {
-            fileOutputStream = Files.newOutputStream(Paths.get("Homework/logs.txt").toAbsolutePath());
+            fileOutputStream = Files.newOutputStream(Paths.get(home + "/logs.txt"));
             printStream = new PrintStream(fileOutputStream);
         } catch (IOException e) {
             consoleLogger.error("Cannot create console logger due to IO exception");
@@ -23,29 +22,17 @@ public class FileLogger implements Logger {
 
     @Override
     public void log(String message) {
-        try {
-            printStream.println(message);
-        } catch (Exception e) {
-            consoleLogger.warn(WARNING_MESSAGE);
-        }
+        printStream.println(message);
     }
 
     @Override
     public void warn(String message) {
-        try {
-            printStream.println(message);
-        } catch (Exception e) {
-            consoleLogger.warn(WARNING_MESSAGE);
-        }
+        printStream.println("WARNING: " + message);
     }
 
     @Override
     public void error(String message) {
-        try {
-            printStream.println(message);
-        } catch (Exception e) {
-            consoleLogger.warn(WARNING_MESSAGE);
-        }
+        printStream.println("ERROR: " + message);
     }
 
     public void closeLogger() {

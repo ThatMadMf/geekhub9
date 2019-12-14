@@ -1,11 +1,9 @@
 package org.geekhub.crypto.ui;
 
-import org.geekhub.crypto.ui.ConsoleLogger;
-import org.geekhub.crypto.ui.FileLogger;
-
 public class LogManager {
+    private static final String HOME = System.getProperty("user.home");
     private static final ConsoleLogger consoleLogger = new ConsoleLogger();
-    private static final FileLogger fileLogger = new FileLogger();
+    private static final FileLogger fileLogger = new FileLogger(HOME);
     public static final String INVALID_INPUT = "Invalid input, try again";
 
     public static void log(String message) {

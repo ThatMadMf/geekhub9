@@ -63,6 +63,7 @@ public class CodingHistory {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private LinkedList<HistoryRecord> readHistory() {
         Path path = Paths.get("Homework/history.ser").toAbsolutePath();
         try (InputStream fileInputStream = Files.newInputStream(path);

@@ -19,7 +19,15 @@ class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:]?\\s";
     private int currentMark = 0;
-    private static final String KEY = "key=AIzaSyB2HijQLlsmI1udH9ARl45oC5eAj4XfjTw";
+    private final String key;
+
+    public UkrainianEnglish(String key) {
+        this.key = key;
+    }
+
+    public UkrainianEnglish() {
+        key = "key=AIzaSyB2HijQLlsmI1udH9ARl45oC5eAj4XfjTw";
+    }
 
     @Override
     public String encode(String input) {
@@ -39,9 +47,9 @@ class UkrainianEnglish implements Encoder, Decoder {
 
         String translateOnline = decodeOnline(input);
         if (translateOnline == null) {
-            return encodeOffline(input);
-        } else {
             return decodeOffline(input);
+        } else {
+            return translateOnline;
         }
     }
 
@@ -60,12 +68,12 @@ class UkrainianEnglish implements Encoder, Decoder {
     }
 
     private String encodeOnline(String input) {
-        String query = KEY + "&source=uk" + "&target=en" + "&q=" + input.replace(" ", "%20");
+        String query = key + "&source=uk" + "&target=en" + "&q=" + input.replace(" ", "%20");
         return makeRequest(query);
     }
 
     private String decodeOnline(String input) {
-        String query = KEY + "&source=en" + "&target=uk" + "&q=" + input.replace(" ", "%20");
+        String query = key + "&source=en" + "&target=uk" + "&q=" + input.replace(" ", "%20");
         return makeRequest(query);
     }
 
@@ -82,12 +90,11 @@ class UkrainianEnglish implements Encoder, Decoder {
             TranslationModel translatedText = gson.fromJson(HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofString())
                     .body(), TranslationModel.class);
-            if (translatedText != null) {
-                return translatedText.getData().getTranslations().get(0).getTranslatedText();
-            }
+            return translatedText.getData().getTranslations().get(0).getTranslatedText();
+
         } catch (IllegalArgumentException e) {
             throw new IllegalCharacterException("Unsupported character");
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             LogManager.warn("Failed to make request");
             Thread.currentThread().interrupt();
         } catch (IOException e) {

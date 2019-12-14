@@ -22,8 +22,8 @@ public class CodingAuditTest {
 
     @BeforeMethod
     public void initialise() {
-        codingAudit = new CodingAudit(new CodingHistory());
-        history = codingAudit.getCodingHistory();
+        history = new CodingHistory();
+        codingAudit = new CodingAudit(history);
     }
 
     @Test

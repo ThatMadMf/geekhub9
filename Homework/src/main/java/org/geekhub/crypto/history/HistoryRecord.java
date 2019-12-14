@@ -67,7 +67,7 @@ public class HistoryRecord implements Serializable {
 
     @Override
     public String toString() {
-        return operation.toString() + " - " + userInput + " : " + operationDate;
+        return operation.toString() + "/" + codec + " - " + userInput + " : " + operationDate;
     }
 
 }
