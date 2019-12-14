@@ -1,6 +1,6 @@
 package org.geekhub.crypto.history;
 
-import org.geekhub.crypto.util.LogManager;
+import org.geekhub.crypto.ui.LogManager;
 
 import java.util.List;
 

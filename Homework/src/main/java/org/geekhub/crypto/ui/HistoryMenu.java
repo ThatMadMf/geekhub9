@@ -4,7 +4,6 @@ import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryConsolePrinter;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.LogManager;
 import org.geekhub.crypto.util.OperationUnsupportedException;
 
 import java.util.Scanner;

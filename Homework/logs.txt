@@ -14,16 +14,7 @@ Enter codec method:
 7. UKRAINIAN_ENGLISH
 Enter text to encode:
 Encoded:
-{
-  "data": {
-    "translations": [
-      {
-        "translatedText": "Здравствуйте"
-      }
-    ]
-  }
-}
-
+org.geekhub.crypto.util.TranslationModel@5be6e01c
 Select operation
 1. Decode 
 2. Encode 

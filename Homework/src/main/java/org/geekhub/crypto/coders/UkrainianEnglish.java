@@ -1,7 +1,9 @@
 package org.geekhub.crypto.coders;
 
+import com.google.gson.Gson;
+import org.geekhub.crypto.ui.LogManager;
 import org.geekhub.crypto.util.IllegalCharacterException;
-import org.geekhub.crypto.util.LogManager;
+import org.geekhub.crypto.util.TranslationModel;
 
 import java.io.IOException;
 import java.net.URI;
@@ -75,9 +77,14 @@ class UkrainianEnglish implements Encoder, Decoder {
                     .GET()
                     .build();
 
-            return HttpClient.newHttpClient()
+            Gson gson = new Gson();
+
+            TranslationModel translatedText = gson.fromJson(HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofString())
-                    .body();
+                    .body(), TranslationModel.class);
+            if (translatedText != null) {
+                return translatedText.getData().getTranslations().get(0).getTranslatedText();
+            }
         } catch (IllegalArgumentException e) {
             throw new IllegalCharacterException("Unsupported character");
         } catch (InterruptedException e) {

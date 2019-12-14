@@ -1,7 +1,7 @@
 package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
-import org.geekhub.crypto.util.LogManager;
+import org.geekhub.crypto.ui.LogManager;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -31,7 +31,7 @@ public class CodingHistory {
 
     public CodingHistory() {
         LinkedList<HistoryRecord> temp = readHistory();
-        historyRecords = temp == null ? new LinkedList<>() : temp;
+        historyRecords = temp.isEmpty() ? new LinkedList<>() : temp;
     }
 
     public void addToHistory(HistoryRecord record) {
@@ -77,7 +77,7 @@ public class CodingHistory {
         } catch (IOException e) {
             LogManager.error("Error while trying to read the file");
         }
-        return null;
+        return new LinkedList<>();
     }
 
 }
