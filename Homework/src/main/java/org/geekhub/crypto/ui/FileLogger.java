@@ -4,43 +4,38 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileLogger implements Logger {
-    private OutputStream fileOutputStream;
-    private PrintStream printStream;
     private static final Logger consoleLogger = new ConsoleLogger();
+    private final Path logDestination;
 
     public FileLogger(String home) {
-        try {
-            fileOutputStream = Files.newOutputStream(Paths.get(home + "/logs.txt"));
-            printStream = new PrintStream(fileOutputStream);
-        } catch (IOException e) {
-            consoleLogger.error("Cannot create console logger due to IO exception");
-        }
+        logDestination = Paths.get(home + "/logs.txt");
     }
 
     @Override
     public void log(String message) {
-        printStream.println(message);
+        printToFile(message);
     }
 
     @Override
     public void warn(String message) {
-        printStream.println("WARNING: " + message);
+        printToFile("WARNING: " + message);
     }
 
     @Override
     public void error(String message) {
-        printStream.println("ERROR: " + message);
+        printToFile("ERROR: " + message);
     }
 
-    public void closeLogger() {
-        try {
-            fileOutputStream.close();
-            printStream.close();
+    private void printToFile(String message) {
+        try (OutputStream fileOutputStream = Files.newOutputStream(logDestination);
+             PrintStream printStream = new PrintStream(fileOutputStream)) {
+            printStream.println(message);
         } catch (IOException e) {
-            consoleLogger.error("Cannot close log file");
+            consoleLogger.warn("Cannot write to file");
         }
     }
 }

@@ -1,9 +1,9 @@
 package org.geekhub.crypto.coders;
 
 import com.google.gson.Gson;
+import org.geekhub.crypto.exception.IllegalInputException;
+import org.geekhub.crypto.model.translation.TranslationModel;
 import org.geekhub.crypto.ui.LogManager;
-import org.geekhub.crypto.util.IllegalCharacterException;
-import org.geekhub.crypto.util.TranslationModel;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:]?\\s";
-    private int currentMark = 0;
     private final String key;
 
     public UkrainianEnglish(String key) {
@@ -31,7 +30,7 @@ class UkrainianEnglish implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        inputCheck(input);
+        inputNullCheck(input);
 
         String translateOnline = encodeOnline(input);
         if (translateOnline == null) {
@@ -43,7 +42,7 @@ class UkrainianEnglish implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
-        inputCheck(input);
+        inputNullCheck(input);
 
         String translateOnline = decodeOnline(input);
         if (translateOnline == null) {
@@ -54,17 +53,19 @@ class UkrainianEnglish implements Encoder, Decoder {
     }
 
     private String encodeOffline(String input) {
+        int currentMark = 0;
         String[] dividers = getPunctuationMarks(input);
         return Arrays.stream(getWords(input))
                 .map(DICTIONARY::getEnglish)
-                .collect(Collectors.joining(getCurrentMark(dividers)));
+                .collect(Collectors.joining(getCurrentMark(dividers, currentMark)));
     }
 
     private String decodeOffline(String input) {
+        int currentMark = 0;
         String[] dividers = getPunctuationMarks(input);
         return Arrays.stream(getWords(input))
                 .map(DICTIONARY::getUkrainian)
-                .collect(Collectors.joining(getCurrentMark(dividers)));
+                .collect(Collectors.joining(getCurrentMark(dividers, currentMark)));
     }
 
     private String encodeOnline(String input) {
@@ -93,7 +94,7 @@ class UkrainianEnglish implements Encoder, Decoder {
             return translatedText.getData().getTranslations().get(0).getTranslatedText();
 
         } catch (IllegalArgumentException e) {
-            throw new IllegalCharacterException("Unsupported character");
+            throw new IllegalInputException("Unsupported character");
         } catch (InterruptedException | NullPointerException e) {
             LogManager.warn("Failed to make request");
             Thread.currentThread().interrupt();
@@ -103,7 +104,7 @@ class UkrainianEnglish implements Encoder, Decoder {
         return null;
     }
 
-    private void inputCheck(String input) {
+    private void inputNullCheck(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Input have to contain text");
         }
@@ -121,7 +122,7 @@ class UkrainianEnglish implements Encoder, Decoder {
                 .toArray(String[]::new);
     }
 
-    private String getCurrentMark(String[] dividers) {
+    private String getCurrentMark(String[] dividers, int currentMark) {
         if (dividers.length == 0) {
             return "";
         }

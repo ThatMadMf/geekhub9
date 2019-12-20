@@ -1,4 +1,4 @@
-package org.geekhub.crypto.util;
+package org.geekhub.crypto.exception;
 
 public class EmptyHistoryException extends RuntimeException {
 

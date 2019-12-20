@@ -1,8 +1,8 @@
-package org.geekhub.crypto.util;
+package org.geekhub.crypto.model.translation;
 
 public class Translation {
 
-    String translatedText;
+    private String translatedText;
 
     public String getTranslatedText() {
         return translatedText;

@@ -22,10 +22,4 @@ public class LogManager {
         consoleLogger.error(message);
         fileLogger.error(message);
     }
-
-    public static void close() {
-        fileLogger.closeLogger();
-    }
-
-
 }

@@ -1,103 +1,50 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.exception.FileProcessingFailedException;
+import org.geekhub.crypto.exception.IllegalInputException;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.UnaryOperator;
-
-import static java.util.Map.entry;
 
 class MorseCodec implements Encoder, Decoder {
 
-    private static final Map<Character, String> CHAR_MAP = Map.ofEntries(
-            entry(' ', "......."),
-            entry('a', ".-"),
-            entry('b', "-..."),
-            entry('c', "-.-."),
-            entry('d', "-.."),
-            entry('e', "."),
-            entry('f', "..-."),
-            entry('g', "--."),
-            entry('h', "...."),
-            entry('i', ".."),
-            entry('j', ".---"),
-            entry('k', "-.-"),
-            entry('l', ".-.."),
-            entry('m', "--"),
-            entry('n', "-."),
-            entry('o', "---"),
-            entry('p', ".--."),
-            entry('q', "--.-"),
-            entry('r', ".-."),
-            entry('s', "..."),
-            entry('t', "-"),
-            entry('u', "..-"),
-            entry('v', "...-"),
-            entry('w', ".--"),
-            entry('x', "-..-"),
-            entry('y', "-.--"),
-            entry('z', "--.."),
-            entry('1', ".----"),
-            entry('2', "..---"),
-            entry('3', "...--"),
-            entry('4', "....-"),
-            entry('5', "....."),
-            entry('6', "-...."),
-            entry('7', "--..."),
-            entry('8', "---.."),
-            entry('9', "----."),
-            entry('0', "-----")
-    );
-    private static final Map<String, Character> CODE_MAP = Map.ofEntries(
-            entry(".......", ' '),
-            entry(".-", 'a'),
-            entry("-...", 'b'),
-            entry("-.-.", 'c'),
-            entry("-..", 'd'),
-            entry(".", 'e'),
-            entry("..-.", 'f'),
-            entry("--.", 'g'),
-            entry("....", 'h'),
-            entry("..", 'i'),
-            entry(".---", 'j'),
-            entry("-.-", 'k'),
-            entry(".-..", 'l'),
-            entry("--", 'm'),
-            entry("-.", 'n'),
-            entry("---", 'o'),
-            entry(".--.", 'p'),
-            entry("--.-", 'q'),
-            entry(".-.", 'r'),
-            entry("...", 's'),
-            entry("-", 't'),
-            entry("..-", 'u'),
-            entry("...-", 'v'),
-            entry(".--", 'w'),
-            entry("-..-", 'x'),
-            entry("-.--", 'y'),
-            entry("--..", 'z'),
-            entry(".----", '1'),
-            entry("..---", '2'),
-            entry("...--", '3'),
-            entry("....-", '4'),
-            entry(".....", '5'),
-            entry("-....", '6'),
-            entry("--...", '7'),
-            entry("---..", '8'),
-            entry("----.", '9'),
-            entry("-----", '0')
-    );
+    private static final Map<String, String> CHAR_MAP;
+    private static final Map<String, String> CODE_MAP;
+
+    static {
+        CHAR_MAP = new HashMap<>();
+        CODE_MAP = new HashMap<>();
+        ClassLoader classLoader = MorseCodec.class.getClassLoader();
+        try (InputStream inputStream = classLoader.getResourceAsStream("coders/MorseDictionary.properties")) {
+            Properties properties = new Properties();
+            if (inputStream != null) {
+                properties.load(new InputStreamReader(inputStream));
+            }
+            for (String key : properties.stringPropertyNames()) {
+                String value = properties.getProperty(key);
+                CHAR_MAP.put(key, value);
+                CODE_MAP.put(value, key);
+            }
+        } catch (IOException e) {
+            throw new FileProcessingFailedException("Cannot read dictionary from properties");
+        }
+    }
 
     @Override
     public String encode(String input) {
-        inputCheck(input);
+        inputNullCheck(input);
         checkCaseOfInput(input);
         StringBuilder result = new StringBuilder();
         String[] words = input.split("\\s+");
 
         for (String word : words) {
             result.append(performOperation(word, MorseCodec::encodeWord));
-            result.append(CHAR_MAP.get(' '));
+            result.append(CHAR_MAP.get(" "));
             result.append('/');
         }
         return result.toString().substring(0, result.length() - 8);
@@ -105,7 +52,7 @@ class MorseCodec implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
-        inputCheck(input);
+        inputNullCheck(input);
         String result = performOperation(input, MorseCodec::decodeWord);
         return result.toLowerCase();
     }
@@ -118,7 +65,7 @@ class MorseCodec implements Encoder, Decoder {
         }
     }
 
-    private void inputCheck(String input) {
+    private void inputNullCheck(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Input have to contain text");
         }
@@ -127,7 +74,7 @@ class MorseCodec implements Encoder, Decoder {
     private static String encodeWord(String input) {
         StringBuilder result = new StringBuilder();
         for (char c : input.toCharArray()) {
-            result.append(tryGetCode(c));
+            result.append(getCode(String.valueOf(c)));
             result.append("/");
         }
         return result.toString();
@@ -136,25 +83,25 @@ class MorseCodec implements Encoder, Decoder {
     private static String decodeWord(String input) {
         StringBuilder result = new StringBuilder();
         for (String str : input.split("/")) {
-            result.append(tryGetChar(str));
+            result.append(getChar(str));
         }
         return result.toString();
     }
 
-    private static String tryGetCode(char c) {
+    private static String getCode(String c) {
         String code = CHAR_MAP.get(c);
         if (code == null) {
-            throw new IllegalCharacterException("Unsupported character: " + c);
+            throw new IllegalInputException("Unsupported character: " + c);
         }
         return code;
     }
 
-    private static char tryGetChar(String code) {
-        try {
-            return CODE_MAP.get(code);
-        } catch (NullPointerException e) {
-            throw new IllegalCharacterException("Unsupported character: " + code);
+    private static String getChar(String code) {
+        String symbol = CODE_MAP.get(code);
+        if (symbol == null) {
+            throw new IllegalInputException("Unsupported character: " + code);
         }
+        return symbol;
     }
 
     private String performOperation(String text, UnaryOperator<String> function) {

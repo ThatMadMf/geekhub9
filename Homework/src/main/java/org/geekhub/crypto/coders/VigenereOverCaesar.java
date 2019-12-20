@@ -7,10 +7,10 @@ class VigenereOverCaesar implements Encoder, Decoder {
     private final Decoder caesarDecoder;
 
     public VigenereOverCaesar() {
-        vigenereEncoder = EncodersFactory.getEncoder("VIGENERE");
-        caesarEncoder = EncodersFactory.getEncoder("CAESAR");
-        vigenereDecoder = DecodersFactory.getDecoder("VIGENERE");
-        caesarDecoder = DecodersFactory.getDecoder("CAESAR");
+        vigenereEncoder = EncodersFactory.getEncoder(Algorithm.VIGENERE);
+        caesarEncoder = EncodersFactory.getEncoder(Algorithm.CAESAR);
+        vigenereDecoder = DecodersFactory.getDecoder(Algorithm.VIGENERE);
+        caesarDecoder = DecodersFactory.getDecoder(Algorithm.CAESAR);
     }
 
     @Override

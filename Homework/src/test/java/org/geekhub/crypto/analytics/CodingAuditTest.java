@@ -4,7 +4,7 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.EmptyHistoryException;
+import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

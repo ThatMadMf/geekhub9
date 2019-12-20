@@ -1,6 +1,6 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.exception.IllegalInputException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -30,7 +30,7 @@ public class UkrainianEnglishTest {
         encoder.encode("");
     }
 
-    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
+    @Test(groups = "encode", expectedExceptions = IllegalInputException.class)
     void When_EncodeNotSupportedWord_Expect_Exception() {
         encoder.encode("#@$O@#$#@$@#$");
     }
@@ -58,7 +58,7 @@ public class UkrainianEnglishTest {
         assertEquals(encoded, "test word see");
     }
 
-    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
+    @Test(groups = "encode", expectedExceptions = IllegalInputException.class)
     void When_EncodeUnsupportedWordOffline_Expect_Exception() {
         Encoder offlineEncoder = new UkrainianEnglish("notExistingKey");
 
@@ -70,7 +70,7 @@ public class UkrainianEnglishTest {
         decoder.decode(null);
     }
 
-    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
+    @Test(groups = "decode", expectedExceptions = IllegalInputException.class)
     void When_DecodeNotSupportedWord_Expect_Exception() {
         decoder.decode("#@$O@#$#@$@#$");
     }
@@ -104,7 +104,7 @@ public class UkrainianEnglishTest {
         assertEquals(decoded, "тест слово побачити");
     }
 
-    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
+    @Test(groups = "decode", expectedExceptions = IllegalInputException.class)
     void When_DecodeUnsupportedWordOffline_Expect_Exception() {
         Decoder offlineDecoder = new UkrainianEnglish("notExistingKey");
 

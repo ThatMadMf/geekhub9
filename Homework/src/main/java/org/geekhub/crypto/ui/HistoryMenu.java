@@ -4,14 +4,14 @@ import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryConsolePrinter;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.OperationUnsupportedException;
+import org.geekhub.crypto.exception.OperationUnsupportedException;
 
 import java.util.Scanner;
 
 class HistoryMenu {
 
     public static void displayMenu(Scanner scanner, CodingHistory history) {
-        LogManager.log("1 - Show History\n2 - Remove last record\n3 - Clear history");
+        System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
         String input = scanner.nextLine();
 
         switch (input) {

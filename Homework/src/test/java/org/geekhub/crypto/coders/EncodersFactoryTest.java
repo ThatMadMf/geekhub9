@@ -10,13 +10,8 @@ public class EncodersFactoryTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    void When_InputIsEmpty_ThrowingException() {
-        EncodersFactory.getEncoder("");
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
     void When_InputIsNotExistingElement_ThrowingException() {
-        EncodersFactory.getEncoder("NotExistingAlgorithm");
+        EncodersFactory.getEncoder(Algorithm.valueOf("NotExistingAlgorithm"));
     }
 
 }

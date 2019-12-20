@@ -6,44 +6,46 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.EmptyHistoryException;
-import org.geekhub.crypto.util.OperationUnsupportedException;
+import org.geekhub.crypto.exception.EmptyHistoryException;
+import org.geekhub.crypto.exception.OperationUnsupportedException;
 
 import java.util.Scanner;
 
 class AnalyticsMenu {
     public static void displayMenu(Scanner scanner, CodingHistory history) {
-        LogManager.log("1 - Count inputs\n2 - Count by date\n3 - The most popular algorithm");
+        System.out.println("1 - Count inputs\n2 - Count by date\n3 - The most popular algorithm");
         String input = scanner.nextLine();
         CodingAudit audit = new CodingAudit(history);
 
         switch (input) {
             case "1":
-                LogManager.log(audit.countEncodingInputs().toString());
+                System.out.println(audit.countEncodingInputs().toString());
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             case "2":
-                LogManager.log("Encoding;");
-                LogManager.log(audit.countCodingsByDate(CodecUsecase.ENCODING).toString());
+                System.out.println("Encoding;");
+                System.out.println(audit.countCodingsByDate(CodecUsecase.ENCODING).toString());
 
-                LogManager.log("Decoding:");
-                LogManager.log(audit.countCodingsByDate(CodecUsecase.DECODING).toString());
+                System.out.println("Decoding:");
+                System.out.println(audit.countCodingsByDate(CodecUsecase.DECODING).toString());
 
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));
                 break;
             case "3":
-                LogManager.log("Encoding:");
+                System.out.println("Encoding:");
                 try {
                     Algorithm encodeCodec = audit.findMostPopularCodec(CodecUsecase.ENCODING);
-                    LogManager.log(encodeCodec.name());
+                    System.out.println(encodeCodec.name());
                 } catch (EmptyHistoryException e) {
+                    System.out.println("History is empty");
                     LogManager.log("Cannot perform operation. History is empty");
                 }
-                LogManager.log("Decoding:");
+                System.out.println("Decoding:");
                 try {
                     Algorithm decodeCodec = audit.findMostPopularCodec(CodecUsecase.DECODING);
-                    LogManager.log(decodeCodec.name());
+                    System.out.println(decodeCodec.name());
                 } catch (EmptyHistoryException e) {
+                    System.out.println("History is empty");
                     LogManager.log("Cannot perform operation. History is empty");
                 }
                 history.addToHistory(new HistoryRecord(Operation.ANALYTICS));

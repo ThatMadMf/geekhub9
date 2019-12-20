@@ -1,6 +1,6 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.exception.IllegalInputException;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -15,7 +15,7 @@ class CaesarCodec implements Encoder, Decoder {
 
     @Override
     public String encode(String input) {
-        inputCheck(input);
+        inputNullCheck(input);
 
         return input.chars()
                 .map(c -> codeWithCase((char) c, CaesarCodec::encodeLetter))
@@ -24,14 +24,14 @@ class CaesarCodec implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
-        inputCheck(input);
+        inputNullCheck(input);
 
         return input.chars()
                 .map(c -> codeWithCase((char) c, CaesarCodec::decodeLetter))
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
-    private void inputCheck(String input) {
+    private void inputNullCheck(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Input have to contain text");
         }
@@ -48,7 +48,7 @@ class CaesarCodec implements Encoder, Decoder {
         if (ACCESSIBLE_SYMBOLS.contains(input)) {
             return input;
         }
-        throw new IllegalCharacterException("Unsupported character: " + input);
+        throw new IllegalInputException("Unsupported character: " + input);
     }
 
     private static char encodeLetter(char input) {

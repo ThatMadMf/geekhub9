@@ -3,7 +3,7 @@ package org.geekhub.crypto.analytics;
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
-import org.geekhub.crypto.util.EmptyHistoryException;
+import org.geekhub.crypto.exception.EmptyHistoryException;
 
 import java.time.LocalDate;
 import java.util.Collections;

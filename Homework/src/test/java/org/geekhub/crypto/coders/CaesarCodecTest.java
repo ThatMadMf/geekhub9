@@ -1,6 +1,6 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.exception.IllegalInputException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -30,7 +30,7 @@ public class CaesarCodecTest {
         encoder.encode("");
     }
 
-    @Test(groups = "encode", expectedExceptions = IllegalCharacterException.class)
+    @Test(groups = "encode", expectedExceptions = IllegalInputException.class)
     void When_EncodeNotSupportedCharacter_Expect_Exception() {
         encoder.encode("*un_supported%");
 
@@ -60,7 +60,7 @@ public class CaesarCodecTest {
         decoder.decode("");
     }
 
-    @Test(groups = "decode", expectedExceptions = IllegalCharacterException.class)
+    @Test(groups = "decode", expectedExceptions = IllegalInputException.class)
     void When_DecodeNotSupportedCharacter_Expect_Exception() {
         decoder.decode("*un_supported%");
     }

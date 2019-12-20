@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class HistoryRecord implements Serializable {
+    public static final Long serialVersionUID = 3243532453235452345L;
+
     private final Operation operation;
     private final String userInput;
     private final Algorithm codec;

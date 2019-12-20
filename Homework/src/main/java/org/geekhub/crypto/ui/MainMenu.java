@@ -1,11 +1,11 @@
 package org.geekhub.crypto.ui;
 
 import org.geekhub.crypto.coders.*;
-import org.geekhub.crypto.history.Operation;
-
+import org.geekhub.crypto.exception.IllegalInputException;
+import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
-import org.geekhub.crypto.util.*;
+import org.geekhub.crypto.history.Operation;
 
 import java.util.Scanner;
 
@@ -30,41 +30,42 @@ public class MainMenu {
     }
 
     private void displayMenu() {
-        LogManager.log("Select operation");
-        LogManager.log("1. Decode \n2. Encode \n3. Analytics \n4. History\n5. Exit");
+        Logger compositeLogger = LoggerFactory.getLogger();
+        System.out.println("Select operation");
+        System.out.println("1. Decode \n2. Encode \n3. Analytics \n4. History\n5. Exit");
 
         String input = scanner.nextLine();
         switch (input) {
             case "1":
-                String decoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
-                LogManager.log("Enter text to decode:");
+                Algorithm decoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
+                System.out.println("Enter text to decode:");
                 String textToDecode = scanner.nextLine();
                 history.addToHistory(
-                        new HistoryRecord(Operation.DECODE, textToDecode, Algorithm.valueOf(decoderAlgorithm))
+                        new HistoryRecord(Operation.DECODE, textToDecode, decoderAlgorithm)
                 );
 
-                LogManager.log("Decoded:");
+                System.out.println("Decoded:");
                 Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
                 try {
-                    LogManager.log(decoder.decode(textToDecode));
-                } catch (IllegalArgumentException | IllegalCharacterException e) {
-                    LogManager.warn(LogManager.INVALID_INPUT);
+                    System.out.println(decoder.decode(textToDecode));
+                } catch (IllegalArgumentException | IllegalInputException e) {
+                    compositeLogger.warn(LogManager.INVALID_INPUT);
                 }
                 break;
             case "2":
-                String encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
-                LogManager.log("Enter text to encode:");
+                Algorithm encoderAlgorithm = CodecNameReader.getCodecMethod(scanner);
+                System.out.println("Enter text to encode:");
                 String textToEncode = scanner.nextLine();
                 history.addToHistory(
-                        new HistoryRecord(Operation.ENCODE, textToEncode, Algorithm.valueOf(encoderAlgorithm))
+                        new HistoryRecord(Operation.ENCODE, textToEncode, encoderAlgorithm)
                 );
 
-                LogManager.log("Encoded:");
+                System.out.println("Encoded:");
                 Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
                 try {
-                    LogManager.log(encoder.encode(textToEncode));
-                } catch (IllegalArgumentException | IllegalCharacterException e) {
-                    LogManager.warn(LogManager.INVALID_INPUT);
+                    System.out.println(encoder.encode(textToEncode));
+                } catch (IllegalArgumentException | IllegalInputException e) {
+                    compositeLogger.warn(LogManager.INVALID_INPUT);
                 }
                 break;
             case "3":
@@ -75,7 +76,6 @@ public class MainMenu {
                 break;
             case "5":
                 scanner.close();
-                LogManager.close();
                 System.exit(0);
                 break;
             default:

@@ -1,8 +1,8 @@
-package org.geekhub.crypto.util;
+package org.geekhub.crypto.model.translation;
 
 public class TranslationModel {
 
-    Data data;
+    private Data data;
 
     public Data getData() {
         return data;

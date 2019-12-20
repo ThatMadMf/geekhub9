@@ -1,9 +1,9 @@
-package org.geekhub.crypto.util;
+package org.geekhub.crypto.model.translation;
 
 import java.util.List;
 
 public class Data {
-    List<Translation> translations;
+    private List<Translation> translations;
 
     public List<Translation> getTranslations() {
         return translations;

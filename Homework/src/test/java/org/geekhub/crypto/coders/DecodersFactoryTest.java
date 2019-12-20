@@ -10,13 +10,8 @@ public class DecodersFactoryTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    void When_InputIsEmpty_Expect_Exception() {
-        DecodersFactory.getDecoder("");
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
     void When_InputIsNotExistingElement_Expect_Exception() {
-        DecodersFactory.getDecoder("NotExistingAlgorithm");
+        DecodersFactory.getDecoder(Algorithm.valueOf("NotExistingAlgorithm"));
     }
 
 }

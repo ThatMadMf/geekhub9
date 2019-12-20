@@ -1,27 +1,20 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.CodecUnsupportedException;
+import org.geekhub.crypto.exception.CodecUnsupportedException;
 
 public class EncodersFactory {
 
-    public static Encoder getEncoder(String name) {
+    public static Encoder getEncoder(Algorithm name) {
         if(name == null) {
             throw new IllegalArgumentException();
         }
-
-        Algorithm algorithm = Algorithm.valueOf(name);
-
-        switch (algorithm) {
+        switch (name) {
             case MORSE:
                 return new MorseCodec();
             case CAESAR:
                 return new CaesarCodec();
             case VIGENERE:
                 return new VigenereCodec();
-            case VIGENERE_2X:
-                return new Vigenere2x();
-            case VIGENERE_2X_COMPOSITION:
-                return new Vigenere2xComposition();
             case VIGENERE_OVER_CAESAR:
                 return new VigenereOverCaesar();
             case UKRAINIAN_ENGLISH:

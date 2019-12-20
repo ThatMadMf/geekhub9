@@ -1,6 +1,6 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.util.IllegalCharacterException;
+import org.geekhub.crypto.exception.IllegalInputException;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -61,7 +61,7 @@ class VigenereCodec implements Encoder, Decoder {
         if (ACCESSIBLE_SYMBOLS.contains(input)) {
             return input;
         }
-        throw new IllegalCharacterException("Unsupported character: " + input);
+        throw new IllegalInputException("Unsupported character: " + input);
     }
 
     private static char decodeLetter(char input, int keywordIndex) {
@@ -73,7 +73,7 @@ class VigenereCodec implements Encoder, Decoder {
         if (ACCESSIBLE_SYMBOLS.contains(input)) {
             return input;
         }
-        throw new IllegalCharacterException("Unsupported character: " + input);
+        throw new IllegalInputException("Unsupported character: " + input);
     }
 
     private char codeWithCase(char input, int key, BiFunction<Character, Integer, Character> function) {
