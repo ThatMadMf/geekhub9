@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.function.UnaryOperator;
 
+@Codec(algorithm = Algorithm.MORSE)
 class MorseCodec implements Encoder, Decoder {
 
     private static final Map<String, String> CHAR_MAP;

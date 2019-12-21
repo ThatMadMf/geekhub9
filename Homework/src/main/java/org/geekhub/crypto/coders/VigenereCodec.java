@@ -5,6 +5,7 @@ import org.geekhub.crypto.exception.IllegalInputException;
 import java.util.List;
 import java.util.function.BiFunction;
 
+@Codec(algorithm = Algorithm.VIGENERE)
 class VigenereCodec implements Encoder, Decoder {
     private static final String SHIFT_KEY = "keyword";
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',

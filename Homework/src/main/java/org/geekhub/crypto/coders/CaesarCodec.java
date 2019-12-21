@@ -5,6 +5,7 @@ import org.geekhub.crypto.exception.IllegalInputException;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+@Codec(algorithm = Algorithm.CAESAR)
 class CaesarCodec implements Encoder, Decoder {
 
     private static final int SHIFT_KEY = 15;
