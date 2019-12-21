@@ -53,9 +53,9 @@ public class UkrainianEnglishTest {
     void When_EncodeWordOffline_Expect_Success() {
         Encoder offlineEncoder = new UkrainianEnglish("notExistingKey");
 
-        String encoded = offlineEncoder.encode("тест слово побачити");
+        String encoded = offlineEncoder.encode("тест, слово! побачити?");
 
-        assertEquals(encoded, "test word see");
+        assertEquals(encoded, "test, word! see?");
     }
 
     @Test(groups = "encode", expectedExceptions = IllegalInputException.class)

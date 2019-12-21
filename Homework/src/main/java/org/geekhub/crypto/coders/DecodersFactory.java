@@ -6,7 +6,7 @@ public class DecodersFactory {
 
     public static Decoder getDecoder(Algorithm name) {
         if(name == null) {
-            throw new IllegalArgumentException();
+            throw new CodecUnsupportedException("Unsupported decoder");
         }
         switch (name) {
             case MORSE:

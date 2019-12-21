@@ -10,14 +10,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
-    private static final String SPLIT_REGEX = "[,.!?:]?\\s";
+    private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
 
     public UkrainianEnglish(String key) {
@@ -53,19 +55,19 @@ class UkrainianEnglish implements Encoder, Decoder {
     }
 
     private String encodeOffline(String input) {
-        int currentMark = 0;
-        String[] dividers = getPunctuationMarks(input);
+        Deque<String> dividers = getPunctuationMarks(input);
         return Arrays.stream(getWords(input))
                 .map(DICTIONARY::getEnglish)
-                .collect(Collectors.joining(getCurrentMark(dividers, currentMark)));
+                .map(w -> getCurrentMark(w, dividers))
+                .collect(Collectors.joining());
     }
 
     private String decodeOffline(String input) {
-        int currentMark = 0;
-        String[] dividers = getPunctuationMarks(input);
+        Deque<String> dividers = getPunctuationMarks(input);
         return Arrays.stream(getWords(input))
                 .map(DICTIONARY::getUkrainian)
-                .collect(Collectors.joining(getCurrentMark(dividers, currentMark)));
+                .map(w -> getCurrentMark(w, dividers))
+                .collect(Collectors.joining());
     }
 
     private String encodeOnline(String input) {
@@ -114,19 +116,19 @@ class UkrainianEnglish implements Encoder, Decoder {
         return input.split(SPLIT_REGEX);
     }
 
-    private String[] getPunctuationMarks(String input) {
+    private Deque<String> getPunctuationMarks(String input) {
         return Pattern.compile(SPLIT_REGEX)
                 .matcher(input)
                 .results()
                 .map(MatchResult::group)
-                .toArray(String[]::new);
+                .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
-    private String getCurrentMark(String[] dividers, int currentMark) {
-        if (dividers.length == 0) {
+    private String getCurrentMark(String word, Deque<String> dividers) {
+        if (dividers.isEmpty()) {
             return "";
         }
-        return dividers[currentMark++];
+        return word + dividers.pollFirst();
     }
 
 }

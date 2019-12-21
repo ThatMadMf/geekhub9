@@ -6,7 +6,7 @@ public class EncodersFactory {
 
     public static Encoder getEncoder(Algorithm name) {
         if(name == null) {
-            throw new IllegalArgumentException();
+            throw new CodecUnsupportedException("Unsupported encoder");
         }
         switch (name) {
             case MORSE:
