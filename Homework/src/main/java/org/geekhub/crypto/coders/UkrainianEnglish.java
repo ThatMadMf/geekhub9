@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import com.google.gson.Gson;
+import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.model.translation.TranslationModel;
 import org.geekhub.crypto.logging.Logger;
@@ -23,7 +24,7 @@ class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
-    private final static Logger compositeLogger = LoggerFactory.getLogger();
+    private static final Logger compositeLogger = LoggerFactory.getLogger();
 
     public UkrainianEnglish(String key) {
         this.key = key;

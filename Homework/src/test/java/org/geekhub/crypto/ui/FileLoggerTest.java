@@ -1,5 +1,6 @@
 package org.geekhub.crypto.ui;
 
+import org.geekhub.crypto.logging.FileLogger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

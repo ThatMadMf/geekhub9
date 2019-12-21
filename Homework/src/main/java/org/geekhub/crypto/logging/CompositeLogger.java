@@ -1,7 +1,5 @@
 package org.geekhub.crypto.logging;
 
-import org.geekhub.crypto.ui.FileLogger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

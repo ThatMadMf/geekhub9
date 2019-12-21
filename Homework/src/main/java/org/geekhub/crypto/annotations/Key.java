@@ -1,4 +1,4 @@
-package org.geekhub.crypto.coders;
+package org.geekhub.crypto.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Codec {
-    Algorithm algorithm();
+public @interface Key {
+    String keyword() default "keyword";
 }

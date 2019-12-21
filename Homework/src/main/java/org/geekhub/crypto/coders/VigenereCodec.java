@@ -1,16 +1,19 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.annotations.Codec;
+import org.geekhub.crypto.annotations.Key;
 import org.geekhub.crypto.exception.IllegalInputException;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
+@Key(keyword = "notkeyword")
 @Codec(algorithm = Algorithm.VIGENERE)
 class VigenereCodec implements Encoder, Decoder {
-    private static final String SHIFT_KEY = "keyword";
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
+    private final String key = "keyword";
 
     @Override
     public String encode(String input) {
@@ -44,12 +47,12 @@ class VigenereCodec implements Encoder, Decoder {
     }
 
     private int getIndex(int keyIndex) {
-        return ALPHABET.indexOf(SHIFT_KEY.charAt(keyIndex));
+        return ALPHABET.indexOf(key.charAt(keyIndex));
     }
 
     private int getNextKeyIndex(int keywordCount, StringBuilder result, char lastChar) {
         keywordCount = result.charAt(result.length() - 1) == lastChar ? keywordCount : keywordCount + 1;
-        keywordCount = keywordCount < SHIFT_KEY.length() ? keywordCount : 0;
+        keywordCount = keywordCount < key.length() ? keywordCount : 0;
         return keywordCount;
     }
 

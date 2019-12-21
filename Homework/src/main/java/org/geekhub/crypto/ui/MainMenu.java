@@ -1,6 +1,7 @@
 package org.geekhub.crypto.ui;
 
 import org.geekhub.crypto.coders.*;
+import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.CodingHistory;
@@ -48,11 +49,13 @@ public class MainMenu {
                 );
 
                 System.out.println("Decoded:");
-                Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
                 try {
+                    Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
                     System.out.println(decoder.decode(textToDecode));
                 } catch (IllegalArgumentException | IllegalInputException e) {
                     System.out.println("Invalid input, try again");
+                } catch (CodecUnsupportedException e) {
+                    System.out.println("Cannot create this decoder");
                 }
                 break;
             case "2":
@@ -64,11 +67,13 @@ public class MainMenu {
                 );
 
                 System.out.println("Encoded:");
-                Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
                 try {
+                    Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
                     System.out.println(encoder.encode(textToEncode));
                 } catch (IllegalArgumentException | IllegalInputException e) {
                     System.out.println("Invalid input, try again");
+                } catch (CodecUnsupportedException e) {
+                    System.out.println("Cannot create this encoder");
                 }
                 break;
             case "3":

@@ -3,11 +3,10 @@ package org.geekhub.crypto.history;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class CodingHistoryTest {
 
@@ -66,7 +65,7 @@ public class CodingHistoryTest {
     }
 
     @Test
-    void When_RemovingLastElementWithMultipleElementsInHistory_Expect_Success(){
+    void When_RemovingLastElementWithMultipleElementsInHistory_Expect_Success() {
         history.addToHistory(new HistoryRecord(Operation.ENCODE));
         history.addToHistory(new HistoryRecord(Operation.ENCODE));
 

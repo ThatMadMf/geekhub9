@@ -2,7 +2,6 @@ package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.exception.EmptyHistoryException;
-import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 
@@ -13,14 +12,15 @@ import java.util.List;
 public class CodingHistory {
     private final LinkedList<HistoryRecord> historyRecords;
     private final HistoryManager historyManager;
-    private static Logger compostiteLogger = LoggerFactory.getLogger();
+    private static final Logger compostiteLogger = LoggerFactory.getLogger();
+    private static final String EMPTY_HISTORY = "History is empty";
 
     public List<HistoryRecord> getHistoryRecords() {
         if (historyRecords.isEmpty()) {
             try {
                 historyRecords.addAll(readHistory());
             } catch (EmptyHistoryException e) {
-                compostiteLogger.log("History is empty");
+                compostiteLogger.log(EMPTY_HISTORY);
             }
         }
         return historyRecords;
@@ -31,7 +31,7 @@ public class CodingHistory {
             try {
                 historyRecords.addAll(readHistory());
             } catch (EmptyHistoryException e) {
-                compostiteLogger.log("History is empty");
+                compostiteLogger.log(EMPTY_HISTORY);
             }
         }
         List<HistoryRecord> result = new ArrayList<>();

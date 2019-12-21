@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.exception.IllegalInputException;
 
