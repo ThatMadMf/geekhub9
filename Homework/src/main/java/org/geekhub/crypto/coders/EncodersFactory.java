@@ -9,6 +9,7 @@ import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class EncodersFactory {
 
@@ -18,8 +19,7 @@ public class EncodersFactory {
         }
         Logger compositeLogger = LoggerFactory.getLogger();
 
-        Class[] classes = new Class[]{CaesarCodec.class, MorseCodec.class, VigenereCodec.class, UkrainianEnglish.class,
-                VigenereOverCaesar.class};
+        List<Class> classes = ClassParser.getClasses();
         for (Class currentClass : classes) {
             Codec codec = (Codec) currentClass.getAnnotation(Codec.class);
             if (codec.algorithm() == name && Encoder.class.isAssignableFrom(currentClass)) {

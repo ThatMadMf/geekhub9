@@ -9,17 +9,15 @@ import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 
 public class DecodersFactory {
-    private static final Class[] classes = new Class[]{CaesarCodec.class, MorseCodec.class, VigenereCodec.class,
-            UkrainianEnglish.class, VigenereOverCaesar.class};
-
-
     public static Decoder getDecoder(Algorithm name) {
         if (name == null) {
             throw new CodecUnsupportedException("Unsupported decoder");
         }
+        List<Class> classes = ClassParser.getClasses();
         Logger compositeLogger = LoggerFactory.getLogger();
 
         for (Class currentClass : classes) {
