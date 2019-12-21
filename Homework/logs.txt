@@ -1,6 +1,0 @@
-Select operation
-1. Decode 
-2. Encode 
-3. Analytics 
-4. History
-5. Exit

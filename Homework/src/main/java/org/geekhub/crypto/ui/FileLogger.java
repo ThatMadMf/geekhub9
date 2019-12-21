@@ -1,5 +1,8 @@
 package org.geekhub.crypto.ui;
 
+import org.geekhub.crypto.logging.ConsoleLogger;
+import org.geekhub.crypto.logging.Logger;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;

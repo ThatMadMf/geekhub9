@@ -20,12 +20,12 @@ public class UkrainianEnglishTest {
         decoder = new UkrainianEnglish();
     }
 
-    @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
+    @Test(groups = "encode", expectedExceptions = IllegalInputException.class)
     void When_InputIsNull_Expect_Exception() {
         encoder.encode(null);
     }
 
-    @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)
+    @Test(groups = "encode", expectedExceptions = IllegalInputException.class)
     void When_InputIsBlank_Expect_Exception() {
         encoder.encode("");
     }
@@ -65,7 +65,7 @@ public class UkrainianEnglishTest {
         offlineEncoder.encode("notSupportedWord");
     }
 
-    @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
+    @Test(groups = "decode", expectedExceptions = IllegalInputException.class)
     void When_InputDecodeIsNull_Expect_Exception() {
         decoder.decode(null);
     }
@@ -75,7 +75,7 @@ public class UkrainianEnglishTest {
         decoder.decode("#@$O@#$#@$@#$");
     }
 
-    @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
+    @Test(groups = "decode", expectedExceptions = IllegalInputException.class)
     void When_InputDecodeIsBlank_Expect_Exception() {
         decoder.decode("");
     }

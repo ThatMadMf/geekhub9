@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui;
+package org.geekhub.crypto.logging;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -11,7 +11,7 @@ class CodecNameReader {
         int i = 1;
         System.out.println("Enter codec method:");
         for (Algorithm method : Algorithm.values()) {
-            LogManager.log(i + ". " + method);
+            System.out.println(i + ". " + method);
             i++;
         }
         String input = scanner.nextLine();

@@ -6,6 +6,8 @@ import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.logging.LoggerFactory;
+import org.geekhub.crypto.logging.Logger;
 
 import java.util.Scanner;
 
@@ -13,10 +15,12 @@ public class MainMenu {
 
     private final Scanner scanner;
     private final CodingHistory history;
+    private final Logger compositeLogger;
 
     public MainMenu() {
         scanner = new Scanner(System.in);
         history = new CodingHistory();
+        compositeLogger = LoggerFactory.getLogger();
     }
 
     public void run() {
@@ -24,13 +28,12 @@ public class MainMenu {
             try {
                 displayMenu();
             } catch (OperationUnsupportedException e) {
-                LogManager.warn("Operation is not supported");
+                compositeLogger.warn("Operation is not supported");
             }
         }
     }
 
     private void displayMenu() {
-        Logger compositeLogger = LoggerFactory.getLogger();
         System.out.println("Select operation");
         System.out.println("1. Decode \n2. Encode \n3. Analytics \n4. History\n5. Exit");
 
@@ -49,7 +52,7 @@ public class MainMenu {
                 try {
                     System.out.println(decoder.decode(textToDecode));
                 } catch (IllegalArgumentException | IllegalInputException e) {
-                    compositeLogger.warn(LogManager.INVALID_INPUT);
+                    System.out.println("Invalid input, try again");
                 }
                 break;
             case "2":
@@ -65,7 +68,7 @@ public class MainMenu {
                 try {
                     System.out.println(encoder.encode(textToEncode));
                 } catch (IllegalArgumentException | IllegalInputException e) {
-                    compositeLogger.warn(LogManager.INVALID_INPUT);
+                    System.out.println("Invalid input, try again");
                 }
                 break;
             case "3":

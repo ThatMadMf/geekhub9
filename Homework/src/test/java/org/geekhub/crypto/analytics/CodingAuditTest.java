@@ -8,6 +8,9 @@ import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -21,8 +24,9 @@ public class CodingAuditTest {
     private CodingHistory history;
 
     @BeforeMethod
-    public void initialise() {
-        history = new CodingHistory();
+    public void initialise() throws IOException {
+        Files.deleteIfExists(Paths.get(System.getProperty("user.home") + "/history.ser"));
+        history = new CodingHistory(System.getProperty("user.home"));
         codingAudit = new CodingAudit(history);
     }
 

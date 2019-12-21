@@ -3,7 +3,8 @@ package org.geekhub.crypto.coders;
 import com.google.gson.Gson;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.model.translation.TranslationModel;
-import org.geekhub.crypto.ui.LogManager;
+import org.geekhub.crypto.logging.Logger;
+import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,6 +22,7 @@ class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
+    private final static Logger compositeLogger = LoggerFactory.getLogger();
 
     public UkrainianEnglish(String key) {
         this.key = key;
@@ -98,17 +100,17 @@ class UkrainianEnglish implements Encoder, Decoder {
         } catch (IllegalArgumentException e) {
             throw new IllegalInputException("Unsupported character");
         } catch (InterruptedException | NullPointerException e) {
-            LogManager.warn("Failed to make request");
+            compositeLogger.warn("Failed to make request");
             Thread.currentThread().interrupt();
         } catch (IOException e) {
-            LogManager.warn("Failed to translate online");
+            compositeLogger.warn("Failed to translate online");
         }
         return null;
     }
 
     private void inputNullCheck(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("Input have to contain text");
+            throw new IllegalInputException("Input have to contain text");
         }
     }
 

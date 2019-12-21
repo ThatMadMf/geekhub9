@@ -3,6 +3,8 @@ package org.geekhub.crypto.history;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -13,7 +15,7 @@ public class CodingHistoryTest {
 
     @BeforeMethod
     void initialise() {
-        history = new CodingHistory();
+        history = new CodingHistory(System.getProperty("user.home"));
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

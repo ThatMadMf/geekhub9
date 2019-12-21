@@ -1,12 +1,10 @@
 package org.geekhub.crypto.history;
 
-import org.geekhub.crypto.ui.LogManager;
+import org.geekhub.crypto.exception.EmptyHistoryException;
+import org.geekhub.crypto.exception.FileProcessingFailedException;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class HistoryManager {
                 stream.writeObject(record);
             }
         } catch (IOException e) {
-            LogManager.error("Saving object failed");
+            return;
         }
     }
 
@@ -42,12 +40,11 @@ public class HistoryManager {
                 }
             }
         } catch (NoSuchFileException e) {
-            LogManager.warn("Cannot find the file to read from");
-        } catch (NullPointerException | ClassNotFoundException e) {
-            LogManager.warn("File contains invalid data");
+            throw new EmptyHistoryException("Cannot find the file to read from");
+        } catch (ClassNotFoundException e) {
+            throw new FileProcessingFailedException("File contains invalid data");
         } catch (IOException e) {
             return records;
         }
-        return new LinkedList<>();
     }
 }
