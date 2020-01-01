@@ -5,16 +5,15 @@ import org.geekhub.crypto.annotations.Codec;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClassParser {
 
-    public static List<Class> getClasses() {
-        List<Class> annotatedClasses = new ArrayList<>();
+    public static List<Class<?>> getClasses() {
+
+        List<Class<?>> annotatedClasses = new ArrayList<>();
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             List<URL> roots = Collections.list(classLoader.getResources(""));
@@ -22,30 +21,30 @@ public class ClassParser {
                 File root = new File(url.getPath());
                 File[] listOfFiles = root.listFiles();
                 if (listOfFiles != null) {
-                    List<Class> foundedClasses = getClassFiles(listOfFiles);
+                    List<Class<?>> foundedClasses = getClassFiles(listOfFiles);
                     annotatedClasses.addAll(foundedClasses);
                 }
             }
         } catch (Exception e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return annotatedClasses;
     }
 
-    private static List<Class> getClassFiles(File[] listOfFiles) {
-        List<Class> appropriateClasses = new ArrayList<>();
+    private static List<Class<?>> getClassFiles(File[] listOfFiles) {
+        List<Class<?>> appropriateClasses = new ArrayList<>();
+        Pattern pattern = Pattern.compile("(org).*");
         for (File file : listOfFiles) {
             if (file.isDirectory()) {
                 appropriateClasses.addAll(getClassFiles(file.listFiles()));
             } else {
                 try {
                     String fileName = file.getPath();
-                    Pattern pattern = Pattern.compile("(org).*");
                     Matcher packageName = pattern.matcher(fileName);
                     if (packageName.find()) {
                         String name = packageName.group(0).replace("/", ".");
                         name = name.substring(0, name.length() - 6);
-                        Class classInstance = Class.forName(name);
+                        Class<?> classInstance = Class.forName(name);
                         Annotation annotation = classInstance.getAnnotation(Codec.class);
                         if (annotation != null) {
                             appropriateClasses.add(classInstance);

@@ -7,15 +7,18 @@ import org.geekhub.crypto.exception.IllegalInputException;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-@Shift(shift = 10)
 @Codec(algorithm = Algorithm.CAESAR)
 class CaesarCodec implements Encoder, Decoder {
 
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
-    private final int shift = 15;
+    @Shift(shift = 1)
+    private final int shift;
 
+    public CaesarCodec() {
+        shift = 15;
+    }
 
     @Override
     public String encode(String input) {
@@ -56,7 +59,7 @@ class CaesarCodec implements Encoder, Decoder {
     }
 
     private char encodeLetter(char input) {
-        int encodedChar = ALPHABET.indexOf(Character.toLowerCase(input)) + shift;
+        int encodedChar = ALPHABET.indexOf(Character.toLowerCase(input)) + this.shift;
         return ALPHABET.get(encodedChar < ALPHABET.size() ? encodedChar : encodedChar - ALPHABET.size());
     }
 

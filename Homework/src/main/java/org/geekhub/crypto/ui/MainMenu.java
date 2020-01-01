@@ -7,8 +7,8 @@ import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.logging.LoggerFactory;
 import org.geekhub.crypto.logging.Logger;
+import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.util.Scanner;
 

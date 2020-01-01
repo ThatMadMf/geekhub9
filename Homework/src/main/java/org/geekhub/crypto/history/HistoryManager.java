@@ -22,7 +22,8 @@ public class HistoryManager {
             for (HistoryRecord record : records) {
                 stream.writeObject(record);
             }
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 

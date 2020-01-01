@@ -83,7 +83,7 @@ public class CodingHistory {
     private LinkedList<HistoryRecord> readHistory() {
         LinkedList<HistoryRecord> serializedHistory = historyManager.readHistory();
         if (serializedHistory == null || serializedHistory.isEmpty()) {
-            throw new EmptyHistoryException("History is empty");
+            throw new EmptyHistoryException(EMPTY_HISTORY);
         }
         return serializedHistory;
     }

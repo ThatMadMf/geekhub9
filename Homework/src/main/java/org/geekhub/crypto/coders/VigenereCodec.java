@@ -7,17 +7,22 @@ import org.geekhub.crypto.exception.IllegalInputException;
 import java.util.List;
 import java.util.function.BiFunction;
 
-@Key(keyword = "notkeyword")
 @Codec(algorithm = Algorithm.VIGENERE)
 class VigenereCodec implements Encoder, Decoder {
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
-    private final String key = "keyword";
+
+    @Key(keyword = "notkeyword")
+    private final String key;
+
+    public VigenereCodec() {
+        key = "keyword";
+    }
 
     @Override
     public String encode(String input) {
-        checkInput(input);
+        checkNull(input);
         StringBuilder result = new StringBuilder();
 
         int keywordCount = 0;
@@ -30,7 +35,7 @@ class VigenereCodec implements Encoder, Decoder {
 
     @Override
     public String decode(String input) {
-        checkInput(input);
+        checkNull(input);
         StringBuilder result = new StringBuilder();
         int keywordCount = 0;
         for (char symbol : input.toCharArray()) {
@@ -40,7 +45,7 @@ class VigenereCodec implements Encoder, Decoder {
         return result.toString();
     }
 
-    private void checkInput(String input) {
+    private void checkNull(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Input have to contain text");
         }

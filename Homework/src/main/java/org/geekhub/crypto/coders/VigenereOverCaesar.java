@@ -10,10 +10,10 @@ class VigenereOverCaesar implements Encoder, Decoder {
     private final Decoder caesarDecoder;
 
     public VigenereOverCaesar() {
-        vigenereEncoder = EncodersFactory.getEncoder(Algorithm.VIGENERE);
-        caesarEncoder = EncodersFactory.getEncoder(Algorithm.CAESAR);
-        vigenereDecoder = DecodersFactory.getDecoder(Algorithm.VIGENERE);
-        caesarDecoder = DecodersFactory.getDecoder(Algorithm.CAESAR);
+        vigenereEncoder = new VigenereCodec();
+        caesarEncoder = new CaesarCodec();
+        vigenereDecoder = new VigenereCodec();
+        caesarDecoder = new CaesarCodec();
     }
 
     @Override
