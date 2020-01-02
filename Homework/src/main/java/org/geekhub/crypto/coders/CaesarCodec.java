@@ -13,7 +13,7 @@ class CaesarCodec implements Encoder, Decoder {
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
-    @Shift(shift = 1)
+    @Shift
     private final int shift;
 
     public CaesarCodec() {

@@ -4,6 +4,7 @@ import org.geekhub.crypto.annotations.Key;
 import org.geekhub.crypto.annotations.Shift;
 import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.exception.IllegalAnnotaionException;
+import org.geekhub.crypto.util.PropertiesReader;
 
 import java.lang.reflect.Field;
 
@@ -15,18 +16,18 @@ public class FieldInitialiser {
             for (Field field : fields) {
                 if (field.isAnnotationPresent(Shift.class)) {
                     if (instance.getClass() == CaesarCodec.class) {
-                        Shift shift = field.getAnnotation(Shift.class);
                         field.setAccessible(true);
-                        field.set(instance, shift.shift());
+                        PropertiesReader propertiesReader = new PropertiesReader("config.properties");
+                        field.set(instance, Integer.parseInt(propertiesReader.readSingleProperty("shift")));
                     } else {
                         throw new IllegalAnnotaionException("Attempt to set shift to " + instance.getClass());
                     }
                 }
                 if (field.isAnnotationPresent(Key.class)) {
                     if (instance.getClass() == VigenereCodec.class) {
-                        Key key = field.getAnnotation(Key.class);
+                        PropertiesReader propertiesReader = new PropertiesReader("config.properties");
                         field.setAccessible(true);
-                        field.set(instance, key.keyword());
+                        field.set(instance, propertiesReader.readSingleProperty("key"));
                     } else {
                         throw new IllegalAnnotaionException("Attempt to set key to " + instance.getClass());
                     }
