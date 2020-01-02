@@ -5,6 +5,7 @@ import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class EncodersFactory {
@@ -14,14 +15,16 @@ public class EncodersFactory {
             throw new CodecUnsupportedException("Unsupported encoder");
         }
         Logger logger = LoggerFactory.getLogger();
-        List<Class<?>> classes = ClassParser.getClasses();
+        List<Class<?>> classes = ClassParser.matchingClasses;
 
         for (Class<?> currentClass : classes) {
             Codec codec = currentClass.getAnnotation(Codec.class);
             if (codec.algorithm() == name && Encoder.class.isAssignableFrom(currentClass)) {
                 try {
-                    return (Encoder) FieldInitialiser.initialiseFields(currentClass.newInstance());
-                } catch (InstantiationException | IllegalAccessException e) {
+                    return (Encoder) FieldInitialiser.initialiseFields(
+                            currentClass.getDeclaredConstructor().newInstance());
+                } catch (InstantiationException | IllegalAccessException |
+                        NoSuchMethodException | InvocationTargetException e) {
                     logger.warn(e.getMessage());
                 }
             }

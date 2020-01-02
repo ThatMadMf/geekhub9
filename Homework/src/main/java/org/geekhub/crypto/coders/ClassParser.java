@@ -11,8 +11,9 @@ import java.util.regex.Pattern;
 
 public class ClassParser {
 
-    public static List<Class<?>> getClasses() {
+    public static final List<Class<?>> matchingClasses = getClasses();
 
+    private static List<Class<?>> getClasses() {
         List<Class<?>> annotatedClasses = new ArrayList<>();
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -32,6 +33,8 @@ public class ClassParser {
     }
 
     private static List<Class<?>> getClassFiles(File[] listOfFiles) {
+        String pathDivider = "/";
+        String packageDivider = ".";
         List<Class<?>> appropriateClasses = new ArrayList<>();
         Pattern pattern = Pattern.compile("(org).*");
         for (File file : listOfFiles) {
@@ -42,8 +45,8 @@ public class ClassParser {
                     String fileName = file.getPath();
                     Matcher packageName = pattern.matcher(fileName);
                     if (packageName.find()) {
-                        String name = packageName.group(0).replace("/", ".");
-                        name = name.substring(0, name.length() - 6);
+                        String name = packageName.group(0).replace(pathDivider, packageDivider);
+                        name = cropFullClassName(name);
                         Class<?> classInstance = Class.forName(name);
                         Annotation annotation = classInstance.getAnnotation(Codec.class);
                         if (annotation != null) {
@@ -56,5 +59,10 @@ public class ClassParser {
             }
         }
         return appropriateClasses;
+    }
+
+    private static String cropFullClassName(String fullClassName) {
+        int indexOfDot = 6;
+        return fullClassName.substring(0, fullClassName.length() - indexOfDot);
     }
 }

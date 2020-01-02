@@ -1,17 +1,11 @@
 package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.annotations.Codec;
-import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.util.MapReverser;
 import org.geekhub.crypto.util.PropertiesReader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.function.UnaryOperator;
 
 @Codec(algorithm = Algorithm.MORSE)
