@@ -3,6 +3,8 @@ package org.geekhub.crypto.coders;
 import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.exception.IllegalInputException;
+import org.geekhub.crypto.util.MapReverser;
+import org.geekhub.crypto.util.PropertiesReader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,22 +21,9 @@ class MorseCodec implements Encoder, Decoder {
     private static final Map<String, String> CODE_MAP;
 
     static {
-        CHAR_MAP = new HashMap<>();
-        CODE_MAP = new HashMap<>();
-        ClassLoader classLoader = MorseCodec.class.getClassLoader();
-        try (InputStream inputStream = classLoader.getResourceAsStream("coders/MorseDictionary.properties")) {
-            Properties properties = new Properties();
-            if (inputStream != null) {
-                properties.load(new InputStreamReader(inputStream));
-            }
-            for (String key : properties.stringPropertyNames()) {
-                String value = properties.getProperty(key);
-                CHAR_MAP.put(key, value);
-                CODE_MAP.put(value, key);
-            }
-        } catch (IOException e) {
-            throw new FileProcessingFailedException("Cannot read dictionary from properties");
-        }
+        PropertiesReader reader = new PropertiesReader("coders/MorseDictionary.properties");
+        CHAR_MAP = reader.readMap();
+        CODE_MAP = MapReverser.reverse(CHAR_MAP);
     }
 
     @Override

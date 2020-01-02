@@ -1,7 +1,10 @@
 package org.geekhub.crypto.util;
 
+import org.geekhub.crypto.exception.FileProcessingFailedException;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,6 +43,24 @@ public class PropertiesReader {
             System.out.println("Cannot read property " + propertyName);
         }
         return "";
+    }
+
+    public Map<String, String> readMap() {
+        try (InputStream inputStream = PropertiesReader.class.getClassLoader().getResourceAsStream(path)) {
+            Map<String, String> result = new HashMap<>();
+            Properties properties = new Properties();
+            if (inputStream != null) {
+                properties.load(new InputStreamReader(inputStream));
+
+                for (String key : properties.stringPropertyNames()) {
+                    String value = properties.getProperty(key);
+                    result.put(key, value);
+                }
+            }
+            return result;
+        } catch (IOException e) {
+            throw new FileProcessingFailedException("Cannot read dictionary from properties");
+        }
     }
 
 }
