@@ -25,4 +25,34 @@
         <url-pattern>/session</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>MainMenuServlet</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.MainMenuServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MainMenuServlet</servlet-name>
+        <url-pattern>/application</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DecodeServlet</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.DecodeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DecodeServlet</servlet-name>
+        <url-pattern>/application/decode</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EncodeServlet</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.EncodeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EncodeServlet</servlet-name>
+        <url-pattern>/application/encode</url-pattern>
+    </servlet-mapping>
+
 </web-app>
