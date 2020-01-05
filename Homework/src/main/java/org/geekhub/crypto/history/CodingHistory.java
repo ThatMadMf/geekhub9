@@ -1,6 +1,7 @@
 package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
+import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;

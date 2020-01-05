@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>FrontServlet</servlet-name>
-        <servlet-class>org.geekhub.crypto.web.FrontServlet</servlet-class>
+        <servlet-class>org.geekhub.crypto.web.crypto.FrontServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>CheckServlet</servlet-name>
-        <servlet-class>org.geekhub.crypto.web.CheckSessionServlet</servlet-class>
+        <servlet-class>org.geekhub.crypto.web.crypto.CheckSessionServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -27,7 +27,7 @@
 
     <servlet>
         <servlet-name>MainMenuServlet</servlet-name>
-        <servlet-class>org.geekhub.crypto.web.MainMenuServlet</servlet-class>
+        <servlet-class>org.geekhub.crypto.web.crypto.MainMenuServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -37,7 +37,7 @@
 
     <servlet>
         <servlet-name>DecodeServlet</servlet-name>
-        <servlet-class>org.geekhub.crypto.web.DecodeServlet</servlet-class>
+        <servlet-class>org.geekhub.crypto.web.crypto.coders.DecodeServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -47,12 +47,52 @@
 
     <servlet>
         <servlet-name>EncodeServlet</servlet-name>
-        <servlet-class>org.geekhub.crypto.web.EncodeServlet</servlet-class>
+        <servlet-class>org.geekhub.crypto.web.crypto.coders.EncodeServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>EncodeServlet</servlet-name>
         <url-pattern>/application/encode</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnalyticsMenu</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.analytics.AnalyticsMenuServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AnalyticsMenu</servlet-name>
+        <url-pattern>/application/analytics</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnalyticsCountInputs</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.analytics.AuditCountInputsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AnalyticsCountInputs</servlet-name>
+        <url-pattern>/application/analytics/count_inputs</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnalyticsCountByDate</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.analytics.AuditCountByDateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AnalyticsCountByDate</servlet-name>
+        <url-pattern>/application/analytics/count_by_date</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnalyticsFindMostPopular</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.analytics.AuditFindMostPopularServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AnalyticsFindMostPopular</servlet-name>
+        <url-pattern>/application/analytics/find_most_popular_codec</url-pattern>
     </servlet-mapping>
 
 </web-app>

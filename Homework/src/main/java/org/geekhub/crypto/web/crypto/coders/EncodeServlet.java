@@ -1,4 +1,4 @@
-package org.geekhub.crypto.web;
+package org.geekhub.crypto.web.crypto.coders;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Encoder;
