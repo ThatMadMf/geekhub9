@@ -46,13 +46,9 @@ public class CodingHistory {
 
     public CodingHistory() {
         historyRecords = new LinkedList<>();
-        historyManager = new HistoryManager("Homework/history.ser");
+        historyManager = new HistoryManager();
     }
 
-    public CodingHistory(String path) {
-        historyRecords = new LinkedList<>();
-        historyManager = new HistoryManager(path + "/history.ser");
-    }
 
     public void addToHistory(HistoryRecord record) {
         if (record == null) {
@@ -77,6 +73,13 @@ public class CodingHistory {
     }
 
     public void removeLastRecord() {
+        if(historyRecords.isEmpty()){
+            try {
+                historyRecords.addAll(readHistory());
+            } catch (EmptyHistoryException e) {
+                compostiteLogger.log(EMPTY_HISTORY);
+            }
+        }
         historyRecords.pollLast();
         historyManager.saveHistory(historyRecords);
     }

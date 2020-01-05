@@ -26,12 +26,14 @@ public class CodingAuditTest {
     @BeforeMethod
     public void initialise() throws IOException {
         Files.deleteIfExists(Paths.get(System.getProperty("user.home") + "/history.ser"));
-        history = new CodingHistory(System.getProperty("user.home"));
+        history = new CodingHistory();
         codingAudit = new CodingAudit(history);
     }
 
     @Test
     void When_CodingHistoryIsEmpty_Expect_EmptyWordCountMap() {
+        history.clearHistory();
+
         Map<String, Integer> actualResult = codingAudit.countEncodingInputs();
 
         assertTrue(actualResult.isEmpty());
@@ -39,6 +41,7 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryContainsOneWord_Expect_Success() {
+        history.clearHistory();
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE));
 
         Map<String, Integer> actualResult = codingAudit.countEncodingInputs();
@@ -50,6 +53,7 @@ public class CodingAuditTest {
 
     @Test()
     void When_CodingHistoryContainsMultipleWords_Expect_Success() {
+        history.clearHistory();
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE));
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
@@ -64,6 +68,8 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryIsEmpty_Expect_EmptyDateCountMap() {
+        history.clearHistory();
+
         Map<LocalDate, Long> actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
 
         assertTrue(actualResult.isEmpty());
@@ -71,6 +77,7 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryContainsOneDate_Expect_Success() {
+        history.clearHistory();
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE, LocalDate.now()));
 
         Map<LocalDate, Long> actualResult = codingAudit.countCodingsByDate(CodecUsecase.ENCODING);
@@ -83,6 +90,7 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryContainsMultipleDates_Expect_Success() {
+        history.clearHistory();
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.VIGENERE, LocalDate.now()));
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.MORSE, LocalDate.now()));
         history.addToHistory(
@@ -100,11 +108,13 @@ public class CodingAuditTest {
 
     @Test(expectedExceptions = EmptyHistoryException.class)
     void When_CodingHistoryEmpty_Expect_Exception() {
+        history.clearHistory();
         codingAudit.findMostPopularCodec(CodecUsecase.ENCODING);
     }
 
     @Test
     void When_CodingHistoryContainsOneCodecUsecase_Expect_Success() {
+        history.clearHistory();
         history.addToHistory(new HistoryRecord(Operation.DECODE, "word", Algorithm.VIGENERE));
         history.addToHistory(new HistoryRecord(Operation.ENCODE, "word", Algorithm.CAESAR));
 

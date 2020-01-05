@@ -15,7 +15,7 @@ public class AuditCountInputsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         try(PrintWriter out = resp.getWriter()) {
-            CodingAudit audit = new CodingAudit(new CodingHistory("/home/the_guy/IdeaProjects/geekhub9/Homework"));
+            CodingAudit audit = new CodingAudit(new CodingHistory());
             Map<String, Integer> res = audit.countEncodingInputs();
             for(Map.Entry<String, Integer> entry : res.entrySet()) {
                 out.println(entry.getKey() + "\t" + entry.getValue());

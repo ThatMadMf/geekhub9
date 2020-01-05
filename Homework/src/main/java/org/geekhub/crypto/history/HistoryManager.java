@@ -4,19 +4,21 @@ import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.geekhub.crypto.exception.FileProcessingFailedException;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.file.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class HistoryManager {
-    private final Path historyFile;
+    private final Path history;
 
-    public HistoryManager(String path) {
-        historyFile = Paths.get(path);
+    public HistoryManager() {
+        history = getHistoryFile("history.ser");
     }
 
+
     public void saveHistory(List<HistoryRecord> records) {
-        try (OutputStream fileOutputStream = Files.newOutputStream(historyFile);
+        try (OutputStream fileOutputStream = Files.newOutputStream(history);
              ObjectOutputStream stream = new ObjectOutputStream(fileOutputStream)
         ) {
             for (HistoryRecord record : records) {
@@ -29,7 +31,7 @@ public class HistoryManager {
 
     public LinkedList<HistoryRecord> readHistory() {
         LinkedList<HistoryRecord> records = new LinkedList<>();
-        try (InputStream fileInputStream = Files.newInputStream(historyFile);
+        try (InputStream fileInputStream = Files.newInputStream(history);
              BufferedInputStream bis = new BufferedInputStream(fileInputStream);
              ObjectInputStream in = new ObjectInputStream(bis)
         ) {
@@ -46,5 +48,12 @@ public class HistoryManager {
         } catch (IOException e) {
             return records;
         }
+    }
+
+    private Path getHistoryFile(String path) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL historyFile = classLoader.getResource(path);
+        return Paths.get(historyFile.getPath());
+
     }
 }

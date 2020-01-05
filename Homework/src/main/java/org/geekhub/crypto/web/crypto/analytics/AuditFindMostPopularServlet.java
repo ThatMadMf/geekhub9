@@ -35,7 +35,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
         try(PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));
 
-            CodingAudit audit = new CodingAudit(new CodingHistory("/home/the_guy/IdeaProjects/geekhub9/Homework"));
+            CodingAudit audit = new CodingAudit(new CodingHistory());
             Algorithm res = audit.findMostPopularCodec(usecase);
             out.println(res.name());
         } catch (IOException e) {

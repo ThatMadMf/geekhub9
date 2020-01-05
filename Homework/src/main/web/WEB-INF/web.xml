@@ -95,4 +95,44 @@
         <url-pattern>/application/analytics/find_most_popular_codec</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>HistoryMenu</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.history.HistoryMenuServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HistoryMenu</servlet-name>
+        <url-pattern>/application/history</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowHistory</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.history.ShowHistoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShowHistory</servlet-name>
+        <url-pattern>/application/history/show_history</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HistoryRemoveLast</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.history.RemoveHistoryLastServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HistoryRemoveLast</servlet-name>
+        <url-pattern>/application/history/remove_last</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ClearHistory</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.history.ClearHistoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ClearHistory</servlet-name>
+        <url-pattern>/application/history/clear_history</url-pattern>
+    </servlet-mapping>
+
 </web-app>

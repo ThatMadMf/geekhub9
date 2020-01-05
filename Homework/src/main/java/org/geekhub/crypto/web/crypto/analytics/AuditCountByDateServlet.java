@@ -38,7 +38,7 @@ public class AuditCountByDateServlet extends HttpServlet {
         try(PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));
 
-            CodingAudit audit = new CodingAudit(new CodingHistory("/home/the_guy/IdeaProjects/geekhub9/Homework"));
+            CodingAudit audit = new CodingAudit(new CodingHistory());
             Map<LocalDate, Long> res = audit.countCodingsByDate(usecase);
             for(Map.Entry<LocalDate, Long> entry : res.entrySet()) {
                 out.println(entry.getKey() + "\t" + entry.getValue());

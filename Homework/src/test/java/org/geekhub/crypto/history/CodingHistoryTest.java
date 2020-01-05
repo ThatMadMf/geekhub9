@@ -14,7 +14,7 @@ public class CodingHistoryTest {
 
     @BeforeMethod
     void initialise() {
-        history = new CodingHistory(System.getProperty("user.home"));
+        history = new CodingHistory();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -24,6 +24,7 @@ public class CodingHistoryTest {
 
     @Test
     void When_AddingNotNullRecord_Expect_Success() {
+        history.clearHistory();
         HistoryRecord record = new HistoryRecord(Operation.SHOW_HISTORY);
 
         history.addToHistory(record);
