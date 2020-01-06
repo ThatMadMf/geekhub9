@@ -4,6 +4,9 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.DecodersFactory;
 import org.geekhub.crypto.exception.WebException;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +42,8 @@ public class DecodeServlet extends HttpServlet {
             String text = req.getParameter("text");
 
             Decoder decoder = DecodersFactory.getDecoder(algorithm);
+            CodingHistory history = new CodingHistory();
+            history.addToHistory(new HistoryRecord(Operation.DECODE, text, algorithm));
             out.println(decoder.decode(text));
         } catch (IOException e) {
             throw new WebException(e.getMessage());

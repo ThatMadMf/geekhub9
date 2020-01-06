@@ -14,7 +14,7 @@ public class ResponseHistoryPrinter implements HistoryPrinter {
     @Override
     public void print(List<HistoryRecord> history) {
         for(HistoryRecord record : history) {
-            writer.println(record.toString());
+            writer.println(record.toString() + "\n");
         }
     }
 }

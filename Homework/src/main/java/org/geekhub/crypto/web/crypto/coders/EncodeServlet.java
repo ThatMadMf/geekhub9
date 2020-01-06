@@ -4,6 +4,9 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.coders.EncodersFactory;
 import org.geekhub.crypto.exception.WebException;
+import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +43,8 @@ public class EncodeServlet extends HttpServlet {
             String text = req.getParameter("text");
 
             Encoder decoder = EncodersFactory.getEncoder(algorithm);
+            CodingHistory history = new CodingHistory();
+            history.addToHistory(new HistoryRecord(Operation.ENCODE, text, algorithm));
             out.println(decoder.encode(text));
         } catch (IOException e) {
             throw new WebException(e.getMessage());

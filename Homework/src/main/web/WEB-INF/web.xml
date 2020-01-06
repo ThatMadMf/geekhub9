@@ -6,7 +6,7 @@
          version="4.0">
 
     <error-page>
-        <location>/error</location>
+        <location>/errorHandler</location>
     </error-page>
 
     <filter>
@@ -160,7 +160,7 @@
 
     <servlet-mapping>
         <servlet-name>Error</servlet-name>
-        <url-pattern>/error</url-pattern>
+        <url-pattern>/errorHandler</url-pattern>
     </servlet-mapping>
 
 
