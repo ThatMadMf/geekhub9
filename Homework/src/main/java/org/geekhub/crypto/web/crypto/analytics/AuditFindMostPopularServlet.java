@@ -3,6 +3,7 @@ package org.geekhub.crypto.web.crypto.analytics;
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 
 import javax.servlet.http.HttpServlet;
@@ -10,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.Map;
 
 public class AuditFindMostPopularServlet extends HttpServlet {
 
@@ -27,7 +26,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
         } catch (IOException e ) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 
@@ -39,7 +38,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
             Algorithm res = audit.findMostPopularCodec(usecase);
             out.println(res.name());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }

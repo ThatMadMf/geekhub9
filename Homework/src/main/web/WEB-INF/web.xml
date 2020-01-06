@@ -5,6 +5,10 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <error-page>
+        <location>/error</location>
+    </error-page>
+
     <servlet>
         <servlet-name>FrontServlet</servlet-name>
         <servlet-class>org.geekhub.crypto.web.crypto.FrontServlet</servlet-class>
@@ -134,5 +138,17 @@
         <servlet-name>ClearHistory</servlet-name>
         <url-pattern>/application/history/clear_history</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Error</servlet-name>
+        <servlet-class>org.geekhub.crypto.web.crypto.ErrorHandler</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>

@@ -1,5 +1,7 @@
 package org.geekhub.crypto.web.crypto;
 
+import org.geekhub.crypto.exception.WebException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +22,7 @@ public class FrontServlet extends HttpServlet {
                     "   </body>\n" +
                     "</html>");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 
@@ -40,7 +42,7 @@ public class FrontServlet extends HttpServlet {
                 response.sendRedirect("/geekhub");
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }

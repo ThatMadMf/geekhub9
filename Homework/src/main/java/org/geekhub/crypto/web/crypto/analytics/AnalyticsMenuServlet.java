@@ -1,5 +1,7 @@
 package org.geekhub.crypto.web.crypto.analytics;
 
+import org.geekhub.crypto.exception.WebException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +20,7 @@ public class AnalyticsMenuServlet extends HttpServlet {
             out.println("<a href=\"/geekhub/application/analytics/find_most_popular_codec\">" +
                     "3. Find most popular algorithm</a><br>");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }

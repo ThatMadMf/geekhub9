@@ -1,6 +1,7 @@
 package org.geekhub.crypto.web.crypto.analytics;
 
 import org.geekhub.crypto.analytics.CodingAudit;
+import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,7 @@ public class AuditCountInputsServlet extends HttpServlet {
                 out.println(entry.getKey() + "\t" + entry.getValue());
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }

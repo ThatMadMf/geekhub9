@@ -5,6 +5,7 @@ import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.coders.EncodersFactory;
+import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class AuditCountByDateServlet extends HttpServlet {
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
         } catch (IOException e ) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 
@@ -44,7 +45,7 @@ public class AuditCountByDateServlet extends HttpServlet {
                 out.println(entry.getKey() + "\t" + entry.getValue());
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }
