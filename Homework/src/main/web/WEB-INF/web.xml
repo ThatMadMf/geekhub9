@@ -9,6 +9,17 @@
         <location>/error</location>
     </error-page>
 
+    <filter>
+        <filter-name>RequestLoggingFilter</filter-name>
+        <filter-class>org.geekhub.crypto.web.SessionFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RequestLoggingFilter</filter-name>
+        <url-pattern>/application</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>FrontServlet</servlet-name>
         <servlet-class>org.geekhub.crypto.web.crypto.FrontServlet</servlet-class>
@@ -17,16 +28,6 @@
     <servlet-mapping>
         <servlet-name>FrontServlet</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CheckServlet</servlet-name>
-        <servlet-class>org.geekhub.crypto.web.crypto.CheckSessionServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>CheckServlet</servlet-name>
-        <url-pattern>/session</url-pattern>
     </servlet-mapping>
 
     <servlet>
