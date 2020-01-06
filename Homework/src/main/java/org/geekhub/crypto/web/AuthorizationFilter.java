@@ -11,23 +11,22 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class SessionFilter extends HttpFilter {
+public class AuthorizationFilter extends HttpFilter {
 
-    @Override
-    public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) {
-        try (PrintWriter out = resp.getWriter()) {
-            resp.setContentType("text/html");
-            HttpSession session = req.getSession(false);
+    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+        try (PrintWriter out = response.getWriter()) {
+            response.setContentType("text/html");
+            HttpSession session = request.getSession(false);
             if (session == null) {
                 out.write("Wrong login<br>");
                 out.write("<a href=\"/geekhub/\">Login</a>");
             } else {
                 String userRole = session.getAttribute("userRole").toString();
-                if (userRole == null) {
-                    out.write("Wrong login");
-                    out.write("a href=\"/geekhub/\">Login</a>");
+                if (!userRole.equals("admin")) {
+                    out.write("You do not have rights to go<br>");
+                    out.write("<a href=\"/geekhub/\">Login</a>");
                 } else {
-                    chain.doFilter(req, resp);
+                    chain.doFilter(request, response);
                 }
             }
         } catch (IOException | ServletException e) {
@@ -35,4 +34,3 @@ public class SessionFilter extends HttpFilter {
         }
     }
 }
-

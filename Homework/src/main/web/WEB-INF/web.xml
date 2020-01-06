@@ -17,7 +17,20 @@
     <filter-mapping>
         <filter-name>RequestLoggingFilter</filter-name>
         <url-pattern>/application</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
+        <url-pattern>/application/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>org.geekhub.crypto.web.AuthorizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/application/analytics</url-pattern>
+        <url-pattern>/application/analytics/*</url-pattern>
+        <url-pattern>/application/history/remove_last</url-pattern>
+        <url-pattern>/application/history/clear_history</url-pattern>
     </filter-mapping>
 
     <servlet>
