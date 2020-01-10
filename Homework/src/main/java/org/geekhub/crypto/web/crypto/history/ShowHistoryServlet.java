@@ -1,5 +1,6 @@
 package org.geekhub.crypto.web.crypto.history;
 
+import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.ResponseHistoryPrinter;
 
@@ -17,7 +18,7 @@ public class ShowHistoryServlet extends HttpServlet {
             ResponseHistoryPrinter printer = new ResponseHistoryPrinter(out);
             printer.print(history.getHistoryRecords());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }

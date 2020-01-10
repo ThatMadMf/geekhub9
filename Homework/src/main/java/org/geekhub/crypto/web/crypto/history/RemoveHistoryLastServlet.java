@@ -1,5 +1,6 @@
 package org.geekhub.crypto.web.crypto.history;
 
+import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 
 import javax.servlet.http.HttpServlet;
@@ -17,7 +18,7 @@ public class RemoveHistoryLastServlet extends HttpServlet {
                     "<input type = \"submit\"/>\n" +
                     "</form>");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 
@@ -29,7 +30,7 @@ public class RemoveHistoryLastServlet extends HttpServlet {
             out.println("Removing is success");
             out.println("<a href=\"/geekhub/application>Go to menu</a>");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }

@@ -6,13 +6,14 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class FileLogger implements Logger {
     private static final Logger consoleLogger = new ConsoleLogger();
     private final Path logDestination;
 
-    public FileLogger(String home) {
-        logDestination = Paths.get(home + "/logs.txt");
+    public FileLogger(String dir) {
+        logDestination = Paths.get(dir + "/logs.txt");
     }
 
     @Override
@@ -31,7 +32,7 @@ public class FileLogger implements Logger {
     }
 
     private void printToFile(String message) {
-        try (OutputStream fileOutputStream = Files.newOutputStream(logDestination);
+        try (OutputStream fileOutputStream = Files.newOutputStream(logDestination, StandardOpenOption.APPEND);
              PrintStream printStream = new PrintStream(fileOutputStream)) {
             printStream.println(message);
         } catch (IOException e) {

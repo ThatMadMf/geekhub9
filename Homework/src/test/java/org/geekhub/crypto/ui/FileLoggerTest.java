@@ -1,6 +1,8 @@
 package org.geekhub.crypto.ui;
 
 import org.geekhub.crypto.logging.FileLogger;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,15 +16,16 @@ import static org.testng.Assert.assertEquals;
 
 public class FileLoggerTest {
 
-    private FileLogger fileLogger;
-    private Path homePath;
+    private FileLogger fileLogger = new FileLogger(System.getProperty("java.io.tmpdir"));
+    private Path homePath = Paths.get(System.getProperty("java.io.tmpdir")).resolve("logs.txt");
 
     @BeforeMethod
     public void initialise() throws IOException {
-        homePath = Paths.get(System.getProperty("user.home") + "/logs.txt");
-        Files.newInputStream(homePath, StandardOpenOption.TRUNCATE_EXISTING);
-        fileLogger = new FileLogger(System.getProperty("user.home"));
+        Files.deleteIfExists(homePath);
+        Files.createFile(homePath);
+
     }
+
 
     @Test
     public void When_LoggingCorrectly_Expect_Success() throws IOException {

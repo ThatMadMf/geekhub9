@@ -15,7 +15,8 @@ import java.io.PrintWriter;
 public class AuditFindMostPopularServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try(PrintWriter out = response.getWriter()) {
+
+        try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
             out.println("<form action = \"\" method = \"POST\">\n" +
                     "Enter codec use case: <select name = \"usecase\">\n");
@@ -25,13 +26,13 @@ public class AuditFindMostPopularServlet extends HttpServlet {
             out.println("</select>" + "<br>" +
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
-        } catch (IOException e ) {
+        } catch (IOException e) {
             throw new WebException(e.getMessage());
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        try(PrintWriter out = response.getWriter()) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        try (PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));
 
             CodingAudit audit = new CodingAudit(new CodingHistory());

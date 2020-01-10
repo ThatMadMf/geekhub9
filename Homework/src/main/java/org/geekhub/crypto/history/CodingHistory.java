@@ -1,7 +1,6 @@
 package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
-import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
@@ -13,18 +12,11 @@ import java.util.List;
 public class CodingHistory {
     private final LinkedList<HistoryRecord> historyRecords;
     private final HistoryManager historyManager;
-    private static final Logger compostiteLogger = LoggerFactory.getLogger();
+    private static final Logger compositeLogger = LoggerFactory.getLogger();
     private static final String EMPTY_HISTORY = "History is empty";
 
     public List<HistoryRecord> getHistoryRecords() {
-        if (historyRecords.isEmpty()) {
-            try {
-                historyRecords.addAll(readHistory());
-            } catch (EmptyHistoryException e) {
-                compostiteLogger.log(EMPTY_HISTORY);
-            }
-        }
-        return historyRecords;
+        return historyManager.readHistory();
     }
 
     public List<HistoryRecord> getHistoryRecords(CodecUsecase usecase) {
@@ -32,7 +24,7 @@ public class CodingHistory {
             try {
                 historyRecords.addAll(readHistory());
             } catch (EmptyHistoryException e) {
-                compostiteLogger.log(EMPTY_HISTORY);
+                compositeLogger.log(EMPTY_HISTORY);
             }
         }
         List<HistoryRecord> result = new ArrayList<>();
@@ -77,7 +69,7 @@ public class CodingHistory {
             try {
                 historyRecords.addAll(readHistory());
             } catch (EmptyHistoryException e) {
-                compostiteLogger.log(EMPTY_HISTORY);
+                compositeLogger.log(EMPTY_HISTORY);
             }
         }
         historyRecords.pollLast();
@@ -85,8 +77,8 @@ public class CodingHistory {
     }
 
     private LinkedList<HistoryRecord> readHistory() {
-        LinkedList<HistoryRecord> serializedHistory = historyManager.readHistory();
-        if (serializedHistory == null || serializedHistory.isEmpty()) {
+        LinkedList<HistoryRecord> serializedHistory = new LinkedList<>(historyManager.readHistory());
+        if (serializedHistory.isEmpty()) {
             throw new EmptyHistoryException(EMPTY_HISTORY);
         }
         return serializedHistory;

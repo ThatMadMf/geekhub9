@@ -29,7 +29,7 @@ public class HistoryManager {
         }
     }
 
-    public LinkedList<HistoryRecord> readHistory() {
+    public List<HistoryRecord> readHistory() {
         LinkedList<HistoryRecord> records = new LinkedList<>();
         try (InputStream fileInputStream = Files.newInputStream(history);
              BufferedInputStream bis = new BufferedInputStream(fileInputStream);
@@ -42,9 +42,9 @@ public class HistoryManager {
                 }
             }
         } catch (NoSuchFileException e) {
-            throw new EmptyHistoryException("Cannot find the file to read from");
+            throw new EmptyHistoryException(e.getMessage());
         } catch (ClassNotFoundException e) {
-            throw new FileProcessingFailedException("File contains invalid data");
+            throw new FileProcessingFailedException(e.getMessage());
         } catch (IOException e) {
             return records;
         }

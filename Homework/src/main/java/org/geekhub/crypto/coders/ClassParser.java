@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.annotations.Codec;
+import org.geekhub.crypto.exception.FileProcessingFailedException;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -10,8 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClassParser {
+    private static final Pattern pattern = Pattern.compile("(org).*");
+    private static final int INDEX_OF_DOT = 6;
 
-    public static final List<Class<?>> matchingClasses = getClasses();
+    static final List<Class<?>> matchingClasses = getClasses();
 
     private static List<Class<?>> getClasses() {
         List<Class<?>> annotatedClasses = new ArrayList<>();
@@ -27,7 +30,7 @@ public class ClassParser {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new FileProcessingFailedException(e.getMessage());
         }
         return annotatedClasses;
     }
@@ -36,10 +39,12 @@ public class ClassParser {
         String pathDivider = "/";
         String packageDivider = ".";
         List<Class<?>> appropriateClasses = new ArrayList<>();
-        Pattern pattern = Pattern.compile("(org).*");
         for (File file : listOfFiles) {
             if (file.isDirectory()) {
-                appropriateClasses.addAll(getClassFiles(file.listFiles()));
+                File[] listFiles = file.listFiles();
+                if (listFiles != null) {
+                    appropriateClasses.addAll(getClassFiles(listFiles));
+                }
             } else {
                 try {
                     String fileName = file.getPath();
@@ -54,7 +59,7 @@ public class ClassParser {
                         }
                     }
                 } catch (ClassNotFoundException | IllegalStateException e) {
-                    System.out.println(e.getMessage());
+                    throw new FileProcessingFailedException(e.getMessage());
                 }
             }
         }
@@ -62,7 +67,6 @@ public class ClassParser {
     }
 
     private static String cropFullClassName(String fullClassName) {
-        int indexOfDot = 6;
-        return fullClassName.substring(0, fullClassName.length() - indexOfDot);
+        return fullClassName.substring(0, fullClassName.length() - INDEX_OF_DOT);
     }
 }

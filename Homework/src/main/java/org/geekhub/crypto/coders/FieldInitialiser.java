@@ -6,6 +6,7 @@ import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.exception.IllegalAnnotaionException;
 import org.geekhub.crypto.util.PropertiesReader;
 
+
 import java.lang.reflect.Field;
 
 public class FieldInitialiser {

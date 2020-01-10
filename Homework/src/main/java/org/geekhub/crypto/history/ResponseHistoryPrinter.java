@@ -13,8 +13,11 @@ public class ResponseHistoryPrinter implements HistoryPrinter {
 
     @Override
     public void print(List<HistoryRecord> history) {
+        String div = " / ";
+        writer.println("Operation / Date / Codec  / Input<br>");
         for(HistoryRecord record : history) {
-            writer.println(record.toString() + "\n");
+            writer.println(record.getOperation() + div + record.getOperationDate() +
+                    div + record.getCodec() + div + record.getUserInput() + "<br>");
         }
     }
 }

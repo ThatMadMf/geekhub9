@@ -2,6 +2,7 @@ package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.exception.CodecUnsupportedException;
+import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 
@@ -24,7 +25,7 @@ public class EncodersFactory {
                     return (Encoder) FieldInitialiser.initialiseFields(
                             currentClass.getDeclaredConstructor().newInstance());
                 } catch (InstantiationException | IllegalAccessException |
-                        NoSuchMethodException | InvocationTargetException e) {
+                        NoSuchMethodException | InvocationTargetException | FileProcessingFailedException e) {
                     logger.warn(e.getMessage());
                 }
             }

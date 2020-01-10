@@ -97,11 +97,13 @@ class UkrainianEnglish implements Encoder, Decoder {
             TranslationModel translatedText = gson.fromJson(HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofString())
                     .body(), TranslationModel.class);
-            return translatedText.getData().getTranslations().get(0).getTranslatedText();
+            if(translatedText.getData() != null) {
+                return translatedText.getData().getTranslations().get(0).getTranslatedText();
+            }
 
         } catch (IllegalArgumentException e) {
             throw new IllegalInputException("Unsupported character");
-        } catch (InterruptedException | NullPointerException e) {
+        } catch (InterruptedException e) {
             compositeLogger.warn("Failed to make request");
             Thread.currentThread().interrupt();
         } catch (IOException e) {

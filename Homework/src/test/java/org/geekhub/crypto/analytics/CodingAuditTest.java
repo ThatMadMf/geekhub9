@@ -25,7 +25,7 @@ public class CodingAuditTest {
 
     @BeforeMethod
     public void initialise() throws IOException {
-        Files.deleteIfExists(Paths.get(System.getProperty("user.home") + "/history.ser"));
+        Files.deleteIfExists(Paths.get(System.getProperty("java.io.tmpdir") + "/history.ser"));
         history = new CodingHistory();
         codingAudit = new CodingAudit(history);
     }

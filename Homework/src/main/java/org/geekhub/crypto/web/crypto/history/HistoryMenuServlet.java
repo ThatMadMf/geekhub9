@@ -1,5 +1,7 @@
 package org.geekhub.crypto.web.crypto.history;
 
+import org.geekhub.crypto.exception.WebException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +18,7 @@ public class HistoryMenuServlet extends HttpServlet {
             out.println("<a href=\"/geekhub/application/history/remove_last\">2. Remove last element</a><br>");
             out.println("<a href=\"/geekhub/application/history/clear_history\">3. Clear history</a><br>");
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            throw new WebException(e.getMessage());
         }
     }
 }
