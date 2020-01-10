@@ -1,6 +1,6 @@
 package org.geekhub.crypto;
 
-import org.geekhub.crypto.ui.MainMenu;
+import org.geekhub.crypto.ui.console.MainMenu;
 
 class Main {
 

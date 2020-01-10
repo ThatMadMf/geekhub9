@@ -1,14 +1,11 @@
-package org.geekhub.crypto.web.crypto.analytics;
+package org.geekhub.crypto.ui.web.crypto.analytics;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
-import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.coders.Encoder;
-import org.geekhub.crypto.coders.EncodersFactory;
 import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 
-import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +14,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Map;
 
+@WebServlet(urlPatterns = "/application/analytics/count_by_date")
 public class AuditCountByDateServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {

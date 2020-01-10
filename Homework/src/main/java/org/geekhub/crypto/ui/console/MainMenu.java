@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui;
+package org.geekhub.crypto.ui.console;
 
 import org.geekhub.crypto.coders.*;
 import org.geekhub.crypto.exception.CodecUnsupportedException;

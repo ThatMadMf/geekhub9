@@ -1,4 +1,4 @@
-package org.geekhub.crypto.web.crypto.analytics;
+package org.geekhub.crypto.ui.web.crypto.analytics;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
@@ -6,12 +6,14 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.CodingHistory;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@WebServlet(urlPatterns = "/application/analytics/find_most_popular_codec")
 public class AuditFindMostPopularServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {

@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui;
+package org.geekhub.crypto.ui.console;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;

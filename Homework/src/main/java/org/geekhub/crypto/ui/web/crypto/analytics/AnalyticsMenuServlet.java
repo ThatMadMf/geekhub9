@@ -1,13 +1,15 @@
-package org.geekhub.crypto.web.crypto.analytics;
+package org.geekhub.crypto.ui.web.crypto.analytics;
 
 import org.geekhub.crypto.exception.WebException;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@WebServlet(urlPatterns = "/application/analytics")
 public class AnalyticsMenuServlet extends HttpServlet {
 
     @Override
