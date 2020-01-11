@@ -1,59 +1,53 @@
 package org.geekhub.crypto.history;
 
-import org.geekhub.crypto.exception.EmptyHistoryException;
-import org.geekhub.crypto.exception.FileProcessingFailedException;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.db.DataSource;
+import org.geekhub.crypto.logging.Logger;
+import org.geekhub.crypto.logging.LoggerFactory;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.file.*;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class HistoryManager {
-    private final Path history;
+    private static final Logger logger = LoggerFactory.getLogger();
 
-    public HistoryManager() {
-        history = getHistoryFile("history.ser");
-    }
-
-
-    public void saveHistory(List<HistoryRecord> records) {
-        try (OutputStream fileOutputStream = Files.newOutputStream(history);
-             ObjectOutputStream stream = new ObjectOutputStream(fileOutputStream)
-        ) {
-            for (HistoryRecord record : records) {
-                stream.writeObject(record);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+    public static void saveRecord(HistoryRecord record) {
+        String query = "insert into geekhub.history (operation, codec, user_input, date)" +
+                "values (?, ?, ?, ?)";
+        String codec = record.getCodec() == null ? null : record.getCodec().name();
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, record.getOperation().name());
+            preparedStatement.setString(2, codec);
+            preparedStatement.setString(3, record.getUserInput());
+            preparedStatement.setDate(4, Date.valueOf(record.getOperationDate()));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
         }
     }
 
-    public List<HistoryRecord> readHistory() {
-        LinkedList<HistoryRecord> records = new LinkedList<>();
-        try (InputStream fileInputStream = Files.newInputStream(history);
-             BufferedInputStream bis = new BufferedInputStream(fileInputStream);
-             ObjectInputStream in = new ObjectInputStream(bis)
-        ) {
-            while (true) {
-                Object record = in.readObject();
-                if (record instanceof HistoryRecord) {
-                    records.add((HistoryRecord) record);
-                }
+    public static List<HistoryRecord> readHistory() {
+        List<HistoryRecord> records = new LinkedList<>();
+        String query = "select operation, codec, user_input, date from geekhub.history";
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                String codec = resultSet.getString("codec");
+                Algorithm algorithm =  codec == null ? null : Algorithm.valueOf(codec);
+                HistoryRecord record = new HistoryRecord(
+                        Operation.valueOf(resultSet.getString("operation")),
+                        resultSet.getString("user_input"),
+                        algorithm,
+                        resultSet.getDate("date").toLocalDate()
+                );
+                records.add(record);
             }
-        } catch (NoSuchFileException e) {
-            throw new EmptyHistoryException(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new FileProcessingFailedException(e.getMessage());
-        } catch (IOException e) {
-            return records;
+        } catch (SQLException e) {
+            logger.error(e);
         }
-    }
-
-    private Path getHistoryFile(String path) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL historyFile = classLoader.getResource(path);
-        return Paths.get(historyFile.getPath());
-
+        return records;
     }
 }

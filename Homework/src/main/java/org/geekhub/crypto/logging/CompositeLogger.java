@@ -29,6 +29,11 @@ public class CompositeLogger implements Logger {
         loggers.forEach(logger -> logger.error(message));
     }
 
+    @Override
+    public void error(Exception e) {
+        loggers.forEach(logger -> logger.error(e));
+    }
+
     private Logger getLogDestination(LogDestination logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Logger destination is null");

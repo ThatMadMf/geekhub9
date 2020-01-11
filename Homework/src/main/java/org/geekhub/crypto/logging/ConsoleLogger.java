@@ -16,4 +16,14 @@ public class ConsoleLogger implements Logger {
     public void error(String message) {
         System.out.println("ERROR: " + message);
     }
+
+    @Override
+    public void error(Exception e) {
+        String logDivider = "####################";
+        String partDivider = "\n";
+        System.out.println(logDivider);
+        System.out.println("ERROR:" + e.getMessage() + partDivider);
+        System.out.println(e.getCause() + partDivider);
+        System.out.println(e.getStackTrace() + partDivider);
+    }
 }

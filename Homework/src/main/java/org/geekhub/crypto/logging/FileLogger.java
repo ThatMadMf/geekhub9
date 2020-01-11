@@ -31,6 +31,15 @@ public class FileLogger implements Logger {
         printToFile("ERROR: " + message);
     }
 
+    @Override
+    public void error(Exception e) {
+        String logDivider = "####################";
+        String partDivider = "\n";
+        printToFile(logDivider);
+        printToFile("ERROR" + e.getMessage() + partDivider);
+        printToFile(e.getCause() + partDivider);
+        printToFile(e.getStackTrace() + partDivider);
+    }
     private void printToFile(String message) {
         try (OutputStream fileOutputStream = Files.newOutputStream(logDestination, StandardOpenOption.APPEND);
              PrintStream printStream = new PrintStream(fileOutputStream)) {
