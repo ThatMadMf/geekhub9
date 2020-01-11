@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ResponseHistoryPrinter implements HistoryPrinter {
 
-    private PrintWriter writer;
+    private final PrintWriter writer;
 
     public ResponseHistoryPrinter(PrintWriter historyWriter) {
         writer = historyWriter;

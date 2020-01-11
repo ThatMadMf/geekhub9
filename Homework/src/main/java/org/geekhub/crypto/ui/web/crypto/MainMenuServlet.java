@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/application")
 public class MainMenuServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
         try(PrintWriter out = response.getWriter()) {

@@ -14,7 +14,7 @@ public class AnalyticsMenuServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        try(PrintWriter out = resp.getWriter()) {
+        try (PrintWriter out = resp.getWriter()) {
             resp.setContentType("text/html");
             out.println("<h2>Analytics</h2>");
             out.println("<a href=\"/geekhub/application/analytics/count_inputs\">1. Count inputs</a><br>");

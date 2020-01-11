@@ -1,8 +1,6 @@
 package org.geekhub.crypto.ui;
 
 import org.geekhub.crypto.logging.FileLogger;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -10,14 +8,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 import static org.testng.Assert.assertEquals;
 
 public class FileLoggerTest {
 
-    private FileLogger fileLogger = new FileLogger(System.getProperty("java.io.tmpdir"));
-    private Path homePath = Paths.get(System.getProperty("java.io.tmpdir")).resolve("logs.txt");
+    private final FileLogger fileLogger = new FileLogger(System.getProperty("java.io.tmpdir"));
+    private final Path homePath = Paths.get(System.getProperty("java.io.tmpdir")).resolve("logs.txt");
 
     @BeforeMethod
     public void initialise() throws IOException {

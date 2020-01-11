@@ -13,7 +13,7 @@ public class FileLogger implements Logger {
     private final Path logDestination;
 
     public FileLogger(String dir) {
-        logDestination = Paths.get(dir + "/logs.txt");
+        logDestination = Paths.get(dir).resolve("logs.txt");
     }
 
     @Override
@@ -38,14 +38,13 @@ public class FileLogger implements Logger {
         printToFile(logDivider);
         printToFile("ERROR" + e.getMessage() + partDivider);
         printToFile(e.getCause() + partDivider);
-        printToFile(e.getStackTrace() + partDivider);
     }
     private void printToFile(String message) {
         try (OutputStream fileOutputStream = Files.newOutputStream(logDestination, StandardOpenOption.APPEND);
              PrintStream printStream = new PrintStream(fileOutputStream)) {
             printStream.println(message);
         } catch (IOException e) {
-            consoleLogger.warn("Cannot write to file");
+            consoleLogger.warn(e.getMessage());
         }
     }
 }

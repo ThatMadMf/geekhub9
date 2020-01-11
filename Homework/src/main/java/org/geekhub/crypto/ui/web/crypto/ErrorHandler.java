@@ -12,6 +12,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/errorHandler")
 public class ErrorHandler extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         try (PrintWriter out = response.getWriter()) {

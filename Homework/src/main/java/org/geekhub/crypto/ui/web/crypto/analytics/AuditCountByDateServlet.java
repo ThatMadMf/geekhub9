@@ -17,6 +17,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/application/analytics/count_by_date")
 public class AuditCountByDateServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try(PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
@@ -33,6 +34,7 @@ public class AuditCountByDateServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
         try(PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));

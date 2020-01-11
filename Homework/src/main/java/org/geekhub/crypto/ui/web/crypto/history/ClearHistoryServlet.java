@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/application/history/clear_history")
 public class ClearHistoryServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
@@ -24,6 +25,7 @@ public class ClearHistoryServlet extends HttpServlet {
         }
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");

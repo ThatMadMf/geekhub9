@@ -24,6 +24,5 @@ public class ConsoleLogger implements Logger {
         System.out.println(logDivider);
         System.out.println("ERROR:" + e.getMessage() + partDivider);
         System.out.println(e.getCause() + partDivider);
-        System.out.println(e.getStackTrace() + partDivider);
     }
 }

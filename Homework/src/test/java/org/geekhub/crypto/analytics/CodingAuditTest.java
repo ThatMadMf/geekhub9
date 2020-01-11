@@ -1,16 +1,13 @@
 package org.geekhub.crypto.analytics;
 
 import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -24,8 +21,7 @@ public class CodingAuditTest {
     private CodingHistory history;
 
     @BeforeMethod
-    public void initialise() throws IOException {
-        Files.deleteIfExists(Paths.get(System.getProperty("java.io.tmpdir") + "/history.ser"));
+    public void initialise() {
         history = new CodingHistory();
         codingAudit = new CodingAudit(history);
     }

@@ -50,4 +50,25 @@ public class HistoryManager {
         }
         return records;
     }
+
+    public static void removeLast() {
+        String query = "delete from geekhub.history " +
+                "where id in(select id from geekhub.history order by id desc limit 1)";
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+    }
+
+    public static void clear() {
+        String query = "delete from geekhub.history";
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+    }
 }

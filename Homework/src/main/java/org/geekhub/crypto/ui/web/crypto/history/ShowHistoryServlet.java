@@ -14,8 +14,9 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/application/history/show_history")
 public class ShowHistoryServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try(PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             CodingHistory history = new CodingHistory();
             ResponseHistoryPrinter printer = new ResponseHistoryPrinter(out);
             printer.print(history.getHistoryRecords());

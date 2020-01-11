@@ -8,7 +8,6 @@ import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ import java.io.PrintWriter;
 public class EncodeServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try (PrintWriter out = resp.getWriter()) {
 
             resp.setContentType("text/html");
@@ -39,8 +38,8 @@ public class EncodeServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try(PrintWriter out = resp.getWriter()) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        try (PrintWriter out = resp.getWriter()) {
             Algorithm algorithm = Algorithm.valueOf(req.getParameter("algorithm"));
             String text = req.getParameter("text");
 

@@ -2,12 +2,10 @@ package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.coders.Algorithm;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class HistoryRecord implements Serializable {
-    public static final Long serialVersionUID = 3243532453235452345L;
+public class HistoryRecord {
 
     private final Operation operation;
     private final String userInput;

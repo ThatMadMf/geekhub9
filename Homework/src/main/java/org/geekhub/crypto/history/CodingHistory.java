@@ -1,8 +1,6 @@
 package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
-import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -29,6 +27,9 @@ public class CodingHistory {
         historyRecords = new LinkedList<>(HistoryManager.readHistory());
     }
 
+    public CodingHistory(List<HistoryRecord> records) {
+        historyRecords = new LinkedList<>(records);
+    }
 
     public void addToHistory(HistoryRecord record) {
         if (record == null) {
@@ -40,10 +41,12 @@ public class CodingHistory {
 
     public void clearHistory() {
         historyRecords.clear();
+        HistoryManager.clear();
     }
 
     public void removeLastRecord() {
         historyRecords.pollLast();
+        HistoryManager.removeLast();
     }
 
 }

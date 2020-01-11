@@ -16,6 +16,7 @@ import java.io.PrintWriter;
         "/application/history/remove_last", "/application/history/clear_history"})
 public class AuthorizationFilter extends HttpFilter {
 
+    @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");

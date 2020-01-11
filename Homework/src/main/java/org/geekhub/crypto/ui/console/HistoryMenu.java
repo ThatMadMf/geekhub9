@@ -6,8 +6,8 @@ import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryConsolePrinter;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.logging.LoggerFactory;
 import org.geekhub.crypto.logging.Logger;
+import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.util.Scanner;
 
@@ -34,9 +34,7 @@ class HistoryMenu {
                     throw new OperationUnsupportedException("Operation is not supported");
             }
         } catch (FileProcessingFailedException e) {
-            compositeLogger.error("Cannot write or read to history.ser file");
-            compositeLogger.error(e.getMessage());
-            compositeLogger.error(e.getCause().toString());
+            compositeLogger.error(e);
             System.out.println("Error during saving or reading data");
         }
     }

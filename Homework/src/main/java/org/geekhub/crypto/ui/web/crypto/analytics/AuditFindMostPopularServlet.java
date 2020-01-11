@@ -16,8 +16,8 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/application/analytics/find_most_popular_codec")
 public class AuditFindMostPopularServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
             out.println("<form action = \"\" method = \"POST\">\n" +
@@ -33,6 +33,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));

@@ -5,7 +5,6 @@ import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.CodingHistory;
-import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
@@ -48,8 +47,6 @@ public class MainMenu {
                 history.addToHistory(
                         new HistoryRecord(Operation.DECODE, textToDecode, decoderAlgorithm)
                 );
-                HistoryManager.saveRecord(new HistoryRecord(Operation.DECODE, textToDecode, decoderAlgorithm));
-
                 System.out.println("Decoded:");
                 try {
                     Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
@@ -67,7 +64,6 @@ public class MainMenu {
                 history.addToHistory(
                         new HistoryRecord(Operation.ENCODE, textToEncode, encoderAlgorithm)
                 );
-                HistoryManager.saveRecord(new HistoryRecord(Operation.DECODE, textToEncode, encoderAlgorithm));
 
                 System.out.println("Encoded:");
                 try {

@@ -1,57 +1,56 @@
 package org.geekhub.crypto.db;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
 public class DataSource {
 
     private static final Logger logger = LoggerFactory.getLogger();
+    private static final HikariConfig config = initialiseHikari();
+    private static final HikariDataSource hikariDataSource = new HikariDataSource(config);
 
     static {
-        createIfNotExist();
+        createTable();
     }
 
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/maksym_onoshko";
-        Properties props = new Properties();
-        props.setProperty("user", "prompt");
-        props.setProperty("password", "1111");
-        props.setProperty("ssl", "true");
-        props.setProperty("sslmode", "verify-ca");
-        props.setProperty("sslfactory", "org.postgresql.ssl.DefaultJavaSSLFactory");
-        return DriverManager.getConnection(url, props);
+        return hikariDataSource.getConnection();
     }
 
-    private static void createIfNotExist() {
-        String query = "select exists (" +
-                "select 1 from information_schema.tables " +
-                "where table_schema ='geekhub' AND table_name = 'history');";
-        try (Connection connection = DataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet rs = statement.executeQuery()) {
-            if (!rs.next()) {
-                createTable();
+    private static HikariConfig initialiseHikari() {
+        Properties properties = new Properties();
+        try (InputStream stream = DataSource.class.getClassLoader().getResourceAsStream("db.properties")) {
+            if (stream != null) {
+                properties.load(stream);
             }
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
+        } catch (IOException e) {
+            logger.error(e);
         }
+        return new HikariConfig(properties);
     }
 
     private static void createTable() {
-        String query = "CREATE TABLE geekhub.history(" +
+        String schemaQuery = "create schema geekhub";
+        String tableQuery = "CREATE TABLE geekhub.history(" +
                 "id serial primary key," +
                 "operation varchar(30)  not null," +
                 "codec varchar(30)," +
                 "user_input varchar(256)," +
                 "date timestamp not null)";
         try (Connection connection = DataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.executeUpdate();
+             PreparedStatement schema = connection.prepareStatement(schemaQuery);
+             PreparedStatement table = connection.prepareStatement(tableQuery)) {
+            schema.executeUpdate();
+            table.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            logger.log(e.getMessage());
         }
     }
 }
