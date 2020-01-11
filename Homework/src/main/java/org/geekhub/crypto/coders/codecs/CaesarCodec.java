@@ -1,14 +1,17 @@
-package org.geekhub.crypto.coders;
+package org.geekhub.crypto.coders.codecs;
 
 import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.annotations.Shift;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Decoder;
+import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
 
 @Codec(algorithm = Algorithm.CAESAR)
-class CaesarCodec implements Encoder, Decoder {
+public class CaesarCodec implements Encoder, Decoder {
 
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');

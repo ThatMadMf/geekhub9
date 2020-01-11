@@ -1,9 +1,12 @@
-package org.geekhub.crypto.coders;
+package org.geekhub.crypto.coders.codecs;
 
 import org.geekhub.crypto.annotations.Codec;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Decoder;
+import org.geekhub.crypto.coders.Encoder;
 
 @Codec(algorithm = Algorithm.VIGENERE_OVER_CAESAR)
-class VigenereOverCaesar implements Encoder, Decoder {
+public class VigenereOverCaesar implements Encoder, Decoder {
     private final Encoder vigenereEncoder;
     private final Encoder caesarEncoder;
     private final Decoder vigenereDecoder;

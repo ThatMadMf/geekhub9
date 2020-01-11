@@ -1,6 +1,9 @@
-package org.geekhub.crypto.coders;
+package org.geekhub.crypto.coders.codecs;
 
 import org.geekhub.crypto.annotations.Codec;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Decoder;
+import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.util.MapReverser;
 import org.geekhub.crypto.util.PropertiesReader;
@@ -9,7 +12,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 @Codec(algorithm = Algorithm.MORSE)
-class MorseCodec implements Encoder, Decoder {
+public class MorseCodec implements Encoder, Decoder {
 
     private static final Map<String, String> CHAR_MAP;
     private static final Map<String, String> CODE_MAP;

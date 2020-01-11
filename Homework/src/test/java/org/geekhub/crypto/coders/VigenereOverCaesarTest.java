@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.coders.codecs.VigenereOverCaesar;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 

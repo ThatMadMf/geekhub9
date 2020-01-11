@@ -2,6 +2,8 @@ package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.annotations.Key;
 import org.geekhub.crypto.annotations.Shift;
+import org.geekhub.crypto.coders.codecs.CaesarCodec;
+import org.geekhub.crypto.coders.codecs.VigenereCodec;
 import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.exception.IllegalAnnotaionException;
 import org.geekhub.crypto.util.PropertiesReader;

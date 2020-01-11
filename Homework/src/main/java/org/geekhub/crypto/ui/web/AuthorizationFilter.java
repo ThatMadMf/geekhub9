@@ -21,7 +21,7 @@ public class AuthorizationFilter extends HttpFilter {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
             HttpSession session = request.getSession(false);
-            if (session == null) {
+            if (session == null || session.getAttribute("userRole") == null) {
                 out.write("Wrong login<br>");
                 out.write("<a href=\"/geekhub/\">Login</a>");
             } else {

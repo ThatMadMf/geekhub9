@@ -1,11 +1,15 @@
-package org.geekhub.crypto.coders;
+package org.geekhub.crypto.coders.codecs;
 
 import com.google.gson.Gson;
 import org.geekhub.crypto.annotations.Codec;
+import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Decoder;
+import org.geekhub.crypto.coders.Dictionary;
+import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
-import org.geekhub.crypto.model.translation.TranslationModel;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
+import org.geekhub.crypto.model.translation.TranslationModel;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +24,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Codec(algorithm = Algorithm.UKRAINIAN_ENGLISH)
-class UkrainianEnglish implements Encoder, Decoder {
+public class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
@@ -97,7 +101,7 @@ class UkrainianEnglish implements Encoder, Decoder {
             TranslationModel translatedText = gson.fromJson(HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofString())
                     .body(), TranslationModel.class);
-            if(translatedText.getData() != null) {
+            if (translatedText.getData() != null) {
                 return translatedText.getData().getTranslations().get(0).getTranslatedText();
             }
 

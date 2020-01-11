@@ -1,8 +1,6 @@
 package org.geekhub.crypto.util;
 
 import org.geekhub.crypto.exception.FileProcessingFailedException;
-import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +11,6 @@ import java.util.stream.Collectors;
 public class PropertiesReader {
 
     private final String path;
-    private Logger logger = LoggerFactory.getLogger();
 
     public PropertiesReader(String configPath) {
         path = configPath;
@@ -29,7 +26,7 @@ public class PropertiesReader {
                         .collect(Collectors.toList());
             }
         } catch (IOException | IllegalArgumentException e) {
-            logger.warn("Cannot read property " + propertyName);
+            throw new IllegalArgumentException(e.getMessage());
         }
         return new ArrayList<>();
     }
@@ -43,7 +40,7 @@ public class PropertiesReader {
                 return properties.getProperty(propertyName);
             }
         } catch (IOException | IllegalArgumentException e) {
-            logger.warn("Cannot read property " + propertyName);
+            throw new IllegalArgumentException(e.getMessage());
         }
         return "";
     }

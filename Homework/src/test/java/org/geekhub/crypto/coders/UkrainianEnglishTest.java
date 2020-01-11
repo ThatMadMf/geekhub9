@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.coders.codecs.UkrainianEnglish;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
