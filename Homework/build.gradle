@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'application'
+}
+
+mainClassName = 'org.geekhub.crypto.Main'
+
+repositories {
+    mavenCentral()
+}
+
+run {
+    standardInput = System.in
+}
+
+dependencies {
+    implementation("org.reflections:reflections:0.9.12")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+
+    implementation("com.zaxxer:HikariCP:3.4.1")
+
+    implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("org.slf4j:slf4j-simple:1.7.30")
+
+    implementation("com.google.guava:guava:28.2-jre")
+    implementation("com.google.code.gson:gson:2.8.5")
+
+    implementation("org.postgresql:postgresql:42.2.9")
+
+    testImplementation("org.testng:testng:7.0.0")
+    testImplementation("org.mockito:mockito-core:3.2.0")
+}
+
+test {
+    useTestNG()
+}
+
+webAppDirName = "src/main/web"

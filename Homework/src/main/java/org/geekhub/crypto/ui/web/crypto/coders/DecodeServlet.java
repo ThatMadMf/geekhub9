@@ -44,8 +44,6 @@ public class DecodeServlet extends HttpServlet {
             String text = req.getParameter("text");
 
             Decoder decoder = DecodersFactory.getDecoder(algorithm);
-            CodingHistory history = new CodingHistory();
-            history.addToHistory(new HistoryRecord(Operation.DECODE, text, algorithm));
             out.println(decoder.decode(text));
         } catch (IOException e) {
             throw new WebException(e.getMessage(), e);

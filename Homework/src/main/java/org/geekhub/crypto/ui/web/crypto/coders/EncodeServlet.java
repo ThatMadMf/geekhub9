@@ -44,8 +44,6 @@ public class EncodeServlet extends HttpServlet {
             String text = req.getParameter("text");
 
             Encoder decoder = EncodersFactory.getEncoder(algorithm);
-            CodingHistory history = new CodingHistory();
-            history.addToHistory(new HistoryRecord(Operation.ENCODE, text, algorithm));
             out.println(decoder.encode(text));
         } catch (IOException e) {
             throw new WebException(e.getMessage(), e);
