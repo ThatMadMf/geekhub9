@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/application/analytics/find_most_popular_codec")
+@WebServlet(urlPatterns = "/application/analytics/find-most-popular-codec")
 public class AuditFindMostPopularServlet extends HttpServlet {
 
     @Override

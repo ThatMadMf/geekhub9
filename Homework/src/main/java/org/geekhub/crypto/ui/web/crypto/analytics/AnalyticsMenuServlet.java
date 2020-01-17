@@ -17,9 +17,9 @@ public class AnalyticsMenuServlet extends HttpServlet {
         try (PrintWriter out = resp.getWriter()) {
             resp.setContentType("text/html");
             out.println("<h2>Analytics</h2>");
-            out.println("<a href=\"/geekhub/application/analytics/count_inputs\">1. Count inputs</a><br>");
-            out.println("<a href=\"/geekhub/application/analytics/count_by_date\">2. Count by date</a><br>");
-            out.println("<a href=\"/geekhub/application/analytics/find_most_popular_codec\">" +
+            out.println("<a href=\"/geekhub/application/analytics/count-inputs\">1. Count inputs</a><br>");
+            out.println("<a href=\"/geekhub/application/analytics/count-by-date\">2. Count by date</a><br>");
+            out.println("<a href=\"/geekhub/application/analytics/find-most-popular-codec\">" +
                     "3. Find most popular algorithm</a><br>");
         } catch (IOException e) {
             throw new WebException(e.getMessage());

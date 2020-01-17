@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/application/history/remove_last")
+@WebServlet(urlPatterns = "/application/history/remove-last")
 public class RemoveHistoryLastServlet extends HttpServlet {
 
     @Override

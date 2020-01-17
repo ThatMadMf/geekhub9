@@ -17,9 +17,9 @@ public class HistoryMenuServlet extends HttpServlet {
         try(PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
             out.println("<h2>History operations<h2>");
-            out.println("<a href=\"/geekhub/application/history/show_history\">1. Show history</a><br>");
-            out.println("<a href=\"/geekhub/application/history/remove_last\">2. Remove last element</a><br>");
-            out.println("<a href=\"/geekhub/application/history/clear_history\">3. Clear history</a><br>");
+            out.println("<a href=\"/geekhub/application/history/show-history\">1. Show history</a><br>");
+            out.println("<a href=\"/geekhub/application/history/remove-last\">2. Remove last element</a><br>");
+            out.println("<a href=\"/geekhub/application/history/clear-history\">3. Clear history</a><br>");
         } catch (IOException e){
             throw new WebException(e.getMessage());
         }

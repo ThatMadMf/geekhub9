@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/application/analytics/count_by_date")
+@WebServlet(urlPatterns = "/application/analytics/count-by-date")
 public class AuditCountByDateServlet extends HttpServlet {
 
     @Override

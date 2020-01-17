@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/application/history/clear_history")
+@WebServlet(urlPatterns = "/application/history/clear-history")
 public class ClearHistoryServlet extends HttpServlet {
 
     @Override

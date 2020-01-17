@@ -16,11 +16,11 @@ public class DataSource {
     private static final HikariConfig config = initialiseHikari();
     private static final HikariDataSource hikariDataSource = new HikariDataSource(config);
 
-    static {
+    public DataSource() {
         createTable();
     }
 
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return hikariDataSource.getConnection();
     }
 
@@ -36,19 +36,26 @@ public class DataSource {
         return new HikariConfig(properties);
     }
 
-    private static void createTable() {
+    private void createTable() {
         String schemaQuery = "create schema geekhub";
         String tableQuery = "CREATE TABLE geekhub.history(" +
                 "id serial primary key," +
                 "operation varchar(30)  not null," +
                 "codec varchar(30)," +
                 "user_input varchar(256)," +
-                "date timestamp not null)";
-        try (Connection connection = DataSource.getConnection();
+                "operation_date timestamp not null)";
+        try (Connection connection = getConnection();
              PreparedStatement schema = connection.prepareStatement(schemaQuery);
              PreparedStatement table = connection.prepareStatement(tableQuery)) {
-            schema.executeUpdate();
-            table.executeUpdate();
+            DatabaseMetaData meta = connection.getMetaData();
+            ResultSet schemaExist = meta.getSchemas(null, "geekhub");
+            ResultSet tableExist = meta.getTables(null, "geekhub", "history", null);
+            if(!schemaExist.next()) {
+                schema.executeUpdate();
+                table.executeUpdate();
+            } else if (!tableExist.next()) {
+                table.executeUpdate();
+            }
         } catch (SQLException e) {
             logger.log(e.getMessage());
         }

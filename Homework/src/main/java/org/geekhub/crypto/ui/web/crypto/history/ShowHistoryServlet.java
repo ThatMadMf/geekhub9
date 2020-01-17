@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/application/history/show_history")
+@WebServlet(urlPatterns = "/application/history/show-history")
 public class ShowHistoryServlet extends HttpServlet {
 
     @Override

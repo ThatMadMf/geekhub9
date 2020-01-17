@@ -11,12 +11,17 @@ import java.util.List;
 
 public class HistoryManager {
     private static final Logger logger = LoggerFactory.getLogger();
+    private final DataSource dataSource;
 
-    public static void saveRecord(HistoryRecord record) {
-        String query = "insert into geekhub.history (operation, codec, user_input, date)" +
+    public HistoryManager() {
+        dataSource = new DataSource();
+    }
+
+    public void saveRecord(HistoryRecord record) {
+        String query = "insert into geekhub.history (operation, codec, user_input, operation_date)" +
                 "values (?, ?, ?, ?)";
         String codec = record.getCodec() == null ? null : record.getCodec().name();
-        try (Connection connection = DataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, record.getOperation().name());
             preparedStatement.setString(2, codec);
@@ -28,10 +33,11 @@ public class HistoryManager {
         }
     }
 
-    public static List<HistoryRecord> readHistory() {
+    public List<HistoryRecord> readHistory() {
         List<HistoryRecord> records = new LinkedList<>();
-        String query = "select operation, codec, user_input, date from geekhub.history";
-        try (Connection connection = DataSource.getConnection();
+        String query = "select operation, codec, user_input, operation_date from geekhub.history " +
+                "order by id, operation_date desc";
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
@@ -41,7 +47,7 @@ public class HistoryManager {
                         Operation.valueOf(resultSet.getString("operation")),
                         resultSet.getString("user_input"),
                         algorithm,
-                        resultSet.getDate("date").toLocalDate()
+                        resultSet.getDate("operation_date").toLocalDate()
                 );
                 records.add(record);
             }
@@ -51,10 +57,10 @@ public class HistoryManager {
         return records;
     }
 
-    public static void removeLast() {
+    public void removeLast() {
         String query = "delete from geekhub.history " +
                 "where id in(select id from geekhub.history order by id desc limit 1)";
-        try (Connection connection = DataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -62,9 +68,9 @@ public class HistoryManager {
         }
     }
 
-    public static void clear() {
+    public void clear() {
         String query = "delete from geekhub.history";
-        try (Connection connection = DataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebFilter(filterName = "AuthorizationFileter", urlPatterns = {"/application/analytics", "/application/analytics/*",
-        "/application/history/remove_last", "/application/history/clear_history"})
+        "/application/history/remove-last", "/application/history/clear-history"})
 public class AuthorizationFilter extends HttpFilter {
 
     @Override

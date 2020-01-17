@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/application/analytics/count_inputs")
+@WebServlet(urlPatterns = "/application/analytics/count-inputs")
 public class AuditCountInputsServlet extends HttpServlet {
 
     @Override

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class CodingHistory {
     private final LinkedList<HistoryRecord> historyRecords;
+    private HistoryManager manager = new HistoryManager();
 
     public List<HistoryRecord> getHistoryRecords() {
         return historyRecords;
@@ -24,7 +25,7 @@ public class CodingHistory {
     }
 
     public CodingHistory() {
-        historyRecords = new LinkedList<>(HistoryManager.readHistory());
+        historyRecords = new LinkedList<>(manager.readHistory());
     }
 
     public CodingHistory(List<HistoryRecord> records) {
@@ -36,17 +37,17 @@ public class CodingHistory {
             throw new IllegalArgumentException();
         }
         historyRecords.add(record);
-        HistoryManager.saveRecord(record);
+        manager.saveRecord(record);
     }
 
     public void clearHistory() {
         historyRecords.clear();
-        HistoryManager.clear();
+        manager.clear();
     }
 
     public void removeLastRecord() {
         historyRecords.pollLast();
-        HistoryManager.removeLast();
+        manager.removeLast();
     }
 
 }
