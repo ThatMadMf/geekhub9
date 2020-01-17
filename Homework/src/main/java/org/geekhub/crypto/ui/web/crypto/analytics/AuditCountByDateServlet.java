@@ -19,7 +19,7 @@ public class AuditCountByDateServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try(PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
             out.println("<form action = \"\" method = \"POST\">\n" +
                     "Enter codec use case: <select name = \"usecase\">\n");
@@ -29,23 +29,23 @@ public class AuditCountByDateServlet extends HttpServlet {
             out.println("</select>" + "<br>" +
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
-        } catch (IOException e ) {
-            throw new WebException(e.getMessage());
+        } catch (IOException e) {
+            throw new WebException(e.getMessage(), e);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        try(PrintWriter out = response.getWriter()) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        try (PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));
 
             CodingAudit audit = new CodingAudit(new CodingHistory());
             Map<LocalDate, Long> res = audit.countCodingsByDate(usecase);
-            for(Map.Entry<LocalDate, Long> entry : res.entrySet()) {
+            for (Map.Entry<LocalDate, Long> entry : res.entrySet()) {
                 out.println(entry.getKey() + "\t" + entry.getValue());
             }
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

@@ -33,7 +33,7 @@ public class SessionFilter extends HttpFilter {
                 }
             }
         } catch (IOException | ServletException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

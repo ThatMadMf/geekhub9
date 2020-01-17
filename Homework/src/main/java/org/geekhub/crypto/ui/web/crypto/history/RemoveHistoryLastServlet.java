@@ -21,7 +21,7 @@ public class RemoveHistoryLastServlet extends HttpServlet {
                     "<input type = \"submit\"/>\n" +
                     "</form>");
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 
@@ -34,7 +34,7 @@ public class RemoveHistoryLastServlet extends HttpServlet {
             out.println("Removing is success");
             out.println("<a href=\"/geekhub/application>Go to menu</a>");
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

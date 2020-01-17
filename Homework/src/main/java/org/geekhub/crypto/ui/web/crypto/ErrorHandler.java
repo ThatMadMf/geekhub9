@@ -1,5 +1,7 @@
 package org.geekhub.crypto.ui.web.crypto;
 
+import org.geekhub.crypto.exception.WebException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +15,7 @@ import java.util.List;
 public class ErrorHandler extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
             out.write("<h2>:( Something went wrong</h2>");
@@ -23,6 +24,8 @@ public class ErrorHandler extends HttpServlet {
                     RequestDispatcher.ERROR_MESSAGE)
                     .forEach(e -> out.println(request.getAttribute(e)));
 
+        } catch (IOException e) {
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

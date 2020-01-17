@@ -22,7 +22,7 @@ public class AnalyticsMenuServlet extends HttpServlet {
             out.println("<a href=\"/geekhub/application/analytics/find-most-popular-codec\">" +
                     "3. Find most popular algorithm</a><br>");
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

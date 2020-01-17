@@ -22,7 +22,7 @@ public class MainMenuServlet extends HttpServlet {
             out.println("<a href=\"/geekhub/application/analytics\">3. Analytics</a><br>");
             out.println("<a href=\"/geekhub/application/history\">4. History</a><br>");
         } catch(IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

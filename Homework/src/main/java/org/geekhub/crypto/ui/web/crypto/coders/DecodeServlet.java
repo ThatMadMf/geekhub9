@@ -32,7 +32,7 @@ public class DecodeServlet extends HttpServlet {
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 
@@ -48,7 +48,7 @@ public class DecodeServlet extends HttpServlet {
             history.addToHistory(new HistoryRecord(Operation.DECODE, text, algorithm));
             out.println(decoder.decode(text));
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

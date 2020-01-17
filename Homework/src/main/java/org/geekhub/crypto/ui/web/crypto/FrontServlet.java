@@ -44,7 +44,7 @@ public class FrontServlet extends HttpServlet {
                 response.sendRedirect("/geekhub");
             }
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

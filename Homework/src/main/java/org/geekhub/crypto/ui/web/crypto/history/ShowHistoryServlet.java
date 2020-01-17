@@ -21,7 +21,7 @@ public class ShowHistoryServlet extends HttpServlet {
             ResponseHistoryPrinter printer = new ResponseHistoryPrinter(out);
             printer.print(history.getHistoryRecords());
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

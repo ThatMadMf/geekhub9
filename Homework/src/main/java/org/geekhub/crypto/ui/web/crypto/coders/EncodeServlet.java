@@ -33,7 +33,7 @@ public class EncodeServlet extends HttpServlet {
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 
@@ -48,7 +48,7 @@ public class EncodeServlet extends HttpServlet {
             history.addToHistory(new HistoryRecord(Operation.ENCODE, text, algorithm));
             out.println(decoder.encode(text));
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

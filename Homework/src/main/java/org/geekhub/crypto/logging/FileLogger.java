@@ -16,6 +16,10 @@ public class FileLogger implements Logger {
         logDestination = Paths.get(dir).resolve("logs.txt");
     }
 
+    public FileLogger(Path path) {
+        logDestination = path.resolve("logs.txt");
+    }
+
     @Override
     public void log(String message) {
         printToFile(message);
@@ -39,6 +43,7 @@ public class FileLogger implements Logger {
         printToFile("ERROR" + e.getMessage() + partDivider);
         printToFile(e.getCause() + partDivider);
     }
+
     private void printToFile(String message) {
         try (OutputStream fileOutputStream = Files.newOutputStream(logDestination, StandardOpenOption.APPEND);
              PrintStream printStream = new PrintStream(fileOutputStream)) {

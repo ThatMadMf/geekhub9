@@ -13,16 +13,15 @@ import static org.testng.Assert.assertEquals;
 
 public class FileLoggerTest {
 
-    private final FileLogger fileLogger = new FileLogger(System.getProperty("java.io.tmpdir"));
-    private final Path homePath = Paths.get(System.getProperty("java.io.tmpdir")).resolve("logs.txt");
+    private final Path tempDirectory = createTempDirectory();
+    private final FileLogger fileLogger = new FileLogger(tempDirectory);
+    private final Path homePath = tempDirectory.resolve("logs.txt");
 
     @BeforeMethod
     public void initialise() throws IOException {
         Files.deleteIfExists(homePath);
         Files.createFile(homePath);
-
     }
-
 
     @Test
     public void When_LoggingCorrectly_Expect_Success() throws IOException {
@@ -49,5 +48,13 @@ public class FileLoggerTest {
         String readLine = Files.readString(homePath);
 
         assertEquals(readLine, "ERROR: Test of error reporting\n");
+    }
+
+    private Path createTempDirectory() {
+        try {
+            return Files.createTempDirectory("test");
+        } catch (IOException ignored) {
+        }
+        return Paths.get("");
     }
 }

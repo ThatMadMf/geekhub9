@@ -29,7 +29,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
                     "<input type = \"submit\" value = \"Submit\"/>\n" +
                     "</form>\n");
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 
@@ -42,7 +42,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
             Algorithm res = audit.findMostPopularCodec(usecase);
             out.println(res.name());
         } catch (IOException e) {
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }

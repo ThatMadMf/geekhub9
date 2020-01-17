@@ -21,7 +21,7 @@ public class HistoryMenuServlet extends HttpServlet {
             out.println("<a href=\"/geekhub/application/history/remove-last\">2. Remove last element</a><br>");
             out.println("<a href=\"/geekhub/application/history/clear-history\">3. Clear history</a><br>");
         } catch (IOException e){
-            throw new WebException(e.getMessage());
+            throw new WebException(e.getMessage(), e);
         }
     }
 }
