@@ -20,7 +20,10 @@ public class VigenereCodec implements Encoder, Decoder {
     private final String key;
 
     public VigenereCodec() {
-        key = "";
+        key = "keyword";
+    }
+    public VigenereCodec(String shiftKey) {
+        key = shiftKey;
     }
 
     @Override

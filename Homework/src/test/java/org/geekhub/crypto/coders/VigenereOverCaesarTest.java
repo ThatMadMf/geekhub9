@@ -34,14 +34,14 @@ public class VigenereOverCaesarTest {
     void When_EncodeWord_Expect_Success() {
         String encodedWord = encoder.encode("geekhub");
 
-        assertEquals(encodedWord, "fxrvkat");
+        assertEquals(encodedWord, "nmrofmr");
     }
 
     @Test(groups = "encode")
     void When_EncodeText_Expect_Success() {
         String encodedWords = encoder.encode("geekhub THREE words");
 
-        assertEquals(encodedWords, "fxrvkat SAEPH cgqwf");
+        assertEquals(encodedWords, "nmrofmr BSOLM jspvi");
     }
 
     @Test(groups = "decode", expectedExceptions = IllegalArgumentException.class)
@@ -56,14 +56,14 @@ public class VigenereOverCaesarTest {
 
     @Test(groups = "decode")
     void When_DecodeWord_Expect_Success() {
-        String decodedWord = decoder.decode("fxrvkat");
+        String decodedWord = decoder.decode("nmrofmr");
 
         assertEquals(decodedWord, "geekhub");
     }
 
     @Test(groups = "decode")
     void When_DecodeText_Expect_Success() {
-        String decodedWords = decoder.decode("fxrvkat SAEPH cgqwf");
+        String decodedWords = decoder.decode("nmrofmr BSOLM jspvi");
 
         assertEquals(decodedWords, "geekhub THREE words");
     }

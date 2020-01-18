@@ -1,9 +1,7 @@
 package org.geekhub.crypto.coders.codecs;
 
 import org.geekhub.crypto.annotations.Codec;
-import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.coders.Decoder;
-import org.geekhub.crypto.coders.Encoder;
+import org.geekhub.crypto.coders.*;
 
 @Codec(algorithm = Algorithm.VIGENERE_OVER_CAESAR)
 public class VigenereOverCaesar implements Encoder, Decoder {
@@ -13,10 +11,10 @@ public class VigenereOverCaesar implements Encoder, Decoder {
     private final Decoder caesarDecoder;
 
     public VigenereOverCaesar() {
-        vigenereEncoder = new VigenereCodec();
-        caesarEncoder = new CaesarCodec();
-        vigenereDecoder = new VigenereCodec();
-        caesarDecoder = new CaesarCodec();
+        vigenereEncoder = EncodersFactory.getEncoder(Algorithm.VIGENERE);
+        caesarEncoder = EncodersFactory.getEncoder(Algorithm.CAESAR);
+        vigenereDecoder = DecodersFactory.getDecoder(Algorithm.VIGENERE);
+        caesarDecoder = DecodersFactory.getDecoder(Algorithm.CAESAR);
     }
 
     @Override

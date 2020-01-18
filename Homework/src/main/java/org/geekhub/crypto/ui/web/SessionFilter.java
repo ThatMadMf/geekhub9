@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "SessionFilter",  urlPatterns = {"/application", "/application/*"})
+@WebFilter(filterName = "SessionFilter",  urlPatterns = {"/applicationzz", "/application/*"})
 public class SessionFilter extends HttpFilter {
 
     @Override

@@ -13,12 +13,13 @@ public class VigenereCodecTest {
 
     @BeforeGroups(groups = "encode")
     public void initialiseEncode() {
-        encoder = new VigenereCodec();
+        encoder = new VigenereCodec("keyword");
     }
 
     @BeforeGroups(groups = "decode")
     public void initialiseDecode() {
-        decoder = new VigenereCodec();
+        decoder = new VigenereCodec("keyword" +
+                "");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")

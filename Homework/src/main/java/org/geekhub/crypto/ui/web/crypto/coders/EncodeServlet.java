@@ -42,12 +42,18 @@ public class EncodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try (PrintWriter out = resp.getWriter()) {
-            Algorithm algorithm = Algorithm.valueOf(req.getParameter("algorithm"));
-            String text = req.getParameter("text");
 
-            Encoder decoder = EncodersFactory.getEncoder(algorithm);
-            history.addToHistory(new HistoryRecord(Operation.ENCODE, text, algorithm));
-            out.println(decoder.encode(text));
+            String algorithmParameter = req.getParameter("algorithm");
+            if (algorithmParameter == null) {
+                out.println("Illegal usage of not existing codec");
+            } else {
+                Algorithm algorithm = Algorithm.valueOf(algorithmParameter);
+                String text = req.getParameter("text");
+
+                Encoder decoder = EncodersFactory.getEncoder(algorithm);
+                history.addToHistory(new HistoryRecord(Operation.ENCODE, text, algorithm));
+                out.println(decoder.encode(text));
+            }
         } catch (IOException e) {
             throw new WebException(e.getMessage(), e);
         }

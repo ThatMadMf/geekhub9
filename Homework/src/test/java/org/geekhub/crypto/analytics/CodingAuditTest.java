@@ -123,6 +123,8 @@ public class CodingAuditTest {
 
     @Test
     void When_CodingHistoryContainsMultipleCodesUsecases_Expect_Succcess() {
+        List<HistoryRecord> history = new LinkedList<>();
+
         history.add(new HistoryRecord(Operation.ENCODE, "word", Algorithm.VIGENERE));
         history.add(new HistoryRecord(Operation.ENCODE, "word", Algorithm.CAESAR));
         history.add(new HistoryRecord(Operation.DECODE, "word", Algorithm.CAESAR));
@@ -133,6 +135,8 @@ public class CodingAuditTest {
         history.add(new HistoryRecord(Operation.DECODE, "geekhub", Algorithm.MORSE));
         history.add(new HistoryRecord(Operation.ENCODE, "geekhub", Algorithm.MORSE));
         history.add(new HistoryRecord(Operation.DECODE, "geekhub", Algorithm.MORSE));
+
+        CodingAudit codingAudit = new CodingAudit(history);
 
         Algorithm actualResult = codingAudit.findMostPopularCodec(CodecUsecase.DECODING);
 

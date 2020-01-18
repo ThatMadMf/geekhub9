@@ -42,12 +42,17 @@ public class DecodeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try (PrintWriter out = resp.getWriter()) {
 
-            Algorithm algorithm = Algorithm.valueOf(req.getParameter("algorithm"));
-            String text = req.getParameter("text");
+            String algorithmParameter = req.getParameter("algorithm");
+            if (algorithmParameter == null) {
+                out.println("Illegal usage of not existing codec");
+            } else {
+                Algorithm algorithm = Algorithm.valueOf(algorithmParameter);
+                String text = req.getParameter("text");
 
-            Decoder decoder = DecodersFactory.getDecoder(algorithm);
-            history.addToHistory(new HistoryRecord(Operation.DECODE, text, algorithm));
-            out.println(decoder.decode(text));
+                Decoder decoder = DecodersFactory.getDecoder(algorithm);
+                history.addToHistory(new HistoryRecord(Operation.DECODE, text, algorithm));
+                out.println(decoder.decode(text));
+            }
         } catch (IOException e) {
             throw new WebException(e.getMessage(), e);
         }

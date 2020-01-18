@@ -31,7 +31,7 @@ public class CodingAudit {
 
     public Map<LocalDate, Long> countCodingsByDate(CodecUsecase usecase) {
         return codingHistory.stream()
-                .filter(record -> record.getOperation().name().equals(usecase.name()))
+                .filter(record -> record.getOperation().equals(getOperation(usecase)))
                 .collect(Collectors.groupingBy(
                         HistoryRecord::getOperationDate,
                         () -> new TreeMap<>(Collections.reverseOrder()),
@@ -41,11 +41,23 @@ public class CodingAudit {
 
     public Algorithm findMostPopularCodec(CodecUsecase usecase) {
         return codingHistory.stream()
-                .filter(record -> record.getOperation().name().equals(usecase.name()))
+                .filter(record -> record.getOperation().equals(getOperation(usecase)))
                 .collect(Collectors.groupingBy(HistoryRecord::getCodec, Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElseThrow(() -> new EmptyHistoryException("History is empty"));
+    }
+
+    private Operation getOperation(CodecUsecase usecase) {
+        if(usecase.equals(CodecUsecase.ENCODING)) {
+            return Operation.ENCODE;
+        }
+
+        if(usecase.equals(CodecUsecase.DECODING)) {
+            return Operation.DECODE;
+        }
+
+        throw new IllegalArgumentException("Unsupported usecase");
     }
 }

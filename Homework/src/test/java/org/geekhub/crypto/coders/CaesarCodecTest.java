@@ -13,12 +13,12 @@ public class CaesarCodecTest {
 
     @BeforeGroups(groups = "encode")
     public void initialiseEncode() {
-        encoder = new CaesarCodec();
+        encoder = new CaesarCodec(15);
     }
 
     @BeforeGroups(groups = "decode")
     public void initialiseDecode() {
-        decoder = new CaesarCodec();
+        decoder = new CaesarCodec(15);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "encode")
