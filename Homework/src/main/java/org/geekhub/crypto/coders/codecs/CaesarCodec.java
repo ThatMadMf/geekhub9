@@ -20,7 +20,7 @@ public class CaesarCodec implements Encoder, Decoder {
     private final int shift;
 
     public CaesarCodec() {
-        shift = 15;
+        shift = 0;
     }
 
     @Override

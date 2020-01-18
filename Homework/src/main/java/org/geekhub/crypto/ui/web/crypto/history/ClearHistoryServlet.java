@@ -1,7 +1,7 @@
 package org.geekhub.crypto.ui.web.crypto.history;
 
 import org.geekhub.crypto.exception.WebException;
-import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryManager;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +29,7 @@ public class ClearHistoryServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
-            CodingHistory history = new CodingHistory();
+            HistoryManager history = new HistoryManager();
             history.clearHistory();
             out.println("<p>Removing is success</p>");
             out.println("<a href=\"/geekhub/application>Go to menu</a>");

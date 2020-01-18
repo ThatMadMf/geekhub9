@@ -17,7 +17,7 @@ public class HistoryManager {
         dataSource = new DataSource();
     }
 
-    public void saveRecord(HistoryRecord record) {
+    public void addToHistory(HistoryRecord record) {
         String query = "insert into geekhub.history (operation, codec, user_input, operation_date)" +
                 "values (?, ?, ?, ?)";
         String codec = record.getCodec() == null ? null : record.getCodec().name();
@@ -57,7 +57,7 @@ public class HistoryManager {
         return records;
     }
 
-    public void removeLast() {
+    public void removeLastRecord() {
         String query = "delete from geekhub.history " +
                 "where id in(select id from geekhub.history order by id desc limit 1)";
         try (Connection connection = dataSource.getConnection();
@@ -68,7 +68,7 @@ public class HistoryManager {
         }
     }
 
-    public void clear() {
+    public void clearHistory() {
         String query = "delete from geekhub.history";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

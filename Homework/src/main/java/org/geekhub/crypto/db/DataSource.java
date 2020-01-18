@@ -13,8 +13,7 @@ import java.util.Properties;
 public class DataSource {
 
     private static final Logger logger = LoggerFactory.getLogger();
-    private static final HikariConfig config = initialiseHikari();
-    private static final HikariDataSource hikariDataSource = new HikariDataSource(config);
+    private static final HikariDataSource hikariDataSource = new HikariDataSource(initialiseHikari());
 
     public DataSource() {
         createTable();
@@ -50,7 +49,7 @@ public class DataSource {
             DatabaseMetaData meta = connection.getMetaData();
             ResultSet schemaExist = meta.getSchemas(null, "geekhub");
             ResultSet tableExist = meta.getTables(null, "geekhub", "history", null);
-            if(!schemaExist.next()) {
+            if (!schemaExist.next()) {
                 schema.executeUpdate();
                 table.executeUpdate();
             } else if (!tableExist.next()) {

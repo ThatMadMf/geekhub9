@@ -3,7 +3,7 @@ package org.geekhub.crypto.ui.web.crypto.analytics;
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.exception.WebException;
-import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryManager;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +39,7 @@ public class AuditCountByDateServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));
 
-            CodingAudit audit = new CodingAudit(new CodingHistory());
+            CodingAudit audit = new CodingAudit(new HistoryManager().readHistory());
             Map<LocalDate, Long> res = audit.countCodingsByDate(usecase);
             for (Map.Entry<LocalDate, Long> entry : res.entrySet()) {
                 out.println(entry.getKey() + "\t" + entry.getValue());

@@ -1,26 +1,27 @@
 package org.geekhub.crypto.analytics;
 
 import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.history.CodingHistory;
-import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.exception.EmptyHistoryException;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class CodingAudit {
-    private final CodingHistory codingHistory;
+    private final List<HistoryRecord> codingHistory;
 
-    public CodingAudit(CodingHistory codingHistory) {
+    public CodingAudit(List<HistoryRecord> codingHistory) {
         this.codingHistory = codingHistory;
     }
 
     public Map<String, Integer> countEncodingInputs() {
-        return codingHistory.getHistoryRecords(CodecUsecase.ENCODING)
-                .stream()
+        return codingHistory.stream()
+                .filter(record -> record.getOperation().equals(Operation.ENCODE))
                 .collect(Collectors.groupingBy(
                         HistoryRecord::getUserInput,
                         () -> new TreeMap<>(Collections.reverseOrder()),
@@ -29,8 +30,8 @@ public class CodingAudit {
     }
 
     public Map<LocalDate, Long> countCodingsByDate(CodecUsecase usecase) {
-        return codingHistory.getHistoryRecords(usecase)
-                .stream()
+        return codingHistory.stream()
+                .filter(record -> record.getOperation().name().equals(usecase.name()))
                 .collect(Collectors.groupingBy(
                         HistoryRecord::getOperationDate,
                         () -> new TreeMap<>(Collections.reverseOrder()),
@@ -39,8 +40,8 @@ public class CodingAudit {
     }
 
     public Algorithm findMostPopularCodec(CodecUsecase usecase) {
-        return codingHistory.getHistoryRecords(usecase)
-                .stream()
+        return codingHistory.stream()
+                .filter(record -> record.getOperation().name().equals(usecase.name()))
                 .collect(Collectors.groupingBy(HistoryRecord::getCodec, Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())

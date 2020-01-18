@@ -1,7 +1,7 @@
 package org.geekhub.crypto.ui.web.crypto.history;
 
 import org.geekhub.crypto.exception.WebException;
-import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.ResponseHistoryPrinter;
 
 import javax.servlet.annotation.WebServlet;
@@ -17,9 +17,9 @@ public class ShowHistoryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
-            CodingHistory history = new CodingHistory();
+            HistoryManager history = new HistoryManager();
             ResponseHistoryPrinter printer = new ResponseHistoryPrinter(out);
-            printer.print(history.getHistoryRecords());
+            printer.print(history.readHistory());
         } catch (IOException e) {
             throw new WebException(e.getMessage(), e);
         }

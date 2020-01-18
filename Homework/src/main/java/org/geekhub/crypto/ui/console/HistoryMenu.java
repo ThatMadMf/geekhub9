@@ -2,8 +2,8 @@ package org.geekhub.crypto.ui.console;
 
 import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.exception.OperationUnsupportedException;
-import org.geekhub.crypto.history.CodingHistory;
 import org.geekhub.crypto.history.HistoryConsolePrinter;
+import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
@@ -13,14 +13,15 @@ import java.util.Scanner;
 
 class HistoryMenu {
 
-    public static void displayMenu(Scanner scanner, CodingHistory history) {
+    public static void displayMenu(Scanner scanner) {
         Logger compositeLogger = LoggerFactory.getLogger();
         System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
         String input = scanner.nextLine();
+        HistoryManager history = new HistoryManager();
         try {
             switch (input) {
                 case "1":
-                    new HistoryConsolePrinter().print(history.getHistoryRecords());
+                    new HistoryConsolePrinter().print(history.readHistory());
                     history.addToHistory(new HistoryRecord(Operation.SHOW_HISTORY, null, null));
                     break;
                 case "2":

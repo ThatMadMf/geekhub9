@@ -16,11 +16,11 @@ public class VigenereCodec implements Encoder, Decoder {
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
 
-    @Key(keyword = "notkeyword")
+    @Key
     private final String key;
 
     public VigenereCodec() {
-        key = "keyword";
+        key = "";
     }
 
     @Override

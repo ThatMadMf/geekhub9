@@ -4,7 +4,7 @@ import org.geekhub.crypto.coders.*;
 import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.exception.OperationUnsupportedException;
-import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
@@ -15,12 +15,13 @@ import java.util.Scanner;
 public class MainMenu {
 
     private final Scanner scanner;
-    private final CodingHistory history;
     private final Logger compositeLogger;
+    private final HistoryManager history;
+
 
     public MainMenu() {
         scanner = new Scanner(System.in);
-        history = new CodingHistory();
+        history = new HistoryManager();
         compositeLogger = LoggerFactory.getLogger();
     }
 
@@ -76,10 +77,10 @@ public class MainMenu {
                 }
                 break;
             case "3":
-                AnalyticsMenu.displayMenu(scanner, history);
+                AnalyticsMenu.displayMenu(scanner);
                 break;
             case "4":
-                HistoryMenu.displayMenu(scanner, history);
+                HistoryMenu.displayMenu(scanner);
                 break;
             case "5":
                 scanner.close();

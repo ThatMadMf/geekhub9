@@ -3,7 +3,7 @@ package org.geekhub.crypto.ui.console;
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.history.CodingHistory;
+import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.exception.EmptyHistoryException;
@@ -12,10 +12,12 @@ import org.geekhub.crypto.exception.OperationUnsupportedException;
 import java.util.Scanner;
 
 class AnalyticsMenu {
-    public static void displayMenu(Scanner scanner, CodingHistory history) {
+    public static void displayMenu(Scanner scanner) {
         System.out.println("1 - Count inputs\n2 - Count by date\n3 - The most popular algorithm");
         String input = scanner.nextLine();
-        CodingAudit audit = new CodingAudit(history);
+
+        HistoryManager history = new HistoryManager();
+        CodingAudit audit = new CodingAudit(history.readHistory());
 
         switch (input) {
             case "1":

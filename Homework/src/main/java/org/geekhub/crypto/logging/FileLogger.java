@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 
 public class FileLogger implements Logger {
     private static final Logger consoleLogger = new ConsoleLogger();
@@ -41,6 +42,7 @@ public class FileLogger implements Logger {
         String partDivider = "\n";
         printToFile(logDivider);
         printToFile("ERROR" + e.getMessage() + partDivider);
+        printToFile("DATE " + LocalDate.now() + partDivider);
         printToFile(e.getCause() + partDivider);
     }
 
