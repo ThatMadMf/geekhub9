@@ -1,17 +1,16 @@
 package org.geekhub.crypto.coders.codecs;
 
-import org.geekhub.crypto.annotations.Codec;
-import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.util.MapReverser;
 import org.geekhub.crypto.util.PropertiesReader;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
-@Codec(algorithm = Algorithm.MORSE)
+@Service("MORSE")
 public class MorseCodec implements Encoder, Decoder {
 
     private static final Map<String, String> CHAR_MAP;

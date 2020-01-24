@@ -1,35 +1,25 @@
 package org.geekhub.crypto.coders;
 
-import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.exception.CodecUnsupportedException;
-import org.geekhub.crypto.exception.FileProcessingFailedException;
-import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-
+@Configuration
+@PropertySource("classpath:config.properties")
+@ComponentScan("org.geekhub.crypto.coders.codecs")
 public class EncodersFactory {
 
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public static Encoder getEncoder(Algorithm name) {
         if (name == null) {
             throw new CodecUnsupportedException("Unsupported encoder");
         }
-        Logger logger = LoggerFactory.getLogger();
-        List<Class<?>> classes = ClassParser.matchingClasses;
 
-        for (Class<?> currentClass : classes) {
-            Codec codec = currentClass.getAnnotation(Codec.class);
-            if (codec.algorithm() == name && Encoder.class.isAssignableFrom(currentClass)) {
-                try {
-                    return (Encoder) FieldInitialiser.initialiseFields(
-                            currentClass.getDeclaredConstructor().newInstance());
-                } catch (InstantiationException | IllegalAccessException |
-                        NoSuchMethodException | InvocationTargetException | FileProcessingFailedException e) {
-                    logger.warn(e.getMessage());
-                }
-            }
+        try (ConfigurableApplicationContext context =
+                     new AnnotationConfigApplicationContext(EncodersFactory.class)) {
+            return context.getBean(name.name(), Encoder.class);
         }
-        throw new CodecUnsupportedException("Cannot create such an encoder");
     }
 }

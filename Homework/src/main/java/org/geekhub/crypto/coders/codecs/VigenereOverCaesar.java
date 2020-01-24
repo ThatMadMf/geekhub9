@@ -1,9 +1,9 @@
 package org.geekhub.crypto.coders.codecs;
 
-import org.geekhub.crypto.annotations.Codec;
 import org.geekhub.crypto.coders.*;
+import org.springframework.stereotype.Service;
 
-@Codec(algorithm = Algorithm.VIGENERE_OVER_CAESAR)
+@Service("VIGENERE_OVER_CAESAR")
 public class VigenereOverCaesar implements Encoder, Decoder {
     private final Encoder vigenereEncoder;
     private final Encoder caesarEncoder;
@@ -11,10 +11,10 @@ public class VigenereOverCaesar implements Encoder, Decoder {
     private final Decoder caesarDecoder;
 
     public VigenereOverCaesar() {
-        vigenereEncoder = EncodersFactory.getEncoder(Algorithm.VIGENERE);
-        caesarEncoder = EncodersFactory.getEncoder(Algorithm.CAESAR);
-        vigenereDecoder = DecodersFactory.getDecoder(Algorithm.VIGENERE);
-        caesarDecoder = DecodersFactory.getDecoder(Algorithm.CAESAR);
+        vigenereEncoder = new VigenereCodec("notkeyword");
+        caesarEncoder = new CaesarCodec(20);
+        vigenereDecoder = new VigenereCodec("notkeyword");
+        caesarDecoder = new CaesarCodec(20);
     }
 
     @Override

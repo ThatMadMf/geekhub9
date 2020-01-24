@@ -1,28 +1,23 @@
 package org.geekhub.crypto.coders.codecs;
 
-import org.geekhub.crypto.annotations.Codec;
-import org.geekhub.crypto.annotations.Key;
-import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-@Codec(algorithm = Algorithm.VIGENERE)
+@Service("VIGENERE")
 public class VigenereCodec implements Encoder, Decoder {
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
 
-    @Key
     private final String key;
 
-    public VigenereCodec() {
-        key = "keyword";
-    }
-    public VigenereCodec(String shiftKey) {
+    public VigenereCodec(@Value("${key}") String shiftKey) {
         key = shiftKey;
     }
 
