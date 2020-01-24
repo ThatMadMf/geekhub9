@@ -10,7 +10,6 @@ import org.springframework.context.annotation.*;
 @ComponentScan("org.geekhub.crypto.coders.codecs")
 public class DecodersFactory {
 
-    @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public static Decoder getDecoder(Algorithm name) {
         if (name == null) {

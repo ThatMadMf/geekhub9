@@ -20,6 +20,5 @@ class CodecNameReader {
         } else {
             throw new OperationUnsupportedException("Operation is not supported");
         }
-
     }
 }
