@@ -1,9 +1,10 @@
 package org.geekhub.crypto.coders.codecs;
 
-import org.geekhub.crypto.coders.*;
-import org.springframework.stereotype.Service;
+import org.geekhub.crypto.coders.Decoder;
+import org.geekhub.crypto.coders.Encoder;
+import org.springframework.stereotype.Component;
 
-@Service("VIGENERE_OVER_CAESAR")
+@Component("VIGENERE_OVER_CAESAR")
 public class VigenereOverCaesar implements Encoder, Decoder {
     private final Encoder vigenereEncoder;
     private final Encoder caesarEncoder;

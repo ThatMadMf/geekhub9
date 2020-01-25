@@ -92,7 +92,7 @@ public class UkrainianEnglishTest {
     void When_DecodeText_Expect_Success() {
         String decoded = decoder.decode("test word see");
 
-        assertEquals(decoded, "тест слово побачити");
+        assertEquals(decoded, "тестове слово див");
     }
 
 

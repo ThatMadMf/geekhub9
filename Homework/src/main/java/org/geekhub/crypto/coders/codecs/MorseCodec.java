@@ -5,12 +5,12 @@ import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.util.MapReverser;
 import org.geekhub.crypto.util.PropertiesReader;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
-@Service("MORSE")
+@Component("MORSE")
 public class MorseCodec implements Encoder, Decoder {
 
     private static final Map<String, String> CHAR_MAP;

@@ -9,6 +9,7 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -28,7 +29,7 @@ public class MainMenu {
     }
 
     public void run() {
-        while (true) {
+        while (displayMenu()) {
             try {
                 displayMenu();
             } catch (OperationUnsupportedException e) {
@@ -37,7 +38,7 @@ public class MainMenu {
         }
     }
 
-    private void displayMenu() {
+    private boolean displayMenu() {
         System.out.println("Select operation");
         System.out.println("1. Decode \n2. Encode \n3. Analytics \n4. History\n5. Exit");
 
@@ -86,11 +87,11 @@ public class MainMenu {
                 break;
             case "5":
                 scanner.close();
-                System.exit(0);
-                break;
+                return false;
             default:
                 throw new OperationUnsupportedException("Operation is not supported");
         }
+        return true;
     }
 
 }

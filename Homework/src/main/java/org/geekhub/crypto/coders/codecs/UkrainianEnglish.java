@@ -8,7 +8,7 @@ import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
 import org.geekhub.crypto.model.translation.TranslationModel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +22,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@Service("UKRAINIAN_ENGLISH")
+@Component("UKRAINIAN_ENGLISH")
 public class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";

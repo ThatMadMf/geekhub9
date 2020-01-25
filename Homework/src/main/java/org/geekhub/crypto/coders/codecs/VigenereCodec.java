@@ -4,12 +4,12 @@ import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-@Service("VIGENERE")
+@Component("VIGENERE")
 public class VigenereCodec implements Encoder, Decoder {
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
