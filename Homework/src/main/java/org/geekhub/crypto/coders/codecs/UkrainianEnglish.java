@@ -27,7 +27,7 @@ public class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
-    private static final Logger compositeLogger = LoggerFactory.getLogger();
+    private Logger compositeLogger = LoggerFactory.getLoger();
 
     public UkrainianEnglish(String key) {
         this.key = key;

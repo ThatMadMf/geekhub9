@@ -1,5 +1,7 @@
 package org.geekhub.crypto.logging;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -9,12 +11,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 
+@Component("FILE")
 public class FileLogger implements Logger {
     private static final Logger consoleLogger = new ConsoleLogger();
     private final Path logDestination;
 
-    public FileLogger(String dir) {
-        logDestination = Paths.get(dir).resolve("logs.txt");
+    public FileLogger() {
+        logDestination = Paths.get(System.getProperty("user.home")).resolve("logs.txt");
     }
 
     public FileLogger(Path path) {

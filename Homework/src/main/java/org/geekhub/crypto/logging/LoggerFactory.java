@@ -1,23 +1,14 @@
 package org.geekhub.crypto.logging;
 
-import org.geekhub.crypto.util.PropertiesReader;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class LoggerFactory {
 
-
-    public static Logger getLogger() {
-        PropertiesReader propertiesReader = new PropertiesReader("config.properties");
-        List<String> readProperties = propertiesReader.getMultipleValueProperty("loggers");
-        Set<LogDestination> destinations = new HashSet<>();
-        for(String property : readProperties) {
-            destinations.add(LogDestination.valueOf(property));
+    public static Logger getLoger() {
+        try(ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(LogConfig.class)) {
+            return context.getBean(CompositeLogger.class);
         }
-
-        return new CompositeLogger(destinations);
     }
 
 }

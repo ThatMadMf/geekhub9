@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class HistoryManager {
-    private static final Logger logger = LoggerFactory.getLogger();
+    private static Logger logger = LoggerFactory.getLoger();
     private final DataSource dataSource;
 
     public HistoryManager() {
@@ -42,7 +42,7 @@ public class HistoryManager {
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 String codec = resultSet.getString("codec");
-                Algorithm algorithm =  codec == null ? null : Algorithm.valueOf(codec);
+                Algorithm algorithm = codec == null ? null : Algorithm.valueOf(codec);
                 HistoryRecord record = new HistoryRecord(
                         Operation.valueOf(resultSet.getString("operation")),
                         resultSet.getString("user_input"),

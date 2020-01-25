@@ -2,7 +2,6 @@ package org.geekhub.crypto.ui.web.crypto;
 
 import com.google.common.base.Stopwatch;
 import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @WebFilter(urlPatterns = "/*")
 public class RequestLogger extends HttpFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger();
+    private Logger logger;
 
     @Override
     public void doFilter(

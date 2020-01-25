@@ -1,17 +1,17 @@
 package org.geekhub.crypto.logging;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public class CompositeLogger implements Logger {
     private final List<Logger> loggers;
 
-    public CompositeLogger(Set<LogDestination> loggerDestinations) {
-        loggers = new ArrayList<>();
-        for (LogDestination logger : loggerDestinations) {
-            loggers.add(getLogDestination(logger));
-        }
+    @Autowired
+    public CompositeLogger(List<Logger> destinations) {
+        loggers = destinations;
     }
 
     @Override
@@ -32,19 +32,5 @@ public class CompositeLogger implements Logger {
     @Override
     public void error(Exception e) {
         loggers.forEach(logger -> logger.error(e));
-    }
-
-    private Logger getLogDestination(LogDestination logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger destination is null");
-        }
-        switch (logger) {
-            case FILE:
-                return new FileLogger(System.getProperty("user.home"));
-            case CONSOLE:
-                return new ConsoleLogger();
-            default:
-                throw new IllegalArgumentException("Unsupported destination");
-        }
     }
 }

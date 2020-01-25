@@ -1,5 +1,8 @@
 package org.geekhub.crypto.logging;
 
+import org.springframework.stereotype.Component;
+
+@Component("CONSOLE")
 public class ConsoleLogger implements Logger {
 
     @Override

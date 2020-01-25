@@ -13,8 +13,9 @@ import java.util.Scanner;
 
 class HistoryMenu {
 
-    public static void displayMenu(Scanner scanner) {
-        Logger compositeLogger = LoggerFactory.getLogger();
+    private Logger compositeLogger = LoggerFactory.getLoger();
+
+    public void displayMenu(Scanner scanner) {
         System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
         String input = scanner.nextLine();
         HistoryManager history = new HistoryManager();
