@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:config.properties")
-@ComponentScan("org.geekhub.crypto.coders.codecs")
+@ComponentScan("org.geekhub.crypto.coders")
 public class EncodersFactory {
 
     public static Encoder getEncoder(Algorithm name) {

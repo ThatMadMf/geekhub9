@@ -7,7 +7,7 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @PropertySource("classpath:config.properties")
-@ComponentScan("org.geekhub.crypto.coders.codecs")
+@ComponentScan("org.geekhub.crypto.coders")
 public class DecodersFactory {
 
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)

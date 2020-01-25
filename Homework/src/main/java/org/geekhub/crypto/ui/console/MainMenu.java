@@ -9,7 +9,6 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
