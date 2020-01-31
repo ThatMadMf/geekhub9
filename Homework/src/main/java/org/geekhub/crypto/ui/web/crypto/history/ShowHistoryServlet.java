@@ -3,6 +3,7 @@ package org.geekhub.crypto.ui.web.crypto.history;
 import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.ResponseHistoryPrinter;
+import org.geekhub.crypto.util.ApplicationContextWrapper;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +18,7 @@ public class ShowHistoryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
-            HistoryManager history = new HistoryManager();
+            HistoryManager history = ApplicationContextWrapper.getBean(HistoryManager.class);
             ResponseHistoryPrinter printer = new ResponseHistoryPrinter(out);
             printer.print(history.readHistory());
         } catch (IOException e) {

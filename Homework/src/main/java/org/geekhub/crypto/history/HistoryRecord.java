@@ -54,6 +54,9 @@ public class HistoryRecord {
     }
 
     public String getUserInput() {
+        if(userInput == null) {
+            return "";
+        }
         return userInput;
     }
 

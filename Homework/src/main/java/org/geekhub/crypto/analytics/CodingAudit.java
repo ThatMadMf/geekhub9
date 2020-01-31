@@ -2,8 +2,11 @@ package org.geekhub.crypto.analytics;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.exception.EmptyHistoryException;
+import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -12,11 +15,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+@Component
 public class CodingAudit {
     private final List<HistoryRecord> codingHistory;
 
-    public CodingAudit(List<HistoryRecord> codingHistory) {
-        this.codingHistory = codingHistory;
+    @Autowired
+    public CodingAudit(HistoryManager manager) {
+        codingHistory = manager.readHistory();
     }
 
     public Map<String, Integer> countEncodingInputs() {

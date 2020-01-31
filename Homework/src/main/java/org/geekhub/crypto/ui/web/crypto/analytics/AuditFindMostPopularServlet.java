@@ -5,6 +5,7 @@ import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.HistoryManager;
+import org.geekhub.crypto.util.ApplicationContextWrapper;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +39,7 @@ public class AuditFindMostPopularServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             CodecUsecase usecase = CodecUsecase.valueOf(request.getParameter("usecase"));
 
-            CodingAudit audit = new CodingAudit(new HistoryManager().readHistory());
+            CodingAudit audit = ApplicationContextWrapper.getBean(CodingAudit.class);
             Algorithm res = audit.findMostPopularCodec(usecase);
             out.println(res.name());
         } catch (IOException e) {

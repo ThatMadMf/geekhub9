@@ -8,21 +8,32 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 class HistoryMenu {
 
-    private Logger compositeLogger = LoggerFactory.getLoger();
+    private final HistoryConsolePrinter printer;
+    private final Logger logger;
+    private final HistoryManager history;
+
+    @Autowired
+    public HistoryMenu(HistoryConsolePrinter printer, HistoryManager history) {
+        this.printer = printer;
+        this.history = history;
+        this.logger = LoggerFactory.getLoger();
+    }
 
     public void displayMenu(Scanner scanner) {
         System.out.println("1 - Show History\n2 - Remove last record\n3 - Clear history");
         String input = scanner.nextLine();
-        HistoryManager history = new HistoryManager();
         try {
             switch (input) {
                 case "1":
-                    new HistoryConsolePrinter().print(history.readHistory());
+                    printer.print(history.readHistory());
                     history.addToHistory(new HistoryRecord(Operation.SHOW_HISTORY, null, null));
                     break;
                 case "2":
@@ -36,7 +47,7 @@ class HistoryMenu {
                     throw new OperationUnsupportedException("Operation is not supported");
             }
         } catch (FileProcessingFailedException e) {
-            compositeLogger.error(e);
+            logger.error(e);
             System.out.println("Error during saving or reading data");
         }
     }

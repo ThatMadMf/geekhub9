@@ -1,13 +1,14 @@
 package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.exception.CodecUnsupportedException;
+import org.geekhub.crypto.util.ApplicationContextWrapper;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
 @PropertySource("classpath:config.properties")
-@ComponentScan("org.geekhub.crypto.coders")
 public class DecodersFactory {
 
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -16,9 +17,6 @@ public class DecodersFactory {
             throw new CodecUnsupportedException("Unsupported encoder");
         }
 
-        try (ConfigurableApplicationContext context =
-                     new AnnotationConfigApplicationContext(org.geekhub.crypto.coders.DecodersFactory.class)) {
-            return context.getBean(name.name(), Decoder.class);
-        }
+        return ApplicationContextWrapper.getBean(name.name(), Decoder.class);
     }
 }

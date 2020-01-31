@@ -2,6 +2,7 @@ package org.geekhub.crypto.ui.web.crypto.history;
 
 import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.HistoryManager;
+import org.geekhub.crypto.util.ApplicationContextWrapper;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +30,7 @@ public class ClearHistoryServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/html");
-            HistoryManager history = new HistoryManager();
+            HistoryManager history = ApplicationContextWrapper.getBean(HistoryManager.class);
             history.clearHistory();
             out.println("<p>Removing is success</p>");
             out.println("<a href=\"/geekhub/application>Go to menu</a>");

@@ -8,16 +8,26 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.exception.EmptyHistoryException;
 import org.geekhub.crypto.exception.OperationUnsupportedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 class AnalyticsMenu {
-    public static void displayMenu(Scanner scanner) {
+
+    private final CodingAudit audit;
+    private final HistoryManager history;
+
+    @Autowired
+    public AnalyticsMenu(CodingAudit audit, HistoryManager history) {
+        this.audit = audit;
+        this.history = history;
+    }
+
+    public void displayMenu(Scanner scanner) {
         System.out.println("1 - Count inputs\n2 - Count by date\n3 - The most popular algorithm");
         String input = scanner.nextLine();
-
-        HistoryManager history = new HistoryManager();
-        CodingAudit audit = new CodingAudit(history.readHistory());
 
         switch (input) {
             case "1":

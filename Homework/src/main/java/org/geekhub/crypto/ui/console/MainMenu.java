@@ -9,22 +9,28 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class MainMenu {
 
     private final Scanner scanner;
-    private Logger compositeLogger = LoggerFactory.getLoger();
+    private final Logger compositeLogger;
     private final HistoryManager history;
     private final HistoryMenu historyMenu;
+    private final AnalyticsMenu analyticsMenu;
 
-
-    public MainMenu() {
+    @Autowired
+    public MainMenu(HistoryManager history, HistoryMenu historyMenu, AnalyticsMenu analyticsMenu) {
         scanner = new Scanner(System.in);
-        history = new HistoryManager();
-        historyMenu = new HistoryMenu();
+        compositeLogger = LoggerFactory.getLoger();
+        this.history = history;
+        this.historyMenu = historyMenu;
+        this.analyticsMenu = analyticsMenu;
+
     }
 
     public void run() {
@@ -79,7 +85,7 @@ public class MainMenu {
                 }
                 break;
             case "3":
-                AnalyticsMenu.displayMenu(scanner);
+                analyticsMenu.displayMenu(scanner);
                 break;
             case "4":
                 historyMenu.displayMenu(scanner);

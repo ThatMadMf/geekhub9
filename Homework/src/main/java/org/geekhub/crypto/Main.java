@@ -1,11 +1,18 @@
 package org.geekhub.crypto;
 
 import org.geekhub.crypto.ui.console.MainMenu;
+import org.geekhub.crypto.util.ApplicationContextWrapper;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan("org.geekhub.crypto")
 class Main {
 
     public static void main(String[] args) {
-        MainMenu menu = new MainMenu();
-        menu.run();
+        ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+        ApplicationContextWrapper wrapper = new ApplicationContextWrapper();
+        wrapper.setApplicationContext(context);
+        ApplicationContextWrapper.getBean(MainMenu.class).run();
     }
 }

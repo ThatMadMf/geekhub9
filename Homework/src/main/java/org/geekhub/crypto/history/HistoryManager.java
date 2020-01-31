@@ -4,17 +4,22 @@ import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.db.DataSource;
 import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
 public class HistoryManager {
-    private static Logger logger = LoggerFactory.getLoger();
+    private final Logger logger;
     private final DataSource dataSource;
 
-    public HistoryManager() {
-        dataSource = new DataSource();
+    @Autowired
+    public HistoryManager(DataSource source) {
+        logger = LoggerFactory.getLoger();
+        dataSource = source;
     }
 
     public void addToHistory(HistoryRecord record) {

@@ -3,12 +3,14 @@ package org.geekhub.crypto.db;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.geekhub.crypto.logging.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
+@Component
 public class DataSource {
 
     private  Logger logger;

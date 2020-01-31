@@ -7,6 +7,7 @@ import org.geekhub.crypto.exception.WebException;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.util.ApplicationContextWrapper;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/application/encode")
 public class EncodeServlet extends HttpServlet {
 
-    private final HistoryManager history = new HistoryManager();
+    private final HistoryManager history = ApplicationContextWrapper.getBean(HistoryManager.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

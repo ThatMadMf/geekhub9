@@ -1,7 +1,10 @@
 package org.geekhub.crypto.history;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class HistoryConsolePrinter implements HistoryPrinter {
 
     @Override
