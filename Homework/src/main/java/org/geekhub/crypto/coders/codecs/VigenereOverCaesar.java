@@ -11,11 +11,11 @@ public class VigenereOverCaesar implements Encoder, Decoder {
     private final Decoder vigenereDecoder;
     private final Decoder caesarDecoder;
 
-    public VigenereOverCaesar() {
-        vigenereEncoder = new VigenereCodec("notkeyword");
-        caesarEncoder = new CaesarCodec(20);
-        vigenereDecoder = new VigenereCodec("notkeyword");
-        caesarDecoder = new CaesarCodec(20);
+    public VigenereOverCaesar(CaesarCodec caesarCodec, VigenereCodec vigenereCodec) {
+        vigenereEncoder = vigenereCodec;
+        caesarEncoder = caesarCodec;
+        vigenereDecoder = vigenereCodec;
+        caesarDecoder = caesarCodec;
     }
 
     @Override

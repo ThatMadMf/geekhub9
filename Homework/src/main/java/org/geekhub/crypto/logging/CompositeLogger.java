@@ -10,8 +10,8 @@ public class CompositeLogger implements Logger {
     private final List<Logger> loggers;
 
     @Autowired
-    public CompositeLogger(List<Logger> destinations) {
-        loggers = destinations;
+    public CompositeLogger(List<Logger> loggers) {
+        this.loggers = loggers;
     }
 
     @Override

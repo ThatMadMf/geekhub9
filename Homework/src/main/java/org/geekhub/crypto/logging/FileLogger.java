@@ -1,5 +1,6 @@
 package org.geekhub.crypto.logging;
 
+import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,9 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 
-@Component("FILE")
 public class FileLogger implements Logger {
-    private static final Logger consoleLogger = new ConsoleLogger();
     private final Path logDestination;
 
     public FileLogger() {
@@ -54,7 +53,7 @@ public class FileLogger implements Logger {
              PrintStream printStream = new PrintStream(fileOutputStream)) {
             printStream.println(message);
         } catch (IOException e) {
-            consoleLogger.warn(e.getMessage());
+            throw new FileProcessingFailedException("Failed to write to file", e);
         }
     }
 }

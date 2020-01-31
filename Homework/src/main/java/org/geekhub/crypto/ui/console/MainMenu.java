@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Component
 public class MainMenu {
 
     private final Scanner scanner;
     private Logger compositeLogger = LoggerFactory.getLoger();
     private final HistoryManager history;
     private final HistoryMenu historyMenu;
+
 
     public MainMenu() {
         scanner = new Scanner(System.in);
