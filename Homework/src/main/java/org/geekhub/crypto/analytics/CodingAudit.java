@@ -24,6 +24,10 @@ public class CodingAudit {
         codingHistory = manager.readHistory();
     }
 
+    public CodingAudit(List<HistoryRecord> records) {
+        codingHistory = records;
+    }
+
     public Map<String, Integer> countEncodingInputs() {
         return codingHistory.stream()
                 .filter(record -> record.getOperation().equals(Operation.ENCODE))

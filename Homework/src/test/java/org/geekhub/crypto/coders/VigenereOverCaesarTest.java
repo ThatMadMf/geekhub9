@@ -1,6 +1,9 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.coders.codecs.CaesarCodec;
+import org.geekhub.crypto.coders.codecs.VigenereCodec;
 import org.geekhub.crypto.coders.codecs.VigenereOverCaesar;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -12,12 +15,12 @@ public class VigenereOverCaesarTest {
 
     @BeforeGroups(groups = "encode")
     public void initialiseEncode() {
-        encoder = new VigenereOverCaesar();
+        encoder = new VigenereOverCaesar(new CaesarCodec(20), new VigenereCodec("notkeyword"));
     }
 
     @BeforeGroups(groups = "decode")
     void initialiseDecode() {
-        decoder = new VigenereOverCaesar();
+        decoder = new VigenereOverCaesar(new CaesarCodec(20), new VigenereCodec("notkeyword"));
     }
 
     @Test(groups = "encode", expectedExceptions = IllegalArgumentException.class)

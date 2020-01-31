@@ -19,7 +19,10 @@ dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("org.springframework:spring-context:5.2.3.RELEASE")
-    implementation("org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE") {
+        exclude module: "logback-classic"
+        exclude module: "spring-boot-starter-logging"
+    }
 
     implementation("com.zaxxer:HikariCP:3.4.1")
 
@@ -33,6 +36,7 @@ dependencies {
 
     testImplementation("org.testng:testng:7.0.0")
     testImplementation("org.mockito:mockito-core:3.2.0")
+
 }
 
 test {
