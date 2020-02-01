@@ -1,15 +1,10 @@
 package org.geekhub.crypto.logging;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
-@Component
 public class CompositeLogger implements Logger {
     private final List<Logger> loggers;
 
-    @Autowired
     public CompositeLogger(List<Logger> loggers) {
         this.loggers = loggers;
     }

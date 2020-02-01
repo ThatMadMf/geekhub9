@@ -1,7 +1,6 @@
 package org.geekhub.crypto.logging;
 
 import org.geekhub.crypto.exception.FileProcessingFailedException;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.OutputStream;
