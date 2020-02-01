@@ -6,25 +6,25 @@ import org.geekhub.crypto.history.HistoryConsolePrinter;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
 @Component
-class HistoryMenu {
+public class HistoryMenu {
 
     private final HistoryConsolePrinter printer;
     private final Logger logger;
     private final HistoryManager history;
 
     @Autowired
-    public HistoryMenu(HistoryConsolePrinter printer, HistoryManager history) {
+    public HistoryMenu(HistoryConsolePrinter printer, HistoryManager history, CompositeLogger logger) {
         this.printer = printer;
         this.history = history;
-        this.logger = LoggerFactory.getLoger();
+        this.logger = logger;
     }
 
     public void displayMenu(Scanner scanner) {

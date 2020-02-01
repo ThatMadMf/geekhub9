@@ -8,7 +8,10 @@ import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.util.ApplicationContextWrapper;
+import org.springframework.context.ApplicationContext;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +22,15 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/application/decode")
 public class DecodeServlet extends HttpServlet {
 
-    private final HistoryManager history = ApplicationContextWrapper.getBean(HistoryManager.class);
+    private HistoryManager history;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+           super.init();
+           final ApplicationContext applicationContext =
+                   (ApplicationContext) config.getServletContext().getAttribute("APPLICATION_CONTEXT");
+           this.history = applicationContext.getBean(HistoryManager.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

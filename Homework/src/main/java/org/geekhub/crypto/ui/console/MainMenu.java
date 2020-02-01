@@ -7,8 +7,8 @@ import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,15 +18,16 @@ import java.util.Scanner;
 public class MainMenu {
 
     private final Scanner scanner;
-    private final Logger compositeLogger;
+    private final Logger logger;
     private final HistoryManager history;
     private final HistoryMenu historyMenu;
     private final AnalyticsMenu analyticsMenu;
 
     @Autowired
-    public MainMenu(HistoryManager history, HistoryMenu historyMenu, AnalyticsMenu analyticsMenu) {
+    public MainMenu(HistoryManager history, HistoryMenu historyMenu,
+                    AnalyticsMenu analyticsMenu, CompositeLogger logger) {
         scanner = new Scanner(System.in);
-        compositeLogger = LoggerFactory.getLoger();
+        this.logger = logger;
         this.history = history;
         this.historyMenu = historyMenu;
         this.analyticsMenu = analyticsMenu;
@@ -38,7 +39,7 @@ public class MainMenu {
             try {
                 displayMenu();
             } catch (OperationUnsupportedException e) {
-                compositeLogger.warn("Operation is not supported");
+                logger.warn("Operation is not supported");
             }
         }
     }

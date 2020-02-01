@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Dictionary;
 import org.geekhub.crypto.coders.Encoder;
+import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.exception.IllegalInputException;
+import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 import org.geekhub.crypto.model.translation.TranslationModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,12 +29,8 @@ public class UkrainianEnglish implements Encoder, Decoder {
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
-    private Logger compositeLogger = LoggerFactory.getLoger();
 
-    public UkrainianEnglish(String key) {
-        this.key = key;
-    }
-
+    @Autowired
     public UkrainianEnglish() {
         key = "key=AIzaSyB2HijQLlsmI1udH9ARl45oC5eAj4XfjTw";
     }
@@ -107,10 +105,10 @@ public class UkrainianEnglish implements Encoder, Decoder {
         } catch (IllegalArgumentException e) {
             throw new IllegalInputException("Unsupported character");
         } catch (InterruptedException e) {
-            compositeLogger.warn("Failed to make request");
             Thread.currentThread().interrupt();
+            throw new FileProcessingFailedException("Failed to make request", e);
         } catch (IOException e) {
-            compositeLogger.warn("Failed to translate online");
+            throw new FileProcessingFailedException("Failed to translate online", e);
         }
         return null;
     }

@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web;
+package org.geekhub.crypto.ui.web.crypto.filters;
 
 import org.geekhub.crypto.exception.WebException;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "SessionFilter",  urlPatterns = {"/applicationzz", "/application/*"})
+@WebFilter(filterName = "filter3",  urlPatterns = {"/applicationzz", "/application/*"})
 public class SessionFilter extends HttpFilter {
 
     @Override

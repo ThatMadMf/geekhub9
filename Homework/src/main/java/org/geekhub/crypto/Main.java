@@ -13,6 +13,6 @@ class Main {
         ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper();
         wrapper.setApplicationContext(context);
-        ApplicationContextWrapper.getBean(MainMenu.class).run();
+        context.getBean(MainMenu.class).run();
     }
 }

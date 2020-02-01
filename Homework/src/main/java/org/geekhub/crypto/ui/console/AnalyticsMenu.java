@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 @Component
-class AnalyticsMenu {
+public class AnalyticsMenu {
 
     private final CodingAudit audit;
     private final HistoryManager history;

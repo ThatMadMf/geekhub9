@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 @PropertySource("classpath:config.properties")
 public class DecodersFactory {
 
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public static Decoder getDecoder(Algorithm name) {
         if (name == null) {
             throw new CodecUnsupportedException("Unsupported encoder");

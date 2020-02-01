@@ -2,8 +2,8 @@ package org.geekhub.crypto.history;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.db.DataSource;
+import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.geekhub.crypto.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +17,8 @@ public class HistoryManager {
     private final DataSource dataSource;
 
     @Autowired
-    public HistoryManager(DataSource source) {
-        logger = LoggerFactory.getLoger();
+    public HistoryManager(DataSource source, CompositeLogger logger) {
+        this.logger = logger;
         dataSource = source;
     }
 

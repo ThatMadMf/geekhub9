@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web;
+package org.geekhub.crypto.ui.web.crypto.filters;
 
 import org.geekhub.crypto.exception.WebException;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "AuthorizationFileter", urlPatterns = {"/application/analytics", "/application/analytics/*",
+@WebFilter(filterName = "filter4", urlPatterns = {"/application/analytics", "/application/analytics/*",
         "/application/history/remove-last", "/application/history/clear-history"})
 public class AuthorizationFilter extends HttpFilter {
 
