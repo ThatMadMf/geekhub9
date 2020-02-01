@@ -54,7 +54,7 @@ public class HistoryRecord {
     }
 
     public String getUserInput() {
-        if(userInput == null) {
+        if (userInput == null) {
             return "";
         }
         return userInput;
@@ -68,8 +68,7 @@ public class HistoryRecord {
         return operationDate;
     }
 
-    @Override
-    public String toString() {
+    public String getStringRepresentation() {
         return operation.toString() + "/" + codec + " - " + userInput + " : " + operationDate;
     }
 

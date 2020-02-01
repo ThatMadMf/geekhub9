@@ -2,6 +2,10 @@ package org.geekhub.crypto.ui.web.controller;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.DecoderFactory;
+import org.geekhub.crypto.coders.EncoderFactory;
+import org.geekhub.crypto.history.HistoryManager;
+import org.geekhub.crypto.history.HistoryRecord;
+import org.geekhub.crypto.history.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +20,14 @@ import java.io.IOException;
 public class HomeController {
 
     private DecoderFactory decoderFactory;
+    private EncoderFactory encoderFactory;
+    private HistoryManager historyManager;
 
     @Autowired
-    public HomeController(DecoderFactory decoderFactory) {
+    public HomeController(DecoderFactory decoderFactory, EncoderFactory encoderFactory, HistoryManager historyManager) {
         this.decoderFactory = decoderFactory;
+        this.encoderFactory = encoderFactory;
+        this.historyManager = historyManager;
     }
 
     @GetMapping("/")
@@ -53,33 +61,33 @@ public class HomeController {
     @GetMapping("application/history")
     public String history() {
         return "<h2>History operations<h2>" +
-                "<a href=\"/geekhub/application/history/show-history\">1. Show history</a><br>" +
-                "<a href=\"/geekhub/application/history/remove-last\">2. Remove last element</a><br>" +
-                "<a href=\"/geekhub/application/history/clear-history\">3. Clear history</a><br>";
+                "<a href=\"/application/history/show-history\">1. Show history</a><br>" +
+                "<a href=\"/application/history/remove-last\">2. Remove last element</a><br>" +
+                "<a href=\"/application/history/clear-history\">3. Clear history</a><br>";
     }
 
     @GetMapping("application/analytics")
     public String analytics() {
         return "<h2>Analytics</h2>" +
-                "<a href=\"/geekhub/application/analytics/count-inputs\">1. Count inputs</a><br>" +
-                "<a href=\"/geekhub/application/analytics/count-by-date\">2. Count by date</a><br>" +
-                "<a href=\"/geekhub/application/analytics/find-most-popular-codec\">" +
+                "<a href=\"/application/analytics/count-inputs\">1. Count inputs</a><br>" +
+                "<a href=\"/application/analytics/count-by-date\">2. Count by date</a><br>" +
+                "<a href=\"/application/analytics/find-most-popular-codec\">" +
                 "3. Find most popular algorithm</a><br>";
     }
 
     @GetMapping("application/decode")
     public String decode() {
-        String result = "";
-        result += "<form action = \"\" method = \"POST\">" +
-                "Enter decode algorithm: <select name = \"algorithm\">\n";
+        StringBuilder result = new StringBuilder();
+        result.append("<form action = \"\" method = \"POST\">" +
+                "Enter decode algorithm: <select name = \"algorithm\">");
         for (Algorithm algorithm : Algorithm.values()) {
-            result += "<option value=\"" + algorithm.name() + "\">" + algorithm.name() + "</option>";
+            result.append("<option value=\"" + algorithm.name() + "\">" + algorithm.name() + "</option>");
         }
-        result += "</select>" + "<br>" +
+        result.append("</select>" + "<br>" +
                 "Enter text to decode: <input name = \"text\">" +
                 "<input type = \"submit\" value = \"Submit\"/>" +
-                "</form>";
-        return result;
+                "</form>");
+        return result.toString();
     }
 
     @PostMapping("application/decode")
@@ -88,22 +96,34 @@ public class HomeController {
             return "Illegal usage of not existing codec";
         }
 
+        HistoryRecord record = new HistoryRecord(Operation.DECODE, text, Algorithm.valueOf(algorithm));
+        historyManager.addToHistory(record);
         return decoderFactory.getDecoder(Algorithm.valueOf(algorithm)).decode(text);
     }
 
     @GetMapping("application/encode")
     public String encode() {
-        String result = "";
-        result += "<form action = \"\" method = \"POST\">" +
-                "Enter encode algorithm: <select name = \"algorithm\">\n";
+        StringBuilder result = new StringBuilder();
+        result.append("<form action = \"\" method = \"POST\">" +
+                "Enter encode algorithm: <select name = \"algorithm\">");
         for (Algorithm algorithm : Algorithm.values()) {
-            result += "<option value=\"" + algorithm.name() + "\">" + algorithm.name() + "</option>";
+            result.append("<option value=\"" + algorithm.name() + "\">" + algorithm.name() + "</option>");
         }
-        result += "</select>" + "<br>" +
+        result.append("</select>" + "<br>" +
                 "Enter text to encode: <input name = \"text\">" +
                 "<input type = \"submit\" value = \"Submit\"/>" +
-                "</form>";
-        return result;
+                "</form>");
+        return result.toString();
     }
 
+    @PostMapping("application/encode")
+    public String encodePost(@RequestParam String algorithm, String text) {
+        if (algorithm == null) {
+            return "Illegal usage of not existing codec";
+        }
+
+        HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, Algorithm.valueOf(algorithm));
+        historyManager.addToHistory(record);
+        return encoderFactory.getEncoder(Algorithm.valueOf(algorithm)).encode(text);
+    }
 }

@@ -1,24 +1,11 @@
 package org.geekhub.crypto.history;
 
-import org.geekhub.crypto.analytics.CodecUsecase;
-
 public enum Operation {
     ENCODE,
     DECODE,
     SHOW_HISTORY,
     CLEAR_HISTORY,
     ANALYTICS;
-
-    public static Operation usecaseToOperation(CodecUsecase usecase) {
-        switch (usecase) {
-            case ENCODING:
-                return ENCODE;
-            case DECODING:
-                return DECODE;
-            default:
-                throw new IllegalArgumentException();
-        }
-    }
 
     @Override
     public String toString() {
