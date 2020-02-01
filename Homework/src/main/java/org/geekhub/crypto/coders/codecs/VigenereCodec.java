@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders.codecs;
 
+import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.function.BiFunction;
 
-@Component("VIGENERE")
+@Component
 public class VigenereCodec implements Encoder, Decoder {
+
+    private static final Algorithm algorithm = Algorithm.VIGENERE;
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
@@ -44,6 +47,11 @@ public class VigenereCodec implements Encoder, Decoder {
             keywordCount = getNextKeyIndex(keywordCount, result, symbol);
         }
         return result.toString();
+    }
+
+    @Override
+    public Algorithm getAlgorithm() {
+        return algorithm;
     }
 
     private void checkNull(String input) {

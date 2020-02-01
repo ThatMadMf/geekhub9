@@ -10,17 +10,17 @@ public class EncodersFactoryTest {
 
     @Test(expectedExceptions = CodecUnsupportedException.class)
     void When_InputIsNull_ThrowingException() {
-        EncodersFactory.getEncoder(null);
+        EncoderFactory.getEncoder(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     void When_InputIsNotExistingElement_ThrowingException() {
-        EncodersFactory.getEncoder(Algorithm.valueOf("NotExistingAlgorithm"));
+        EncoderFactory.getEncoder(Algorithm.valueOf("NotExistingAlgorithm"));
     }
 
     @Test()
     void Whent_InputIsMorse_Expect_Success() {
-        Encoder encoder = EncodersFactory.getEncoder(Algorithm.MORSE);
+        Encoder encoder = EncoderFactory.getEncoder(Algorithm.MORSE);
 
         assertTrue(encoder instanceof MorseCodec);
     }
@@ -28,7 +28,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsCaesar_Expect_Success() {
-        Encoder encoder = EncodersFactory.getEncoder(Algorithm.CAESAR);
+        Encoder encoder = EncoderFactory.getEncoder(Algorithm.CAESAR);
 
         assertTrue(encoder instanceof CaesarCodec);
     }
@@ -36,7 +36,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsVigenere_Expect_Success() {
-        Encoder encoder = EncodersFactory.getEncoder(Algorithm.VIGENERE);
+        Encoder encoder = EncoderFactory.getEncoder(Algorithm.VIGENERE);
 
         assertTrue(encoder instanceof VigenereCodec);
     }
@@ -44,7 +44,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsVigenereOverCasesar_Expect_Success() {
-        Encoder encoder = EncodersFactory.getEncoder(Algorithm.VIGENERE_OVER_CAESAR);
+        Encoder encoder = EncoderFactory.getEncoder(Algorithm.VIGENERE_OVER_CAESAR);
 
         assertTrue(encoder instanceof VigenereOverCaesar);
     }
@@ -52,7 +52,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsUkranianEnglish_Expect_Success() {
-        Encoder encoder = EncodersFactory.getEncoder(Algorithm.UKRAINIAN_ENGLISH);
+        Encoder encoder = EncoderFactory.getEncoder(Algorithm.UKRAINIAN_ENGLISH);
 
         assertTrue(encoder instanceof UkrainianEnglish);
     }

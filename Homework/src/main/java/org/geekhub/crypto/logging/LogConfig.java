@@ -25,9 +25,4 @@ public class LogConfig {
         return new FileLogger();
     }
 
-    @Bean
-    public CompositeLogger compositeLogger (List<Logger> loggers) {
-        return new CompositeLogger(loggers);
-    }
-
 }

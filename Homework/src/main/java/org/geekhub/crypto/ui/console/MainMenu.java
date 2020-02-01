@@ -22,16 +22,19 @@ public class MainMenu {
     private final HistoryManager history;
     private final HistoryMenu historyMenu;
     private final AnalyticsMenu analyticsMenu;
+    private final DecoderFactory decoderFactory;
+    private final EncoderFactory encoderFactory;
 
     @Autowired
-    public MainMenu(HistoryManager history, HistoryMenu historyMenu,
-                    AnalyticsMenu analyticsMenu, CompositeLogger logger) {
+    public MainMenu(HistoryManager history, HistoryMenu historyMenu, AnalyticsMenu analyticsMenu,
+                    CompositeLogger logger, DecoderFactory decoderFactory, EncoderFactory encoderFactory) {
         scanner = new Scanner(System.in);
         this.logger = logger;
         this.history = history;
         this.historyMenu = historyMenu;
         this.analyticsMenu = analyticsMenu;
-
+        this.decoderFactory = decoderFactory;
+        this.encoderFactory = encoderFactory;
     }
 
     public void run() {
@@ -59,7 +62,7 @@ public class MainMenu {
                 );
                 System.out.println("Decoded:");
                 try {
-                    Decoder decoder = DecodersFactory.getDecoder(decoderAlgorithm);
+                    Decoder decoder = decoderFactory.getDecoder(decoderAlgorithm);
                     System.out.println(decoder.decode(textToDecode));
                 } catch (IllegalArgumentException | IllegalInputException e) {
                     System.out.println("Invalid input, try again");
@@ -77,7 +80,7 @@ public class MainMenu {
 
                 System.out.println("Encoded:");
                 try {
-                    Encoder encoder = EncodersFactory.getEncoder(encoderAlgorithm);
+                    Encoder encoder = encoderFactory.getEncoder(encoderAlgorithm);
                     System.out.println(encoder.encode(textToEncode));
                 } catch (IllegalArgumentException | IllegalInputException e) {
                     System.out.println("Invalid input, try again");

@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders.codecs;
 
+import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-@Component("CAESAR")
+@Component
 public class CaesarCodec implements Encoder, Decoder {
+
+    private static final Algorithm algorithm = Algorithm.CAESAR;
 
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
@@ -38,6 +41,11 @@ public class CaesarCodec implements Encoder, Decoder {
         return input.chars()
                 .map(c -> codeWithCase((char) c, this::decodeLetter))
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+    }
+
+    @Override
+    public Algorithm getAlgorithm() {
+        return algorithm;
     }
 
     private void inputNullCheck(String input) {

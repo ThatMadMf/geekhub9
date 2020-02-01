@@ -1,6 +1,7 @@
 package org.geekhub.crypto.coders.codecs;
 
 import com.google.gson.Gson;
+import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Dictionary;
 import org.geekhub.crypto.coders.Encoder;
@@ -24,8 +25,10 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@Component("UKRAINIAN_ENGLISH")
+@Component
 public class UkrainianEnglish implements Encoder, Decoder {
+
+    private static final Algorithm algorithm = Algorithm.UKRAINIAN_ENGLISH;
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
@@ -57,6 +60,11 @@ public class UkrainianEnglish implements Encoder, Decoder {
         } else {
             return translateOnline;
         }
+    }
+
+    @Override
+    public Algorithm getAlgorithm() {
+        return algorithm;
     }
 
     private String encodeOffline(String input) {

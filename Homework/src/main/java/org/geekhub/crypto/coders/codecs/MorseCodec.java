@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders.codecs;
 
+import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.coders.Decoder;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.IllegalInputException;
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
-@Component("MORSE")
+@Component
 public class MorseCodec implements Encoder, Decoder {
+
+    private static final Algorithm algorithm = Algorithm.MORSE;
+
 
     private static final Map<String, String> CHAR_MAP;
     private static final Map<String, String> CODE_MAP;
@@ -42,6 +46,11 @@ public class MorseCodec implements Encoder, Decoder {
         inputNullCheck(input);
         String result = performOperation(input, MorseCodec::decodeWord);
         return result.toLowerCase();
+    }
+
+    @Override
+    public Algorithm getAlgorithm() {
+        return algorithm;
     }
 
     private void checkCaseOfInput(String input) {
