@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class EncoderFactory {
@@ -12,9 +15,10 @@ public class EncoderFactory {
     private EnumMap<Algorithm, Encoder> encoders;
 
     @Autowired
-    public EncoderFactory(Set<Encoder> encoders) {
-        this.encoders = new EnumMap<>(Algorithm.class);
-        encoders.forEach(e -> this.encoders.put(e.getAlgorithm(), e));
+    public EncoderFactory(List<Encoder> encoders) {
+        Map<Algorithm, Encoder> map = encoders.stream()
+                .collect(Collectors.toMap(Encoder::getAlgorithm, Function.identity()));
+        this.encoders = new EnumMap<>(map);
     }
 
     public Encoder getEncoder(Algorithm algorithm) {
