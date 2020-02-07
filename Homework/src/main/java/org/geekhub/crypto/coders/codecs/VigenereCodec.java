@@ -13,7 +13,6 @@ import java.util.function.BiFunction;
 @Component
 public class VigenereCodec implements Encoder, Decoder {
 
-    private static final Algorithm algorithm = Algorithm.VIGENERE;
     private static final List<Character> ALPHABET = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static final List<Character> ACCESSIBLE_SYMBOLS = List.of('.', ',', '!', '?', '-', '=', '+', '-', ' ');
@@ -51,7 +50,7 @@ public class VigenereCodec implements Encoder, Decoder {
 
     @Override
     public Algorithm getAlgorithm() {
-        return algorithm;
+        return Algorithm.VIGENERE;
     }
 
     private void checkNull(String input) {

@@ -61,7 +61,7 @@ public class UkrainianEnglishTest {
 
     @Test(groups = "encode", expectedExceptions = IllegalInputException.class)
     void When_EncodeUnsupportedWordOffline_Expect_Exception() {
-        Encoder offlineEncoder = new UkrainianEnglish();
+        Encoder offlineEncoder = new UkrainianEnglish("wrongKey");
 
         offlineEncoder.encode("notSupportedWord");
     }
@@ -102,12 +102,12 @@ public class UkrainianEnglishTest {
 
         String decoded = offlineDecoder.decode("test word see");
 
-        assertEquals(decoded, "тест слово побачити");
+        assertEquals(decoded, "тестове слово див");
     }
 
     @Test(groups = "decode", expectedExceptions = IllegalInputException.class)
     void When_DecodeUnsupportedWordOffline_Expect_Exception() {
-        Decoder offlineDecoder = new UkrainianEnglish();
+        Decoder offlineDecoder = new UkrainianEnglish("wrongRey");
 
         offlineDecoder.decode("notSupportedWord");
     }

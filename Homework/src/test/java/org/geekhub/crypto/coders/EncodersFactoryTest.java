@@ -2,25 +2,34 @@ package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.coders.codecs.*;
 import org.geekhub.crypto.exception.CodecUnsupportedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class EncodersFactoryTest {
 
+
+    private EncoderFactory encoderFactory;
+
+    @Autowired
+    public EncodersFactoryTest(EncoderFactory encoderFactory) {
+        this.encoderFactory = encoderFactory;
+    }
+
     @Test(expectedExceptions = CodecUnsupportedException.class)
     void When_InputIsNull_ThrowingException() {
-        EncoderFactory.getEncoder(null);
+        encoderFactory.getEncoder(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     void When_InputIsNotExistingElement_ThrowingException() {
-        EncoderFactory.getEncoder(Algorithm.valueOf("NotExistingAlgorithm"));
+        encoderFactory.getEncoder(Algorithm.valueOf("NotExistingAlgorithm"));
     }
 
     @Test()
     void Whent_InputIsMorse_Expect_Success() {
-        Encoder encoder = EncoderFactory.getEncoder(Algorithm.MORSE);
+        Encoder encoder = encoderFactory.getEncoder(Algorithm.MORSE);
 
         assertTrue(encoder instanceof MorseCodec);
     }
@@ -28,7 +37,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsCaesar_Expect_Success() {
-        Encoder encoder = EncoderFactory.getEncoder(Algorithm.CAESAR);
+        Encoder encoder = encoderFactory.getEncoder(Algorithm.CAESAR);
 
         assertTrue(encoder instanceof CaesarCodec);
     }
@@ -36,7 +45,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsVigenere_Expect_Success() {
-        Encoder encoder = EncoderFactory.getEncoder(Algorithm.VIGENERE);
+        Encoder encoder = encoderFactory.getEncoder(Algorithm.VIGENERE);
 
         assertTrue(encoder instanceof VigenereCodec);
     }
@@ -44,7 +53,7 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsVigenereOverCasesar_Expect_Success() {
-        Encoder encoder = EncoderFactory.getEncoder(Algorithm.VIGENERE_OVER_CAESAR);
+        Encoder encoder = encoderFactory.getEncoder(Algorithm.VIGENERE_OVER_CAESAR);
 
         assertTrue(encoder instanceof VigenereOverCaesar);
     }
@@ -52,9 +61,8 @@ public class EncodersFactoryTest {
 
     @Test()
     void Whent_InputIsUkranianEnglish_Expect_Success() {
-        Encoder encoder = EncoderFactory.getEncoder(Algorithm.UKRAINIAN_ENGLISH);
+        Encoder encoder = encoderFactory.getEncoder(Algorithm.UKRAINIAN_ENGLISH);
 
         assertTrue(encoder instanceof UkrainianEnglish);
     }
-
 }

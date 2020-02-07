@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 @Component
 public class UkrainianEnglish implements Encoder, Decoder {
 
-    private static final Algorithm algorithm = Algorithm.UKRAINIAN_ENGLISH;
     private static final Dictionary DICTIONARY = new Dictionary();
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
@@ -36,6 +35,10 @@ public class UkrainianEnglish implements Encoder, Decoder {
     @Autowired
     public UkrainianEnglish() {
         key = "key=AIzaSyB2HijQLlsmI1udH9ARl45oC5eAj4XfjTw";
+    }
+
+    public UkrainianEnglish(String key) {
+        this.key = key;
     }
 
     @Override
@@ -64,7 +67,7 @@ public class UkrainianEnglish implements Encoder, Decoder {
 
     @Override
     public Algorithm getAlgorithm() {
-        return algorithm;
+        return Algorithm.UKRAINIAN_ENGLISH;
     }
 
     private String encodeOffline(String input) {

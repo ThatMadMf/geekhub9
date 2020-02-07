@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web;
+package org.geekhub.crypto.ui.web.configuration;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VigenereOverCaesar implements Encoder, Decoder {
-    private static final Algorithm algorithm = Algorithm.VIGENERE_OVER_CAESAR;
     private final Encoder vigenereEncoder;
     private final Encoder caesarEncoder;
     private final Decoder vigenereDecoder;
@@ -34,6 +33,6 @@ public class VigenereOverCaesar implements Encoder, Decoder {
 
     @Override
     public Algorithm getAlgorithm() {
-        return algorithm;
+        return Algorithm.VIGENERE_OVER_CAESAR;
     }
 }

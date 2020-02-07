@@ -14,9 +14,6 @@ import java.util.function.UnaryOperator;
 @Component
 public class MorseCodec implements Encoder, Decoder {
 
-    private static final Algorithm algorithm = Algorithm.MORSE;
-
-
     private static final Map<String, String> CHAR_MAP;
     private static final Map<String, String> CODE_MAP;
 
@@ -50,7 +47,7 @@ public class MorseCodec implements Encoder, Decoder {
 
     @Override
     public Algorithm getAlgorithm() {
-        return algorithm;
+        return Algorithm.MORSE;
     }
 
     private void checkCaseOfInput(String input) {

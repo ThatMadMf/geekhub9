@@ -2,8 +2,6 @@ package org.geekhub.crypto.ui.web.iterceptor;
 
 import com.google.common.base.Stopwatch;
 import org.geekhub.crypto.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;
@@ -15,15 +13,16 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@Configurable
 public class RequestLogger extends HandlerInterceptorAdapter {
 
-    @Qualifier("getLogger")
-    @Autowired
-    private Logger logger;
+    private final Logger logger;
+
+    public RequestLogger(@Qualifier("getLogger") Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (handler instanceof HandlerMethod) {
             Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -33,7 +32,8 @@ public class RequestLogger extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+                                Object handler, Exception ex) {
         if (handler instanceof HandlerMethod) {
             if (Objects.isNull(ex)) {
                 Stopwatch requestStart = (Stopwatch) request.getAttribute("REQUEST_START");

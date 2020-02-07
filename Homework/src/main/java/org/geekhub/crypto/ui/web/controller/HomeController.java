@@ -7,16 +7,18 @@ import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@RestController
+@Controller
 public class HomeController {
 
     private DecoderFactory decoderFactory;
@@ -32,10 +34,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "<form action=\"\" method=\"POST\">" +
-                "Enter User role: <input type=\"text\" name=\"user\">" +
-                "<input type=\"submit\" value=\"Submit\"/>" +
-                "</form>";
+        return "menus/login";
     }
 
     @PostMapping("/")
@@ -50,47 +49,31 @@ public class HomeController {
     }
 
     @GetMapping("application")
-    public String application() {
-        return "<h2>Crypto application</h2>" +
-                "<a href='/application/decode'>1. Decode</a><br>" +
-                "<a href='/application/encode'>2. Encode</a><br>" +
-                "<a href='/application/analytics'>3. Analytics</a><br>" +
-                "<a href='/application/history'>4. History</a><br>";
+    public String index() {
+
+        return "menus/application";
     }
 
     @GetMapping("application/history")
     public String history() {
-        return "<h2>History operations<h2>" +
-                "<a href=\"/application/history/show-history\">1. Show history</a><br>" +
-                "<a href=\"/application/history/remove-last\">2. Remove last element</a><br>" +
-                "<a href=\"/application/history/clear-history\">3. Clear history</a><br>";
+        return "menus/history";
     }
 
     @GetMapping("application/analytics")
     public String analytics() {
-        return "<h2>Analytics</h2>" +
-                "<a href=\"/application/analytics/count-inputs\">1. Count inputs</a><br>" +
-                "<a href=\"/application/analytics/count-by-date\">2. Count by date</a><br>" +
-                "<a href=\"/application/analytics/find-most-popular-codec\">" +
-                "3. Find most popular algorithm</a><br>";
+        return "menus/analytics";
     }
 
     @GetMapping("application/decode")
-    public String decode() {
-        StringBuilder result = new StringBuilder();
-        result.append("<form action = \"\" method = \"POST\">" +
-                "Enter decode algorithm: <select name = \"algorithm\">");
-        for (Algorithm algorithm : Algorithm.values()) {
-            result.append("<option value=\"" + algorithm.name() + "\">" + algorithm.name() + "</option>");
-        }
-        result.append("</select>" + "<br>" +
-                "Enter text to decode: <input name = \"text\">" +
-                "<input type = \"submit\" value = \"Submit\"/>" +
-                "</form>");
-        return result.toString();
+    public String decode(Model model) {
+        model.addAttribute("operation", Operation.DECODE);
+        model.addAttribute("algorithms", Algorithm.values());
+
+        return "codecs";
     }
 
     @PostMapping("application/decode")
+    @ResponseBody
     public String decodePost(@RequestParam String algorithm, String text) {
         if (algorithm == null) {
             return "Illegal usage of not existing codec";
@@ -102,21 +85,15 @@ public class HomeController {
     }
 
     @GetMapping("application/encode")
-    public String encode() {
-        StringBuilder result = new StringBuilder();
-        result.append("<form action = \"\" method = \"POST\">" +
-                "Enter encode algorithm: <select name = \"algorithm\">");
-        for (Algorithm algorithm : Algorithm.values()) {
-            result.append("<option value=\"" + algorithm.name() + "\">" + algorithm.name() + "</option>");
-        }
-        result.append("</select>" + "<br>" +
-                "Enter text to encode: <input name = \"text\">" +
-                "<input type = \"submit\" value = \"Submit\"/>" +
-                "</form>");
-        return result.toString();
+    public String encode(Model model) {
+        model.addAttribute("operation", Operation.ENCODE);
+        model.addAttribute("algorithms", Algorithm.values());
+
+        return "codecs";
     }
 
     @PostMapping("application/encode")
+    @ResponseBody
     public String encodePost(@RequestParam String algorithm, String text) {
         if (algorithm == null) {
             return "Illegal usage of not existing codec";

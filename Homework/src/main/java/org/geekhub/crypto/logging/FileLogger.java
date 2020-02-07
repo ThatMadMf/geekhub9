@@ -48,7 +48,8 @@ public class FileLogger implements Logger {
     }
 
     private void printToFile(String message) {
-        try (OutputStream fileOutputStream = Files.newOutputStream(logDestination, StandardOpenOption.APPEND);
+        try (OutputStream fileOutputStream = Files.newOutputStream(logDestination, StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
              PrintStream printStream = new PrintStream(fileOutputStream)) {
             printStream.println(message);
         } catch (IOException e) {
