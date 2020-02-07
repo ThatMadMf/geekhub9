@@ -2,22 +2,26 @@ package org.geekhub.crypto.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @Component
 public class DataSource {
 
-    private  Logger logger;
+    private Logger logger;
     private HikariDataSource hikariDataSource = new HikariDataSource(initialiseHikari());
 
-    public DataSource() {
-        createTable();
+    @Autowired
+    public DataSource(CompositeLogger logger) {
+        this.logger = logger;
     }
 
     public Connection getConnection() throws SQLException {
@@ -34,30 +38,5 @@ public class DataSource {
             logger.error(e);
         }
         return new HikariConfig(properties);
-    }
-
-    private void createTable() {
-        String schemaQuery = "create schema geekhub";
-        String tableQuery = "CREATE TABLE geekhub.history(" +
-                "id serial primary key," +
-                "operation varchar(30)  not null," +
-                "codec varchar(30)," +
-                "user_input varchar(256)," +
-                "operation_date timestamp not null)";
-        try (Connection connection = getConnection();
-             PreparedStatement schema = connection.prepareStatement(schemaQuery);
-             PreparedStatement table = connection.prepareStatement(tableQuery)) {
-            DatabaseMetaData meta = connection.getMetaData();
-            ResultSet schemaExist = meta.getSchemas(null, "geekhub");
-            ResultSet tableExist = meta.getTables(null, "geekhub", "history", null);
-            if (!schemaExist.next()) {
-                schema.executeUpdate();
-                table.executeUpdate();
-            } else if (!tableExist.next()) {
-                table.executeUpdate();
-            }
-        } catch (SQLException e) {
-            logger.log(e.getMessage());
-        }
     }
 }
