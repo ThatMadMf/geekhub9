@@ -1,5 +1,6 @@
 package org.geekhub.crypto.ui.web.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -33,11 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .and()
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/**").hasAuthority("ROLE_USER")
-                .antMatchers("/application/encode").hasAuthority("ROLE_ADMIN");
+                .antMatchers("/application/analytics/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/application/history/clear-history").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/application/history/remove-last-record").hasAuthority("ROLE_ADMIN");
     }
 
     @Bean
