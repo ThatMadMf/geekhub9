@@ -35,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("application/encode").anonymous()
+                .antMatchers("application/decode").anonymous()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/application/analytics/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/application/history/clear-history").hasAuthority("ROLE_ADMIN")
