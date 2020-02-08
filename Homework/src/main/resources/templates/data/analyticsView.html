@@ -7,11 +7,11 @@
 </head>
 
 <body>
-<form th:href="@{/'application/' + ${operation.name().toLowerCase()}}" method='POST'>
-    <select name="algorithm">
-        <option th:each="algorithm : ${algorithms}" th:text="${algorithm.name()}"></option>
+<form th:href="@{/'application/analytics' + ${operation}}" method='POST'>
+    Select usecase:
+    <select name="usecase">
+        <option th:each="usecase : ${usecases}" th:text="${usecase.name()}"></option>
     </select><br>
-    Enter text: <input name='text'><br>
     <input type='submit' value='Submit'>
 </form>
 </body>

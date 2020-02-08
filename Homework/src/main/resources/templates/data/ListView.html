@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+<h2 th:text="${title}">Title</h2>
+<ol th:each="item : ${list}">
+    <il th:text="${item}"></il>
+</ol>
+</body>
+</html>
