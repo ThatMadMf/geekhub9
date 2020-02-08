@@ -7,12 +7,14 @@ import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,20 +35,12 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home() {
-        return "menus/login";
+    public RedirectView root() {
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/application");
+        return redirectView;
     }
 
-    @PostMapping("/")
-    public void homePost(@RequestParam String user, HttpSession session, HttpServletResponse response)
-            throws IOException {
-        if (user.equals("admin") || user.equals("user")) {
-            session.setAttribute("user", user);
-            response.sendRedirect("/application");
-        } else {
-            response.sendRedirect("/");
-        }
-    }
 
     @GetMapping("application")
     public String index() {
