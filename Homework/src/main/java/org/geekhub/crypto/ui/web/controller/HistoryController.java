@@ -2,7 +2,6 @@ package org.geekhub.crypto.ui.web.controller;
 
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ public class HistoryController {
 
     private HistoryManager historyManager;
 
-    @Autowired
     public HistoryController(HistoryManager historyManager) {
         this.historyManager = historyManager;
     }

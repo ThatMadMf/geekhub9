@@ -1,6 +1,5 @@
 package org.geekhub.crypto.logging;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,7 +27,6 @@ public class LogConfig {
 
 
     @Bean
-    @Autowired
     public CompositeLogger getLogger(List<Logger> loggers) {
         return new CompositeLogger(loggers);
     }

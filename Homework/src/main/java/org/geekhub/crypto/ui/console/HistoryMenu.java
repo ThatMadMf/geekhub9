@@ -8,7 +8,6 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -20,7 +19,6 @@ public class HistoryMenu {
     private final Logger logger;
     private final HistoryManager history;
 
-    @Autowired
     public HistoryMenu(HistoryConsolePrinter printer, HistoryManager history, CompositeLogger logger) {
         this.printer = printer;
         this.history = history;

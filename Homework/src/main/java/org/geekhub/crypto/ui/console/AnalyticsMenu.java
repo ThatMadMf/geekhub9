@@ -3,12 +3,11 @@ package org.geekhub.crypto.ui.console;
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.coders.Algorithm;
+import org.geekhub.crypto.exception.EmptyHistoryException;
+import org.geekhub.crypto.exception.OperationUnsupportedException;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.exception.EmptyHistoryException;
-import org.geekhub.crypto.exception.OperationUnsupportedException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -19,7 +18,6 @@ public class AnalyticsMenu {
     private final CodingAudit audit;
     private final HistoryManager history;
 
-    @Autowired
     public AnalyticsMenu(CodingAudit audit, HistoryManager history) {
         this.audit = audit;
         this.history = history;

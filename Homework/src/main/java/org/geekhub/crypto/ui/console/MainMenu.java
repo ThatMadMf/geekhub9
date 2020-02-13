@@ -9,7 +9,6 @@ import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -25,7 +24,6 @@ public class MainMenu {
     private final DecoderFactory decoderFactory;
     private final EncoderFactory encoderFactory;
 
-    @Autowired
     public MainMenu(HistoryManager history, HistoryMenu historyMenu, AnalyticsMenu analyticsMenu,
                     CompositeLogger logger, DecoderFactory decoderFactory, EncoderFactory encoderFactory) {
         scanner = new Scanner(System.in);

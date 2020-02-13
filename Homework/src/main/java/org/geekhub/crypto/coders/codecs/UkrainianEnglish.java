@@ -7,10 +7,7 @@ import org.geekhub.crypto.coders.Dictionary;
 import org.geekhub.crypto.coders.Encoder;
 import org.geekhub.crypto.exception.FileProcessingFailedException;
 import org.geekhub.crypto.exception.IllegalInputException;
-import org.geekhub.crypto.logging.CompositeLogger;
-import org.geekhub.crypto.logging.Logger;
 import org.geekhub.crypto.model.translation.TranslationModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -32,7 +29,6 @@ public class UkrainianEnglish implements Encoder, Decoder {
     private static final String SPLIT_REGEX = "[,.!?:\\s]+|$";
     private final String key;
 
-    @Autowired
     public UkrainianEnglish() {
         key = "key=AIzaSyB2HijQLlsmI1udH9ARl45oC5eAj4XfjTw";
     }

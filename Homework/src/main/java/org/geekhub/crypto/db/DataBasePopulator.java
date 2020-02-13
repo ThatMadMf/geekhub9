@@ -12,7 +12,6 @@ public class DataBasePopulator {
 
     private final Logger logger;
 
-    @Autowired
     public DataBasePopulator(CompositeLogger logger) {
         this.logger = logger;
     }

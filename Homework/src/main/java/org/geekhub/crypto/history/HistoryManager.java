@@ -16,7 +16,6 @@ public class HistoryManager {
     private final Logger logger;
     private final DataSource dataSource;
 
-    @Autowired
     public HistoryManager(DataSource source, CompositeLogger logger) {
         this.logger = logger;
         dataSource = source;

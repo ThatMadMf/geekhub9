@@ -15,7 +15,6 @@ public class EncoderFactory {
 
     private EnumMap<Algorithm, Encoder> encoders;
 
-    @Autowired
     public EncoderFactory(List<Encoder> encoders) {
         Map<Algorithm, Encoder> map = encoders.stream()
                 .collect(Collectors.toMap(Encoder::getAlgorithm, Function.identity()));
