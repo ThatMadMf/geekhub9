@@ -1,5 +1,6 @@
 package org.geekhub.crypto.coders;
 
+import org.geekhub.crypto.exception.CodecUnsupportedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,9 @@ public class DecoderFactory {
     }
 
     public Decoder getDecoder(Algorithm algorithm) {
+        if(algorithm == null) {
+            throw new CodecUnsupportedException("Invalid codec has been requested");
+        }
         return decoders.get(algorithm);
     }
 }
