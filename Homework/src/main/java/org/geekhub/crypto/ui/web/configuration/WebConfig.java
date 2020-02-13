@@ -29,11 +29,6 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new DomainArgumentResolver());
-    }
-
-    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestLogger);
     }

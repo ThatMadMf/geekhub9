@@ -39,8 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/application/decode").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/application/analytics/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/application/history/show-history").hasAuthority("ROLE_USER")
                 .antMatchers("/application/history/clear-history").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/application/history/remove-last-record").hasAuthority("ROLE_ADMIN");
+                .antMatchers("/application/history/remove-last").hasAuthority("ROLE_ADMIN");
     }
 
     @Bean
