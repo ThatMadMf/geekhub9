@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<form th:href="@{/'application/analytics' + ${operation}}" method='POST'>
+<form th:action="@{${link}}" method='POST'>
     Select usecase:
     <select name="usecase">
         <option th:each="usecase : ${usecases}" th:text="${usecase.name()}"></option>

@@ -33,7 +33,7 @@ public class AnalyticsController {
 
     @GetMapping("application/analytics/count-by-date")
     public String countByDate(Model model) {
-        model.addAttribute("operation", "count-by-date");
+        model.addAttribute("link", "count-by-date");
         model.addAttribute("usecases", CodecUsecase.values());
         return "data/analyticsView";
     }
@@ -62,7 +62,7 @@ public class AnalyticsController {
 
     @GetMapping("application/analytics/find-most-popular-codec")
     public String findMostPopular(Model model) {
-        model.addAttribute("operation", "find-most-popular-codec");
+        model.addAttribute("link", "find-most-popular-codec");
         model.addAttribute("usecases", CodecUsecase.values());
         return "data/analyticsView";
     }

@@ -60,7 +60,7 @@ public class HomeController {
 
     @GetMapping("application/decode")
     public String decode(Model model) {
-        model.addAttribute("operation", Operation.DECODE);
+        model.addAttribute("link", "decode");
         model.addAttribute("algorithms", Algorithm.values());
 
         return "codecs";

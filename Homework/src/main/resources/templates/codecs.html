@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<form th:href="@{/'application/' + ${operation.name().toLowerCase()}}" method='POST'>
+<form th:action="@{${link}}" method='POST'>
     <select name="algorithm">
         <option th:each="algorithm : ${algorithms}" th:text="${algorithm.name()}"></option>
     </select><br>
