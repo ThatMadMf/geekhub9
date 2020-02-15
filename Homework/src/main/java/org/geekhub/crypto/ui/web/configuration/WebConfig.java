@@ -3,9 +3,11 @@ package org.geekhub.crypto.ui.web.configuration;
 import org.geekhub.crypto.db.DataBasePopulator;
 import org.geekhub.crypto.db.DataSource;
 import org.geekhub.crypto.ui.web.iterceptor.RequestLogger;
+import org.geekhub.crypto.ui.web.util.StringToEnum;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.*;
 
 @EnableWebMvc
@@ -38,5 +40,10 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToEnum());
     }
 }

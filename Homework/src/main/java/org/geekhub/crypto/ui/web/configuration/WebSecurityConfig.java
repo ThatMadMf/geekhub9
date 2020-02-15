@@ -34,9 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/application/encode").permitAll()
                 .antMatchers("/application/decode").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/application/analytics/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/application/history/show-history").hasAuthority("ROLE_USER")
