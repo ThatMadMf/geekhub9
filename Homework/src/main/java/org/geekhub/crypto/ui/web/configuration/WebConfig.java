@@ -3,7 +3,7 @@ package org.geekhub.crypto.ui.web.configuration;
 import org.geekhub.crypto.db.DataBasePopulator;
 import org.geekhub.crypto.db.DataSource;
 import org.geekhub.crypto.ui.web.iterceptor.RequestLogger;
-import org.geekhub.crypto.ui.web.util.StringToEnum;
+import org.geekhub.crypto.ui.web.util.StringToAlgorithm;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -44,6 +44,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new StringToEnum());
+        registry.addConverter(new StringToAlgorithm());
     }
 }

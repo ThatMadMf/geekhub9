@@ -61,14 +61,11 @@ public class HomeController {
 
     @PostMapping("application/decode")
     @ResponseBody
-    public String decodePost(@RequestParam String algorithm, String text) {
-        if (algorithm == null) {
-            return "Illegal usage of not existing codec";
-        }
+    public String decodePost(@RequestParam Algorithm algorithm, String text) {
 
-        HistoryRecord record = new HistoryRecord(Operation.DECODE, text, Algorithm.valueOf(algorithm));
+        HistoryRecord record = new HistoryRecord(Operation.DECODE, text, algorithm);
         historyManager.addToHistory(record);
-        return decoderFactory.getDecoder(Algorithm.valueOf(algorithm)).decode(text);
+        return decoderFactory.getDecoder(algorithm).decode(text);
     }
 
     @GetMapping("application/encode")
@@ -81,13 +78,10 @@ public class HomeController {
 
     @PostMapping("application/encode")
     @ResponseBody
-    public String encodePost(@RequestParam String algorithm, String text) {
-        if (algorithm == null) {
-            return "Illegal usage of not existing codec";
-        }
+    public String encodePost(@RequestParam Algorithm algorithm, String text) {
 
-        HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, Algorithm.valueOf(algorithm));
+        HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, algorithm);
         historyManager.addToHistory(record);
-        return encoderFactory.getEncoder(Algorithm.valueOf(algorithm)).encode(text);
+        return encoderFactory.getEncoder(algorithm).encode(text);
     }
 }

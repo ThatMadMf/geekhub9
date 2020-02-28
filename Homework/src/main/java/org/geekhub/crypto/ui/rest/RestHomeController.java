@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.controller;
+package org.geekhub.crypto.ui.rest;
 
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
@@ -9,7 +9,6 @@ import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -33,14 +32,14 @@ public class RestHomeController {
         this.audit = audit;
     }
 
-    @PostMapping("/api/decode")
+    @GetMapping("/api/decode")
     public String decode(@RequestParam Algorithm algorithm, String text) {
         HistoryRecord record = new HistoryRecord(Operation.DECODE, text, algorithm);
         historyManager.addToHistory(record);
         return decoderFactory.getDecoder(algorithm).decode(text);
     }
 
-    @PostMapping("/api/encode")
+    @GetMapping("/api/encode")
     public String encode(@RequestParam Algorithm algorithm, String text) {
         HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, algorithm);
         historyManager.addToHistory(record);
@@ -54,13 +53,13 @@ public class RestHomeController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("api/history/remove-last")
+    @DeleteMapping("api/history/remove-last")
     public void removeLastPost() {
         historyManager.removeLastRecord();
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    @PostMapping("api/history/clear-history")
+    @DeleteMapping("api/history/clear-history")
     public void clearHistory() {
         historyManager.clearHistory();
     }
@@ -72,10 +71,9 @@ public class RestHomeController {
     }
 
     @GetMapping("api/analytics/count-inputs")
-    public Map<String, Integer> countInputs(Model model) {
+    public Map<String, Integer> countInputs() {
         historyManager.addToHistory(new HistoryRecord(Operation.ANALYTICS));
         return audit.countEncodingInputs();
-
     }
 
     @GetMapping("api/analytics/find-most-popular-codec")
