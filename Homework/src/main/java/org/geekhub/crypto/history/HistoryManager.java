@@ -1,30 +1,17 @@
 package org.geekhub.crypto.history;
 
-import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.db.RecordRowMapper;
-import org.geekhub.crypto.logging.CompositeLogger;
-import org.geekhub.crypto.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class HistoryManager {
-    private final Logger logger;
     private JdbcTemplate jdbcTemplate;
-    private DataSource dataSource;
 
-    public HistoryManager(JdbcTemplate jdbcTemplate, CompositeLogger logger, DataSource dataSource) {
-        this.logger = logger;
+    public HistoryManager(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.dataSource = dataSource;
     }
 
     public void addToHistory(HistoryRecord record) {

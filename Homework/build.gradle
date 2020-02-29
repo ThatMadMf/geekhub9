@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'war'
     id 'application'
+    id 'org.flywaydb.flyway' version "6.2.4"
 }
 
 mainClassName = 'org.geekhub.crypto.Main'
@@ -17,6 +18,8 @@ run {
 dependencies {
     implementation("org.reflections:reflections:0.9.12")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
+
+    implementation("org.flywaydb:flyway-core:6.2.4")
 
     implementation("org.springframework:spring-context:5.2.3.RELEASE")
     implementation("org.springframework:spring-webmvc:5.2.3.RELEASE")
