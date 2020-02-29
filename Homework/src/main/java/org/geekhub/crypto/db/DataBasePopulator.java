@@ -2,7 +2,6 @@ package org.geekhub.crypto.db;
 
 import org.geekhub.crypto.logging.CompositeLogger;
 import org.geekhub.crypto.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -16,7 +15,7 @@ public class DataBasePopulator {
         this.logger = logger;
     }
 
-    public void createTable(DataSource dataSource) {
+    public void createTable(DataPool dataSource) {
         String schemaQuery = "create schema geekhub";
         String tableQuery = "CREATE TABLE geekhub.history(" +
                 "id serial primary key," +

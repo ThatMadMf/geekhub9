@@ -1,7 +1,7 @@
 package org.geekhub.crypto.ui.web.configuration;
 
 import org.geekhub.crypto.db.DataBasePopulator;
-import org.geekhub.crypto.db.DataSource;
+import org.geekhub.crypto.db.DataPool;
 import org.geekhub.crypto.ui.web.iterceptor.RequestLogger;
 import org.geekhub.crypto.ui.web.util.StringToAlgorithm;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     private RequestLogger requestLogger;
 
-    public WebConfig(RequestLogger requestLogger, DataBasePopulator populator, DataSource dataSource) {
+    public WebConfig(RequestLogger requestLogger, DataBasePopulator populator, DataPool dataSource) {
         this.requestLogger = requestLogger;
         populator.createTable(dataSource);
     }

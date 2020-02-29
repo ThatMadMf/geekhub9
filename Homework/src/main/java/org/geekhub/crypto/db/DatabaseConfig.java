@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:db.properties")
-public class HicariInitialiser {
+public class DatabaseConfig {
 
     @Bean
-    public HikariDataSource getHikariConfig(
+    public DataSource getHikariConfig(
             @Value("${jdbcUrl}") String url,
             @Value("${driverClassName}") String driver,
             @Value("${dataSource.user}") String user,
@@ -25,4 +28,10 @@ public class HicariInitialiser {
         hikariConfig.setPassword(password);
         return new HikariDataSource(hikariConfig);
     }
+
+    @Bean
+    public NamedParameterJdbcTemplate customJdbcTemplate (DataSource dataSource) {
+        return new NamedParameterJdbcTemplate(dataSource);
+    }
+
 }
