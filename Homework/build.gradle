@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'war'
     id 'application'
-    id 'org.flywaydb.flyway' version "6.2.4"
 }
 
 mainClassName = 'org.geekhub.crypto.Main'
