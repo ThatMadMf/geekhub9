@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
 
@@ -28,10 +27,4 @@ public class DatabaseConfig {
         hikariConfig.setPassword(password);
         return new HikariDataSource(hikariConfig);
     }
-
-    @Bean
-    public NamedParameterJdbcTemplate customJdbcTemplate (DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
-    }
-
 }
