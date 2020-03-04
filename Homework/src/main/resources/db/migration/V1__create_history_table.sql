@@ -1,4 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS geekhub;
 create table if not exists geekhub.history (
     id serial primary key,
     operation varchar(30) not null,
