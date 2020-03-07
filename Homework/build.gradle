@@ -1,60 +1,30 @@
 plugins {
-    id 'java'
-    id 'war'
-    id 'application'
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
-mainClassName = 'org.geekhub.crypto.Main'
-
-repositories {
-    mavenCentral()
+ext {
+    springBootVersion = "2.2.5.RELEASE"
 }
 
-run {
-    standardInput = System.in
-}
+subprojects {
+    apply plugin: "java"
 
-dependencies {
-    implementation("org.reflections:reflections:0.9.12")
-    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    group = 'org.geekhub'
 
-    implementation("org.flywaydb:flyway-core:6.2.4")
-
-    implementation("org.springframework:spring-context:5.2.3.RELEASE")
-    implementation("org.springframework:spring-webmvc:5.2.3.RELEASE")
-    implementation("org.springframework:spring-jdbc:5.2.3.RELEASE")
-    implementation("org.springframework.boot:spring-boot-starter-security:2.2.4.RELEASE") {
-        exclude module: "logback-classic"
-        exclude module: "spring-boot-starter-logging"
-    }
-    implementation("org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE") {
-        exclude module: "logback-classic"
-        exclude module: "spring-boot-starter-logging"
+    repositories {
+        mavenCentral()
     }
 
-    implementation("com.zaxxer:HikariCP:3.4.1")
+    dependencies {
+        compileOnly("org.springframework.boot:spring-boot-starter:${springBootVersion}")
 
-    implementation("org.thymeleaf:thymeleaf:3.0.11.RELEASE")
-    implementation("org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE")
+        testImplementation("org.testng:testng:7.0.0")
+        testImplementation("org.mockito:mockito-core:3.2.0")
 
-    implementation("org.slf4j:slf4j-api:1.7.30")
-    implementation("org.slf4j:slf4j-simple:1.7.30")
+    }
 
-    implementation("io.springfox:springfox-swagger2:2.9.2")
-    implementation("io.springfox:springfox-swagger-ui:2.9.2")
-
-    implementation("com.google.guava:guava:28.2-jre")
-    implementation("com.google.code.gson:gson:2.8.5")
-
-    implementation("org.postgresql:postgresql:42.2.9")
-
-    testImplementation("org.testng:testng:7.0.0")
-    testImplementation("org.mockito:mockito-core:3.2.0")
-
+    test {
+        useTestNG()
+    }
 }
-
-test {
-    useTestNG()
-}
-
-webAppDirName = "src/main/web"

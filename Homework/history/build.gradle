@@ -1,0 +1,19 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+dependencies {
+
+    implementation(project(":Homework:codec"))
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+}
+
