@@ -1,15 +1,14 @@
 package org.geekhub.crypto.console;
 
 import org.geekhub.crypto.coders.*;
+import org.geekhub.crypto.coders.exception.CodecUnsupportedException;
+import org.geekhub.crypto.coders.exception.IllegalInputException;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.util.exception.OperationUnsupportedException;
 import org.geekhub.crypto.util.logging.CompositeLogger;
 import org.geekhub.crypto.util.logging.Logger;
-import org.geekub.crypto.coders.*;
-import org.geekhub.crypto.coders.exception.CodecUnsupportedException;
-import org.geekhub.crypto.coders.exception.IllegalInputException;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
