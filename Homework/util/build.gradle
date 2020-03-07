@@ -1,3 +1,5 @@
 dependencies {
     implementation("com.zaxxer:HikariCP:3.4.1")
+
+    implementation("org.springframework:spring-webmvc:5.2.3.RELEASE")
 }

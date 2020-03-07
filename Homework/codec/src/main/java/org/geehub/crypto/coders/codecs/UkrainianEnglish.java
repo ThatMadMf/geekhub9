@@ -5,9 +5,9 @@ import org.geehub.crypto.coders.Algorithm;
 import org.geehub.crypto.coders.Decoder;
 import org.geehub.crypto.coders.Dictionary;
 import org.geehub.crypto.coders.Encoder;
-import org.geekhub.crypto.exception.FileProcessingFailedException;
-import org.geekhub.crypto.exception.IllegalInputException;
-import org.geekhub.crypto.model.translation.TranslationModel;
+import org.geekhub.crypto.util.exception.FileProcessingFailedException;
+import org.geekhub.crypto.util.exception.IllegalInputException;
+import org.geekhub.crypto.util.model.translation.TranslationModel;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

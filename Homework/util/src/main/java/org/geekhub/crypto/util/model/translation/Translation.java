@@ -1,4 +1,4 @@
-package org.geekhub.crypto.model.translation;
+package org.geekhub.crypto.util.model.translation;
 
 public class Translation {
 

@@ -3,7 +3,7 @@ package org.geehub.crypto.coders.codecs;
 import org.geehub.crypto.coders.Algorithm;
 import org.geehub.crypto.coders.Decoder;
 import org.geehub.crypto.coders.Encoder;
-import org.geekhub.crypto.exception.IllegalInputException;
+import org.geekhub.crypto.util.exception.IllegalInputException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

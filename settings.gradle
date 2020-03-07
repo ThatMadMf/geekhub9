@@ -3,5 +3,7 @@ rootProject.name = 'geekhub9'
 include ':Homework'
 include ':Homework:codec'
 include ':Homework:history'
-include 'Homework:util'
+include ':Homework:util'
+include ':Homework:analytics'
+
 

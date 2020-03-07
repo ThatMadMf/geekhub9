@@ -3,9 +3,9 @@ package org.geehub.crypto.coders.codecs;
 import org.geehub.crypto.coders.Algorithm;
 import org.geehub.crypto.coders.Decoder;
 import org.geehub.crypto.coders.Encoder;
-import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.util.MapReverser;
 import org.geekhub.crypto.util.PropertiesReader;
+import org.geekhub.crypto.util.exception.IllegalInputException;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

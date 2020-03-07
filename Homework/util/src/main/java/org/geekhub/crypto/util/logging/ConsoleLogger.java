@@ -1,4 +1,4 @@
-package org.geekhub.crypto.logging;
+package org.geekhub.crypto.util.logging;
 
 public class ConsoleLogger implements Logger {
 

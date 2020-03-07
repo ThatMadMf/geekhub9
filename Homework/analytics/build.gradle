@@ -1,0 +1,5 @@
+dependencies {
+    implementation(project(":Homework:history"))
+    implementation(project(":Homework:util"))
+    implementation(project(":Homework:codec"))
+}

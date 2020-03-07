@@ -1,10 +1,10 @@
 package org.geekhub.crypto.analytics;
 
-import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.exception.EmptyHistoryException;
+import org.geehub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.util.exception.EmptyHistoryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -59,11 +59,11 @@ public class CodingAudit {
     }
 
     private Operation getOperation(CodecUsecase usecase) {
-        if(usecase.equals(CodecUsecase.ENCODING)) {
+        if (usecase.equals(CodecUsecase.ENCODING)) {
             return Operation.ENCODE;
         }
 
-        if(usecase.equals(CodecUsecase.DECODING)) {
+        if (usecase.equals(CodecUsecase.DECODING)) {
             return Operation.DECODE;
         }
 

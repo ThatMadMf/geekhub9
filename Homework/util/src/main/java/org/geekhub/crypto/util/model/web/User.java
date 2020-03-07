@@ -1,4 +1,4 @@
-package org.geekhub.crypto.model.web;
+package org.geekhub.crypto.util.model.web;
 
 public class User {
     private String username;

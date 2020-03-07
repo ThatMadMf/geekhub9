@@ -1,6 +1,6 @@
-package org.geekhub.crypto.logging;
+package org.geekhub.crypto.util.logging;
 
-import org.geekhub.crypto.exception.FileProcessingFailedException;
+import org.geekhub.crypto.util.exception.FileProcessingFailedException;
 
 import java.io.IOException;
 import java.io.OutputStream;
