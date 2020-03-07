@@ -7,5 +7,5 @@ include ':Homework:analytics'
 include ':Homework:util'
 include ':Homework:web-app'
 include ':Homework:console-app'
-
+include 'Reddit'
 
