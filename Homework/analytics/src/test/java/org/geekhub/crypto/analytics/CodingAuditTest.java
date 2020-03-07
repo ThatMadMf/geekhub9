@@ -3,7 +3,6 @@ package org.geekhub.crypto.analytics;
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.exception.EmptyHistoryException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

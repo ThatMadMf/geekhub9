@@ -1,7 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.coders.codecs.*;
-import org.geekhub.crypto.util.exception.CodecUnsupportedException;
+import org.geekhub.crypto.coders.exception.CodecUnsupportedException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;

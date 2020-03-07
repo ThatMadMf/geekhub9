@@ -1,7 +1,7 @@
 package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.coders.codecs.CaesarCodec;
-import org.geekhub.crypto.util.exception.IllegalInputException;
+import org.geekhub.crypto.coders.exception.IllegalInputException;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 

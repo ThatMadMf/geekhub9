@@ -1,19 +1,15 @@
 package org.geekhub.crypto.coders;
 
 import org.geekhub.crypto.coders.codecs.*;
-import org.geekhub.crypto.util.exception.CodecUnsupportedException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.geekhub.crypto.coders.exception.CodecUnsupportedException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-@Component
 public class DecodersFactoryTest {
 
     private DecoderFactory decoderFactory;
 
-    @Autowired
     public DecodersFactoryTest(DecoderFactory decoderFactory) {
         this.decoderFactory = decoderFactory;
     }
