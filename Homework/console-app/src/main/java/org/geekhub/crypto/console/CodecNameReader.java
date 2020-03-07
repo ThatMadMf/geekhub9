@@ -1,7 +1,6 @@
 package org.geekhub.crypto.console;
 
 import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.util.exception.OperationUnsupportedException;
 
 import java.util.Scanner;
 

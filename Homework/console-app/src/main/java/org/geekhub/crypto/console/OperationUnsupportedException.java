@@ -1,4 +1,4 @@
-package org.geekhub.crypto.util.exception;
+package org.geekhub.crypto.console;
 
 public class OperationUnsupportedException extends RuntimeException {
 

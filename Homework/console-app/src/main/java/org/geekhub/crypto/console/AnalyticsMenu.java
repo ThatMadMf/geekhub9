@@ -7,7 +7,6 @@ import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
 import org.geekhub.crypto.analytics.EmptyHistoryException;
-import org.geekhub.crypto.util.exception.OperationUnsupportedException;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;

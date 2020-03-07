@@ -6,7 +6,6 @@ import org.geekhub.crypto.coders.exception.IllegalInputException;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.exception.OperationUnsupportedException;
 import org.geekhub.crypto.util.logging.CompositeLogger;
 import org.geekhub.crypto.util.logging.Logger;
 import org.springframework.stereotype.Component;
