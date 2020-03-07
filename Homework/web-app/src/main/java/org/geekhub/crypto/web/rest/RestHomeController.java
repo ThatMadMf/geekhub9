@@ -1,10 +1,10 @@
-package org.geekhub.crypto.ui.rest;
+package org.geekhub.crypto.web.rest;
 
+import org.geehub.crypto.coders.Algorithm;
+import org.geehub.crypto.coders.DecoderFactory;
+import org.geehub.crypto.coders.EncoderFactory;
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
-import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.coders.DecoderFactory;
-import org.geekhub.crypto.coders.EncoderFactory;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;

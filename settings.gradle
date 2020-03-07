@@ -5,5 +5,5 @@ include ':Homework:codec'
 include ':Homework:history'
 include ':Homework:util'
 include ':Homework:analytics'
-
+include ':Homework:web-app'
 

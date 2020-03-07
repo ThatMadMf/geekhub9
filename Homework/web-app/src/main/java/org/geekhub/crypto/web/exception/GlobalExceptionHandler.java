@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.exception;
+package org.geekhub.crypto.web.exception;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;

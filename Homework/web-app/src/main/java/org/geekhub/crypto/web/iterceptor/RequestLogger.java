@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.iterceptor;
+package org.geekhub.crypto.web.iterceptor;
 
 import com.google.common.base.Stopwatch;
 import org.geekhub.crypto.logging.Logger;

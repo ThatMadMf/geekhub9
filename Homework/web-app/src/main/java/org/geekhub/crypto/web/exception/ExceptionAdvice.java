@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.exception;
+package org.geekhub.crypto.web.exception;
 
 import org.geekhub.crypto.exception.IllegalInputException;
 import org.geekhub.crypto.model.web.ErrorDto;

@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.util;
+package org.geekhub.crypto.web.util;
 
 import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.exception.CodecUnsupportedException;

@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.controller;
+package org.geekhub.crypto.web.controller;
 
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;

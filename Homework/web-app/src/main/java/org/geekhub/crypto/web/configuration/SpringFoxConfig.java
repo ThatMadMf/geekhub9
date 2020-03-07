@@ -1,4 +1,4 @@
-package org.geekhub.crypto.ui.web.configuration;
+package org.geekhub.crypto.web.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

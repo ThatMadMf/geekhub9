@@ -1,7 +1,7 @@
-package org.geekhub.crypto.ui.web.configuration;
+package org.geekhub.crypto.web.configuration;
 
-import org.geekhub.crypto.ui.web.iterceptor.RequestLogger;
-import org.geekhub.crypto.ui.web.util.StringToAlgorithm;
+import org.geekhub.crypto.web.iterceptor.RequestLogger;
+import org.geekhub.crypto.web.util.StringToAlgorithm;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

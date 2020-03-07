@@ -1,6 +1,6 @@
-package org.geekhub.crypto.ui.web.configuration;
+package org.geekhub.crypto.web.configuration;
 
-import org.geekhub.crypto.model.web.User;
+import org.geekhub.crypto.util.model.web.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
