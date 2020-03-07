@@ -1,5 +1,21 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    implementation(project(":Homework:history"))
-    implementation(project(":Homework:util"))
     implementation(project(":Homework:codec"))
+    implementation(project(":Homework:history"))
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = true
 }

@@ -1,0 +1,11 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    implementation(project(":Homework:codec"))
+    implementation(project(":Homework:history"))
+    implementation(project(":Homework:analytics"))
+    implementation(project(":Homework:util"))
+}

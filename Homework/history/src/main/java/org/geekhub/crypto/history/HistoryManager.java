@@ -1,5 +1,6 @@
 package org.geekhub.crypto.history;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class HistoryManager {
                 codec, record.getUserInput(), record.getOperationDate());
     }
 
+    @Bean
     public List<HistoryRecord> readHistory() {
         String query = "select operation, codec, user_input, operation_date from geekhub.history " +
                 "order by id, operation_date desc";

@@ -1,0 +1,35 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+ext {
+    springBootVersion = "2.2.5.RELEASE"
+}
+
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "application"
+
+    group = 'org.geekhub'
+
+    sourceCompatibility = '11'
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+
+        testImplementation("org.testng:testng:7.0.0")
+        testImplementation("org.mockito:mockito-core:3.2.0")
+
+    }
+
+    test {
+        useTestNG()
+    }
+}

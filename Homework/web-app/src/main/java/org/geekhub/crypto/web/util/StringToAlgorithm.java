@@ -1,7 +1,7 @@
 package org.geekhub.crypto.web.util;
 
 import org.geekhub.crypto.coders.Algorithm;
-import org.geekhub.crypto.exception.CodecUnsupportedException;
+import org.geekhub.crypto.coders.exception.CodecUnsupportedException;
 import org.springframework.core.convert.converter.Converter;
 
 public class StringToAlgorithm implements Converter<String, Algorithm> {

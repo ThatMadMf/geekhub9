@@ -1,7 +1,7 @@
 package org.geekhub.crypto.web.exception;
 
-import org.geekhub.crypto.exception.IllegalInputException;
-import org.geekhub.crypto.model.web.ErrorDto;
+import org.geekhub.crypto.coders.exception.IllegalInputException;
+import org.geekhub.crypto.web.model.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

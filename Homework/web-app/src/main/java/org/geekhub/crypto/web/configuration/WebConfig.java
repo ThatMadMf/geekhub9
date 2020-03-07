@@ -2,7 +2,6 @@ package org.geekhub.crypto.web.configuration;
 
 import org.geekhub.crypto.web.iterceptor.RequestLogger;
 import org.geekhub.crypto.web.util.StringToAlgorithm;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.format.FormatterRegistry;
@@ -10,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("org.geekhub.crypto.ui.web.controller")
 public class WebConfig implements WebMvcConfigurer {
 
     private RequestLogger requestLogger;

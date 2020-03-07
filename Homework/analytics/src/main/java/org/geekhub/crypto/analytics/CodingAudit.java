@@ -1,11 +1,8 @@
 package org.geekhub.crypto.analytics;
 
-import org.geehub.crypto.coders.Algorithm;
-import org.geekhub.crypto.history.HistoryManager;
+import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
-import org.geekhub.crypto.util.exception.EmptyHistoryException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -18,11 +15,6 @@ import java.util.stream.Collectors;
 @Component
 public class CodingAudit {
     private final List<HistoryRecord> codingHistory;
-
-    @Autowired
-    public CodingAudit(HistoryManager manager) {
-        codingHistory = manager.readHistory();
-    }
 
     public CodingAudit(List<HistoryRecord> records) {
         codingHistory = records;

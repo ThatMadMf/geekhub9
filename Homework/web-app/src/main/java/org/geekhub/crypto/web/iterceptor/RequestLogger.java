@@ -1,7 +1,7 @@
 package org.geekhub.crypto.web.iterceptor;
 
 import com.google.common.base.Stopwatch;
-import org.geekhub.crypto.logging.Logger;
+import org.geekhub.crypto.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;

@@ -3,22 +3,25 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+
 dependencies {
-    implementation(project(":Homework:codec"))
     implementation(project(":Homework:history"))
+    implementation(project(":Homework:codec"))
     implementation(project(":Homework:analytics"))
     implementation(project(":Homework:util"))
 
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
     implementation 'org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE'
-
-    implementation 'org.postgresql:postgresql:42.2.10'
-    implementation 'com.h2database:h2:1.4.200'
 }

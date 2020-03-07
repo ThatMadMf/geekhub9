@@ -1,6 +1,6 @@
 package org.geekhub.crypto.util.logging;
 
-import org.geekhub.crypto.util.exception.FileProcessingFailedException;
+import org.geekhub.crypto.util.exception.FileLogginException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -53,7 +53,7 @@ public class FileLogger implements Logger {
              PrintStream printStream = new PrintStream(fileOutputStream)) {
             printStream.println(message);
         } catch (IOException e) {
-            throw new FileProcessingFailedException("Failed to write to file", e);
+            throw new FileLogginException("Failed to write to file", e);
         }
     }
 }

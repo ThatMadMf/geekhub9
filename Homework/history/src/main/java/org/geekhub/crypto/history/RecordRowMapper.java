@@ -1,6 +1,6 @@
 package org.geekhub.crypto.history;
 
-import org.geehub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Algorithm;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

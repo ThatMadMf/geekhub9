@@ -1,6 +1,6 @@
 package org.geekhub.crypto.web.controller;
 
-import org.geehub.crypto.coders.Algorithm;
+import org.geekhub.crypto.coders.Algorithm;
 import org.geekhub.crypto.analytics.CodecUsecase;
 import org.geekhub.crypto.analytics.CodingAudit;
 import org.geekhub.crypto.history.HistoryManager;
