@@ -1,26 +1,20 @@
 package org.geekhub.reddit.web.configuration;
 
-import org.geekhub.crypto.web.iterceptor.RequestLogger;
-import org.geekhub.crypto.web.util.StringToAlgorithm;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+
+import java.nio.charset.StandardCharsets;
 
 @EnableWebMvc
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
-    private RequestLogger requestLogger;
-
-    public WebConfig(RequestLogger requestLogger) {
-        this.requestLogger = requestLogger;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(requestLogger);
-    }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -37,8 +31,16 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new StringToAlgorithm());
+    @Bean
+    public ThymeleafViewResolver viewResolver(SpringTemplateEngine templateEngine) {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setContentType("application/json");
+        viewResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        viewResolver.setOrder(1);
+        viewResolver.setViewNames(new String[]{"*.json"});
+        viewResolver.setTemplateEngine(templateEngine);
+        return viewResolver;
     }
+
+
 }

@@ -1,24 +1,26 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 <body>
 <h1>Registration form</h1>
-<form action="/" th:object="${user}" method="POST" enctype="utf8">
+<form th:action="@{/registration}" th:object="${userDto}" method="POST" >
     <div>
         <label>Login</label>
-        <input th:field="*{login}"/>
+        <input type = "text"  th:value="${userDto.login}"/>
     </div>
     <div>
         <label>email</label>
-        <input type="email" th:field="*{email}"/>
+        <input type="text" th:value="${userDto.email}"/>
     </div>
     <div>
         <label>password</label>
-        <input type="password" th:field="*{password}"/>
+        <input type="text" th:value="${userDto.password}"/>
     </div>
     <div>
         <label>confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>
+        <input type="text" th:value="${userDto.matchingPassword}"/>
     </div>
     <button type="submit">submit</button>
 </form>
