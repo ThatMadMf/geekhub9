@@ -5,24 +5,12 @@
 </head>
 <body>
 <h1>Registration form</h1>
-<form th:action="@{/registration}" th:object="${userDto}" method="POST" >
-    <div>
-        <label>Login</label>
-        <input type = "text"  th:value="${userDto.login}"/>
-    </div>
-    <div>
-        <label>email</label>
-        <input type="text" th:value="${userDto.email}"/>
-    </div>
-    <div>
-        <label>password</label>
-        <input type="text" th:value="${userDto.password}"/>
-    </div>
-    <div>
-        <label>confirm</label>
-        <input type="text" th:value="${userDto.matchingPassword}"/>
-    </div>
-    <button type="submit">submit</button>
+<form action="#" th:object="${login}" method="POST">
+    <p>Login: <input type="text" th:field="*{login}" /></p>
+    <p>Email: <input type="text" th:field="*{email}" /></p>
+    <p>Password: <input type="text" th:field="*{password}" /></p>
+    <p>Repeat  : <input type="text" th:field="*{matchingPassword}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>
 </html>
