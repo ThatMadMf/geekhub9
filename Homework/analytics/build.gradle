@@ -12,10 +12,3 @@ dependencies {
     implementation(project(":Homework:history"))
 }
 
-bootJar {
-    enabled = true
-}
-
-jar {
-    enabled = true
-}
