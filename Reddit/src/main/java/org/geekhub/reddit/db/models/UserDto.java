@@ -1,11 +1,17 @@
 package org.geekhub.reddit.db.models;
 
+import org.springframework.data.annotation.Id;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class UserDto {
+
+
+    @Id
+    private UUID id;
 
     @NotNull
     @NotEmpty
@@ -21,7 +27,6 @@ public class UserDto {
 
     private String matchingPassword;
     private LocalDate date;
-    private UUID userLink;
 
     public String getLogin() {
         return login;
@@ -43,12 +48,12 @@ public class UserDto {
         return matchingPassword;
     }
 
-    public UUID getUserLink() {
-        return userLink;
+    public UUID getUserId() {
+        return id;
     }
 
-    public void setUserLink(UUID userLink) {
-        this.userLink = userLink;
+    public void setUserId(UUID id) {
+        this.id = id;
     }
 
     public void setMatchingPassword(String matchingPassword) {

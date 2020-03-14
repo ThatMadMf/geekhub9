@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void register(Login login) {
-        String sql = "insert into reddit.users (login, email, password, registration_date, link ) " +
+        String sql = "insert into reddit.users (id, login, email, password, registration_date) " +
                 "values (?, ?, ?, ?, ?)";
 
         UserDto userDto = new UserDto();
@@ -29,10 +29,10 @@ public class UserDaoImpl implements UserDao {
         userDto.setEmail(login.getEmail());
         userDto.setPassword(login.getPassword());
         userDto.setDate(LocalDate.now());
-        userDto.setUserLink(UUID.randomUUID());
+        userDto.setUserId(UUID.randomUUID());
 
-        jdbcTemplate.update(sql, userDto.getLogin(), userDto.getEmail(), userDto.getPassword(),
-                userDto.getDate(), userDto.getUserLink());
+        jdbcTemplate.update(sql, userDto.getUserId(), userDto.getLogin(), userDto.getEmail(), userDto.getPassword(),
+                userDto.getDate());
     }
 
     @Override
