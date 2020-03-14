@@ -3,7 +3,12 @@ package org.geekhub.reddit.db;
 import org.geekhub.reddit.db.models.Login;
 import org.geekhub.reddit.db.models.UserDao;
 import org.geekhub.reddit.db.models.UserDto;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -33,10 +38,5 @@ public class UserDaoImpl implements UserDao {
 
         jdbcTemplate.update(sql, userDto.getUserId(), userDto.getLogin(), userDto.getEmail(), userDto.getPassword(),
                 userDto.getDate());
-    }
-
-    @Override
-    public UserDto retrieveUser(String login) {
-        return null;
     }
 }
