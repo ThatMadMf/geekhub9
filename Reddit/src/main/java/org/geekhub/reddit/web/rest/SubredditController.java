@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/subreddits")
 public class SubredditController {
 
     private SubredditService subredditService;
@@ -18,16 +19,25 @@ public class SubredditController {
         this.subredditService = subredditService;
     }
 
-    @GetMapping("subreddits")
+    @GetMapping
     @ResponseBody
     public List<Subreddit> getAllSubreddits() {
-        return subredditService.getAllTags();
+        return subredditService.getAllSubreddits();
     }
 
+    @GetMapping("{id}")
+    @ResponseBody
+    public Subreddit getSubredditById(@PathVariable int id)  {
+        return subredditService.getSubredditById(id);
+    }
+
+
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("subreddits")
+    @PostMapping
     public Subreddit createSubreddits(@RequestBody String name, Authentication authentication, String userName) {
         return subredditService.addSubreddit(new Subreddit(name,
                 authentication == null ? userName : authentication.name(), LocalDate.now()));
     }
+
+
 }

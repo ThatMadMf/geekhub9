@@ -3,11 +3,11 @@ package org.geekhub.reddit.services;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
+@Service
 public class SubredditService {
 
     private JdbcTemplate jdbcTemplate;
@@ -16,12 +16,12 @@ public class SubredditService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Subreddit> getAllTags() {
+    public List<Subreddit> getAllSubreddits() {
         String sql = "select * from reddit.subreddits";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Subreddit.class));
     }
 
-    public Subreddit getTagById(int id) {
+    public Subreddit getSubredditById(int id) {
         String sql = "select * from reddit.subreddits where id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(Subreddit.class));
     }

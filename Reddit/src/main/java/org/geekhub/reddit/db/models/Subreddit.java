@@ -23,11 +23,24 @@ public class Subreddit {
     @NotEmpty
     private LocalDate creationDate;
 
+    public Subreddit() {
+    }
+
     public Subreddit(@NotNull @NotEmpty String name, @NotNull @NotEmpty String creatorLogin,
-               @NotNull @NotEmpty LocalDate creationDate) {
+                     @NotNull @NotEmpty LocalDate creationDate) {
         this.name = name;
         this.creatorLogin = creatorLogin;
         this.creationDate = creationDate;
+    }
+
+    public Subreddit(int id, @NotNull @NotEmpty String name, @NotNull @NotEmpty String creatorLogin,
+                     @NotNull @NotEmpty LocalDate creationDate) {
+        this(name, creatorLogin, creationDate);
+        this.id = id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
