@@ -1,4 +1,4 @@
-package org.geekhub.reddit.db.config;
+package org.geekhub.reddit.services;
 
 import org.geekhub.reddit.db.models.UserDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -39,8 +39,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     private UserDto findUserById(String login) {
         String sql = "select * from reddit.users where login = ?";
 
-        return (UserDto) jdbcTemplate.queryForObject(sql, new Object[]{login},
-                new BeanPropertyRowMapper(UserDto.class));
-
+        return jdbcTemplate.queryForObject(sql, new Object[]{login},
+                new BeanPropertyRowMapper<>(UserDto.class));
     }
 }

@@ -1,4 +1,4 @@
-package org.geekhub.reddit.db.config;
+package org.geekhub.reddit.db.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
