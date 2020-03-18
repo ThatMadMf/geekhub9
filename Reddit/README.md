@@ -1,9 +1,10 @@
-#TODO Comments
-#TODO Upvotes
-#TODO Remove sql from java files
-#TODO Tests
-#TODO Error and exception handling
-#TODO Deploy
-#TODO User feed
-#TODO Popular feed
-#TODO Global refactor
+#TODO 
+#1 - Comments
+#2 - Upvotes
+#3 - Remove sql from java files
+#4 - Tests
+#5 - Error and exception handling
+#6 - Deploy
+#7 - User feed
+#8 - Popular feed
+#9 - gGlobal refactor
