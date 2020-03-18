@@ -1,7 +1,13 @@
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'application'
 }
+
+application {
+    mainClassName = 'org.geekhub.reddit.RedditMain'
+}
+
 
 configurations {
     developmentOnly
