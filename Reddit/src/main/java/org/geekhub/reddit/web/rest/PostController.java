@@ -1,6 +1,8 @@
 package org.geekhub.reddit.web.rest;
 
+import org.geekhub.reddit.db.dtos.CommentDto;
 import org.geekhub.reddit.db.dtos.PostDto;
+import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.services.CommentService;
 import org.geekhub.reddit.services.PostService;
@@ -38,6 +40,17 @@ public class PostController {
     @ResponseBody
     public Post getPostById(@PathVariable int id) {
         return postService.getPostById(id);
+    }
+
+    @GetMapping("{id}/comments")
+    public List<Comment> getPostComments(@PathVariable("id") int id) {
+        return  commentService.getAllCommentsByPostId(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{id}/comments")
+    public Comment addCommentToPost(@PathVariable("id") int id, @RequestBody CommentDto commentDto) {
+        return commentService.addComment(new Comment(commentDto));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
