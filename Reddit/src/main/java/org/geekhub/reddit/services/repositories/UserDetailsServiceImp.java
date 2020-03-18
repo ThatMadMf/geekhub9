@@ -1,4 +1,4 @@
-package org.geekhub.reddit.services;
+package org.geekhub.reddit.services.repositories;
 
 import org.geekhub.reddit.db.dtos.UserDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

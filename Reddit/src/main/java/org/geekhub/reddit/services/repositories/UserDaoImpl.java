@@ -1,4 +1,4 @@
-package org.geekhub.reddit.services;
+package org.geekhub.reddit.services.repositories;
 
 import org.geekhub.reddit.db.dtos.Login;
 import org.geekhub.reddit.db.dtos.UserDao;

@@ -1,7 +1,8 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.dtos.PostDto;
+import org.geekhub.reddit.db.models.Post;
+import org.geekhub.reddit.services.CommentService;
 import org.geekhub.reddit.services.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,11 @@ import java.util.List;
 public class PostController {
 
     private PostService postService;
+    private CommentService commentService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, CommentService commentService) {
         this.postService = postService;
+        this.commentService = commentService;
     }
 
     @GetMapping("subreddit")

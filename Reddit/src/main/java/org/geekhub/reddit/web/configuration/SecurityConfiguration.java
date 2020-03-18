@@ -1,6 +1,6 @@
 package org.geekhub.reddit.web.configuration;
 
-import org.geekhub.reddit.services.UserDetailsServiceImp;
+import org.geekhub.reddit.services.repositories.UserDetailsServiceImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
