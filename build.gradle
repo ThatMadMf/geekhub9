@@ -25,6 +25,7 @@ subprojects {
         compileOnly("org.springframework.boot:spring-boot-starter:${springBootVersion}")
 
         testImplementation("org.testng:testng:7.0.0")
+        testImplementation("org.assertj:assertj-core:3.15.0")
         testImplementation("org.mockito:mockito-core:3.2.0")
 
     }

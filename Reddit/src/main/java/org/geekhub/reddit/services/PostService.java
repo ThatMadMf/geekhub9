@@ -1,6 +1,8 @@
 package org.geekhub.reddit.services;
 
+import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Post;
+import org.geekhub.reddit.db.models.Vote;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,12 @@ public class PostService {
 
     private JdbcTemplate jdbcTemplate;
     private CommentService commentService;
+    private VoteService voteService;
 
-    public PostService(JdbcTemplate jdbcTemplate, CommentService commentService) {
+    public PostService(JdbcTemplate jdbcTemplate, CommentService commentService, VoteService voteService) {
         this.jdbcTemplate = jdbcTemplate;
         this.commentService = commentService;
+        this.voteService = voteService;
     }
 
     public List<Post> getAllPostBySubredditId(int subredditId) {
@@ -41,5 +45,29 @@ public class PostService {
         jdbcTemplate.update(sql, post.getCreatorLogin(), post.getSubredditId(), post.getTitle(), post.getCreationDate(),
                 post.getContent());
         return post;
+    }
+
+    public List<Comment> getAllCommentsByPostId(int id) {
+        return commentService.getAllCommentsByPostId(id);
+    }
+
+    public List<Vote> getAllVotesByCommentId(int id) {
+        return voteService.getAllVotesByCommentId(id);
+    }
+
+    public Vote voteComment(Vote vote) {
+        return voteService.voteComment(vote);
+    }
+
+    public Vote votePost(Vote vote) {
+        return voteService.votePost(vote);
+    }
+
+    public Comment addComment(Comment comment) {
+        return commentService.addComment(comment);
+    }
+
+    public List<Vote> getAllVotesByPostId(int id) {
+        return voteService.getAllVotesByPostId(id);
     }
 }

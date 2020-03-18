@@ -43,7 +43,7 @@ public class VoteService {
         String sql = "insert into reddit.votes (voter_login, post_id, vote_date, vote)" +
                 " values (?, ?, ?, ?)";
         jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getPostId(), vote.getVoteDate(),
-                vote.isVote());
+                vote.isUpvote());
         return vote;
     }
 
@@ -54,7 +54,7 @@ public class VoteService {
         String sql = "insert into reddit.votes (voter_login, comment_id, vote_date, vote)" +
                 " values (?, ?, ?, ?)";
         jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getCommentId(), vote.getVoteDate(),
-                vote.isVote());
+                vote.isUpvote());
         return vote;
     }
 

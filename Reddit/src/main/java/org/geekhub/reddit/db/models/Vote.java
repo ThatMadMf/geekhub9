@@ -18,7 +18,7 @@ public class Vote {
 
     @NotNull
     @NotEmpty
-    private boolean vote;
+    private boolean upvote;
 
     private Integer postId;
 
@@ -32,7 +32,7 @@ public class Vote {
 
     public Vote(VoteDto voteDto) {
         voterLogin = voteDto.getVoterLogin();
-        vote = voteDto.isVote();
+        upvote = voteDto.isVote();
         postId = voteDto.getPostId();
         commentId = voteDto.getCommentId();
         voteDate = LocalDate.now();
@@ -54,12 +54,12 @@ public class Vote {
         this.voterLogin = voterLogin;
     }
 
-    public boolean isVote() {
-        return vote;
+    public boolean isUpvote() {
+        return upvote;
     }
 
-    public void setVote(boolean vote) {
-        this.vote = vote;
+    public void setUpvote(boolean upvote) {
+        this.upvote = upvote;
     }
 
     public Integer getPostId() {

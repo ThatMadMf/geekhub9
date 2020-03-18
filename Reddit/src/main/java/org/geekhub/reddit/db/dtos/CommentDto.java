@@ -15,6 +15,16 @@ public class CommentDto {
 
     private String content;
 
+    public CommentDto() {
+        
+    }
+
+    public CommentDto(@NotEmpty @NotNull String creatorLogin, @NotEmpty @NotNull int postId, String content) {
+        this.creatorLogin = creatorLogin;
+        this.postId = postId;
+        this.content = content;
+    }
+
     public String getCreatorLogin() {
         return creatorLogin;
     }

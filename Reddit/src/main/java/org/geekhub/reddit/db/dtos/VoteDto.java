@@ -17,6 +17,16 @@ public class VoteDto {
 
     private Integer commentId;
 
+    public VoteDto() {
+    }
+
+    public VoteDto(@NotNull @NotEmpty String voterLogin, @NotEmpty @NotNull boolean vote, Integer postId, Integer commentId) {
+        this.voterLogin = voterLogin;
+        this.vote = vote;
+        this.postId = postId;
+        this.commentId = commentId;
+    }
+
     public String getVoterLogin() {
         return voterLogin;
     }

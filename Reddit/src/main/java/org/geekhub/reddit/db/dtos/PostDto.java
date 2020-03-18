@@ -23,6 +23,14 @@ public class PostDto {
     public PostDto() {
     }
 
+    public PostDto(String creatorLogin, int subredditId, String title, String content) {
+
+        this.creatorLogin = creatorLogin;
+        this.subredditId = subredditId;
+        this.title = title;
+        this.content = content;
+    }
+
     public String getCreatorLogin() {
         return creatorLogin;
     }
