@@ -12,10 +12,7 @@ subprojects {
     apply plugin: "java"
     apply plugin: "application"
 
-    group = 'org.geekhub'
-
     sourceCompatibility = '11'
-
 
     repositories {
         mavenCentral()
@@ -27,7 +24,6 @@ subprojects {
         testImplementation("org.testng:testng:7.0.0")
         testImplementation("org.assertj:assertj-core:3.15.0")
         testImplementation("org.mockito:mockito-core:3.2.0")
-
     }
 
     test {

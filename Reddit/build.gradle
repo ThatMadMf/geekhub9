@@ -12,11 +12,6 @@ configurations {
 
 
 dependencies {
-    implementation(project(":Homework:history"))
-    implementation(project(":Homework:codec"))
-    implementation(project(":Homework:analytics"))
-    implementation(project(":Homework:util"))
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
