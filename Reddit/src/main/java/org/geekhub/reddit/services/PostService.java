@@ -11,9 +11,11 @@ import java.util.List;
 public class PostService {
 
     private JdbcTemplate jdbcTemplate;
+    private CommentService commentService;
 
-    public PostService(JdbcTemplate jdbcTemplate) {
+    public PostService(JdbcTemplate jdbcTemplate, CommentService commentService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.commentService = commentService;
     }
 
     public List<Post> getAllPostBySubredditId(int subredditId) {
@@ -28,7 +30,9 @@ public class PostService {
 
     public Post getPostById(int postId) {
         String sql = "select * from reddit.posts where id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{postId}, new BeanPropertyRowMapper<>(Post.class));
+        Post post = jdbcTemplate.queryForObject(sql, new Object[]{postId}, new BeanPropertyRowMapper<>(Post.class));
+        post.setComments(commentService.getAllCommentsByPostId(postId));
+        return post;
     }
 
     public Post addPost(Post post) {

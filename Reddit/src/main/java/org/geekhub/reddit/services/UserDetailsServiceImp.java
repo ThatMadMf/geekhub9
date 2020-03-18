@@ -1,6 +1,6 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.db.models.UserDto;
+import org.geekhub.reddit.db.dtos.UserDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.User;

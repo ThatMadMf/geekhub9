@@ -1,7 +1,7 @@
 package org.geekhub.reddit.web.controller;
 
-import org.geekhub.reddit.db.models.Login;
-import org.geekhub.reddit.db.models.UserDao;
+import org.geekhub.reddit.db.dtos.Login;
+import org.geekhub.reddit.db.dtos.UserDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

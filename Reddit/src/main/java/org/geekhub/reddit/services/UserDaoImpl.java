@@ -1,8 +1,8 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.db.models.Login;
-import org.geekhub.reddit.db.models.UserDao;
-import org.geekhub.reddit.db.models.UserDto;
+import org.geekhub.reddit.db.dtos.Login;
+import org.geekhub.reddit.db.dtos.UserDao;
+import org.geekhub.reddit.db.dtos.UserDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

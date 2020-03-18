@@ -1,13 +1,11 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.db.models.Login;
 import org.geekhub.reddit.db.models.Post;
-import org.geekhub.reddit.db.models.PostDto;
+import org.geekhub.reddit.db.dtos.PostDto;
 import org.geekhub.reddit.services.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequestMapping("api/posts")
@@ -35,13 +33,13 @@ public class PostController {
 
     @GetMapping("{id}")
     @ResponseBody
-    public Post getSubredditById(@PathVariable int id) {
+    public Post getPostById(@PathVariable int id) {
         return postService.getPostById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Post createSubreddits(@RequestBody PostDto postDto) {
+    public Post createPost(@RequestBody PostDto postDto) {
         return postService.addPost(new Post(postDto));
     }
 }

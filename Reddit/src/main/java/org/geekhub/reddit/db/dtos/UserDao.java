@@ -1,4 +1,4 @@
-package org.geekhub.reddit.db.models;
+package org.geekhub.reddit.db.dtos;
 
 public interface UserDao {
 

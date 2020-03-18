@@ -1,4 +1,4 @@
-create table if not exists reddit.posts (
+create table if not exists reddit.comments (
     id serial primary key,
     creator_login varchar(64) not null references reddit.users(login),
     post_id integer not null references reddit.posts(id),

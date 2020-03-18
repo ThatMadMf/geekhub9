@@ -1,27 +1,19 @@
-package org.geekhub.reddit.db.models;
-
+package org.geekhub.reddit.db.dtos;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class PostDto {
+public class CommentDto {
 
-    @NotNull
     @NotEmpty
+    @NotNull
     private String creatorLogin;
 
-    @NotNull
     @NotEmpty
-    private int subredditId;
-
     @NotNull
-    @NotEmpty
-    private  String title;
+    private int postId;
 
     private String content;
-
-    public PostDto() {
-    }
 
     public String getCreatorLogin() {
         return creatorLogin;
@@ -31,20 +23,12 @@ public class PostDto {
         this.creatorLogin = creatorLogin;
     }
 
-    public int getSubredditId() {
-        return subredditId;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setSubredditId(int subredditId) {
-        this.subredditId = subredditId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public String getContent() {
