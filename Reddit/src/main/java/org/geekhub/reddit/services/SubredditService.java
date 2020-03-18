@@ -11,9 +11,11 @@ import java.util.List;
 public class SubredditService {
 
     private JdbcTemplate jdbcTemplate;
+    private PostService postService;
 
-    public SubredditService(JdbcTemplate jdbcTemplate) {
+    public SubredditService(JdbcTemplate jdbcTemplate, PostService postService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.postService = postService;
     }
 
     public List<Subreddit> getAllSubreddits() {
@@ -23,7 +25,9 @@ public class SubredditService {
 
     public Subreddit getSubredditById(int id) {
         String sql = "select * from reddit.subreddits where id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(Subreddit.class));
+        Subreddit subreddit = jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(Subreddit.class));
+        subreddit.setPosts(postService.getAllPostBySubredditId(subreddit.getId()));
+        return subreddit;
     }
 
     public Subreddit addSubreddit(Subreddit subreddit) {

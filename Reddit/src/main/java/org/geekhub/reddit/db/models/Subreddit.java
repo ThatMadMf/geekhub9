@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Subreddit {
 
@@ -22,6 +23,8 @@ public class Subreddit {
     @NotNull
     @NotEmpty
     private LocalDate creationDate;
+
+    private List<Post> posts;
 
     public Subreddit() {
     }
@@ -69,5 +72,13 @@ public class Subreddit {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
