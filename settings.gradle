@@ -1,5 +1,6 @@
 rootProject.name = 'geekhub9'
 
+include ':Reddit'
 include ':Homework'
 include ':Homework:codec'
 include ':Homework:history'
@@ -7,5 +8,4 @@ include ':Homework:analytics'
 include ':Homework:util'
 include ':Homework:web-app'
 include ':Homework:console-app'
-include 'Reddit'
 

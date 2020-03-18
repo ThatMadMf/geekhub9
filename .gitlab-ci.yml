@@ -2,7 +2,6 @@ image: adoptopenjdk/openjdk11:latest
 
 stages:
   - build
-  - codestyle
   - test
   - deploy
 
@@ -19,23 +18,12 @@ build:
   script: ./gradlew :Reddit:assemble
   artifacts:
     paths:
-      - Reddit/build/libs/*.jar
+      - Reddit/build*.jar
     expire_in: 1 week
-
-codestyle:
-  stage: codestyle
-  script:
-    - ./gradlew checkstyleMain checkstyleTest
 
 test:
   stage: test
   script: ./gradlew check
-
-code_coverage:
-  stage: test
-  script:
-    - ./gradlew codeCoverageReport
-    - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
 deploy:
   stage: deploy
@@ -43,6 +31,5 @@ deploy:
   script:
     - apt-get update -yq
     - apt-get install rubygems ruby-dev -y
-    - gem install dpl
   only:
     - master
