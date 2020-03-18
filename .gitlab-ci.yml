@@ -20,7 +20,7 @@ build:
 
 test:
   stage: test
-  script: ./gradlew check
+  script: ./gradlew :Reddit:check
 
 deploy:
   stage: deploy
