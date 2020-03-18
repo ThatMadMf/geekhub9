@@ -1,5 +1,6 @@
 package org.geekhub.reddit.db.models;
 
+import org.geekhub.reddit.db.dtos.VoteDto;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;
@@ -19,14 +20,22 @@ public class Vote {
     @NotEmpty
     private boolean vote;
 
-    private int postId;
+    private Integer postId;
 
-    private int commentId;
+    private Integer commentId;
 
-    private LocalDate vote_date;
+    private LocalDate voteDate;
 
     public Vote() {
 
+    }
+
+    public Vote(VoteDto voteDto) {
+        voterLogin = voteDto.getVoterLogin();
+        vote = voteDto.isVote();
+        postId = voteDto.getPostId();
+        commentId = voteDto.getCommentId();
+        voteDate = LocalDate.now();
     }
 
     public int getId() {
@@ -53,27 +62,27 @@ public class Vote {
         this.vote = vote;
     }
 
-    public int getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
-    public int getCommentId() {
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(int commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
-    public LocalDate getVote_date() {
-        return vote_date;
+    public LocalDate getVoteDate() {
+        return voteDate;
     }
 
-    public void setVote_date(LocalDate vote_date) {
-        this.vote_date = vote_date;
+    public void setVoteDate(LocalDate voteDate) {
+        this.voteDate = voteDate;
     }
 }
