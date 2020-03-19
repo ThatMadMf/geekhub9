@@ -26,6 +26,7 @@ deploy:
   stage: deploy
   image: ruby:latest
   script:
+    - cd Reddit
     - apt-get update -yq
     - apt-get install rubygems ruby-dev -y
     - gem install dpl
