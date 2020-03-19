@@ -28,9 +28,12 @@ test:
 
 deploy:
   stage: deploy
+  image: ruby:latest
   script:
     - apt-get update -yq
     - apt-get install rubygems ruby-dev -y
     - gem install dpl
     - dpl --provider=heroku --app=monoshko-crypto --api-key=$HEROKU_API_KEY
+  only:
+    - master
 
