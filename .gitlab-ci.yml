@@ -30,10 +30,10 @@ deploy:
   stage: deploy
   image: ruby:latest
   script:
-    - apt-get update -yq
-    - apt-get install rubygems ruby-dev -y
-    - gem install dpl
-    - dpl --provider=heroku --app=monoshko-crypto --api-key=$HEROKU_API_KEY
+    - sudo apt-get update -yq
+    - sudo apt-get install rubygems ruby-dev -y
+    - sudo gem install dpl
+    - sudo dpl --provider=heroku --app=monoshko-crypto --api-key=$HEROKU_API_KEY
   only:
     - master
 
