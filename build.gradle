@@ -1,15 +1,15 @@
 plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
 ext {
     springBootVersion = "2.2.5.RELEASE"
 }
 
-
 subprojects {
     apply plugin: "java"
+
+    group = 'org.geekhub'
 
     sourceCompatibility = '11'
 
@@ -18,7 +18,8 @@ subprojects {
     }
 
     dependencies {
-        compileOnly("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+        implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.5.RELEASE")
+        compileOnly("org.springframework.boot:spring-boot-starter")
 
         testImplementation("org.testng:testng:7.0.0")
         testImplementation("org.assertj:assertj-core:3.15.0")

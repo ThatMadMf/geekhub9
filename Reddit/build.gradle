@@ -1,13 +1,6 @@
 plugins {
     id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'application'
 }
-
-application {
-    mainClassName = 'org.geekhub.reddit.RedditMain'
-}
-
 
 configurations {
     developmentOnly
@@ -15,7 +8,6 @@ configurations {
         extendsFrom developmentOnly
     }
 }
-
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
