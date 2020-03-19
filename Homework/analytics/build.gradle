@@ -1,17 +1,4 @@
-plugins {
-    id 'org.springframework.boot'
-}
-
-repositories {
-    mavenCentral()
-}
-
-bootJar {
-    enabled = false
-}
-
 dependencies {
-
     implementation(project(":Homework:codec"))
     implementation(project(":Homework:history"))
 }
