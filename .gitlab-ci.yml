@@ -13,7 +13,7 @@ cache:
 build:
   stage: build
   script:
-    - ./gradlew assemble
+    - ./gradlew :Redddit:assemble
   artifacts:
     paths:
       - build/libs/*.jar
@@ -24,7 +24,7 @@ build:
 test:
   stage: test
   script:
-    - ./gradlew check
+    - ./gradlew Reddit:check
 
 deploy:
   stage: deploy
