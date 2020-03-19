@@ -15,8 +15,7 @@ cache:
 
 build:
   stage: build
-  script:
-    - ./gradlew :Redddit:assemble
+  script: ./gradlew :Redddit:assemble
   artifacts:
     paths:
       - Reddit/build/libs/*.jar
