@@ -25,8 +25,6 @@ test:
 deploy:
   stage: deploy
   image: ruby:latest
-  dependencies:
-    - build
   script:
     - apt-get update -yq
     - apt-get install rubygems ruby-dev -y

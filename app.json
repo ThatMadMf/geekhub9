@@ -1,0 +1,6 @@
+{
+  "name": "monoshko-crypto",
+  "description": "Examination work",
+  "image": "heroku/gradle",
+  "addons": [ "heroku-postgresql" ]
+}

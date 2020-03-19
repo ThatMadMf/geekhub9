@@ -10,7 +10,6 @@ ext {
 
 subprojects {
     apply plugin: "java"
-    apply plugin: "application"
 
     sourceCompatibility = '11'
 
