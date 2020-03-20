@@ -30,6 +30,7 @@ deploy:
   stage: deploy
   image: ruby:latest
   script:
+    - cd ~
     - apt-get update
     - apt-get install rubygems ruby-dev -y
     - gem install dpl
