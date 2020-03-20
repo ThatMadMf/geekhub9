@@ -3,7 +3,7 @@
 2 - Upvotes : Done  
 3 - Remove sql from java files  
 4 - Tests  
-5 - Error and exception handling  
+5 - Error and exception handling : Done  
 6 - Deploy : Done  
 7 - Downvotes  
 8 - User feed  

@@ -23,7 +23,7 @@ public class RegistrationController {
     public String showRegistrationPage(Model model) {
         Login login = new Login();
         model.addAttribute("login", login);
-        return "registration";
+        return "thymeleaf/registration";
     }
 
     @PostMapping("registration")
