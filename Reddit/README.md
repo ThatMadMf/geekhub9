@@ -4,7 +4,7 @@
 3 - Remove sql from java files  
 4 - Tests  
 5 - Error and exception handling  
-6 - Deploy  
+6 - Deploy : Done  
 7 - Downvotes  
 8 - User feed  
 9 - Popular feed  
