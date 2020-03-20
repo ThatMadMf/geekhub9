@@ -1,13 +1,14 @@
 package org.geekhub.reddit.web.rest;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.geekhub.reddit.db.dtos.SubredditDto;
+import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.geekhub.reddit.services.SubredditService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,17 +29,26 @@ public class SubredditController {
 
     @GetMapping("{id}")
     @ResponseBody
-    public Subreddit getSubredditById(@PathVariable int id)  {
+    public Subreddit getSubredditById(@PathVariable int id) {
         return subredditService.getSubredditById(id);
     }
 
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public Subreddit createSubreddits(@RequestBody String name, Authentication authentication, String userName) {
-        return subredditService.addSubreddit(new Subreddit(name,
-                authentication == null ? userName : authentication.name(), LocalDate.now()));
+    @GetMapping("{id}/subscribers")
+    @ResponseBody
+    public List<RedditUser> getSubscribers(@PathVariable int id) {
+        return subredditService.getSubscribers(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public Subreddit createSubreddits(@RequestBody SubredditDto subredditDto) {
+        return subredditService.addSubreddit(new Subreddit(subredditDto));
+    }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{id}/subscribe")
+    public Subreddit subscribeUser(@PathVariable int id, String login) {
+        return subredditService.subscribeUser(id, login);
+    }
 }

@@ -1,10 +1,12 @@
 package org.geekhub.reddit.db.models;
 
+import org.geekhub.reddit.db.dtos.SubredditDto;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Subreddit {
@@ -26,20 +28,15 @@ public class Subreddit {
 
     private List<Post> posts;
 
+    public Subreddit(SubredditDto subredditDto) {
+        this.name = subredditDto.getName();
+        this.creatorLogin = subredditDto.getCreatorLogin();
+        this.creationDate = LocalDate.now();
+        posts = new ArrayList<>();
+    }
+
     public Subreddit() {
-    }
-
-    public Subreddit(@NotNull @NotEmpty String name, @NotNull @NotEmpty String creatorLogin,
-                     @NotNull @NotEmpty LocalDate creationDate) {
-        this.name = name;
-        this.creatorLogin = creatorLogin;
-        this.creationDate = creationDate;
-    }
-
-    public Subreddit(int id, @NotNull @NotEmpty String name, @NotNull @NotEmpty String creatorLogin,
-                     @NotNull @NotEmpty LocalDate creationDate) {
-        this(name, creatorLogin, creationDate);
-        this.id = id;
+        posts = new ArrayList<>();
     }
 
     public void setId(int id) {

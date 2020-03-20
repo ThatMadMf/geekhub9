@@ -8,7 +8,7 @@ import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.services.PostService;
-import org.geekhub.reddit.services.repositories.UserDetailsServiceImp;
+import org.geekhub.reddit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,7 +44,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     @MockBean
-    private UserDetailsServiceImp userDetailsServiceImp;
+    private UserService userService;
 
 
     @Test

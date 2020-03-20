@@ -1,4 +1,4 @@
-package org.geekhub.reddit.db.dtos;
+package org.geekhub.reddit.db.models;
 
 import org.springframework.data.annotation.Id;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class UserDto {
+public class RedditUser {
 
 
     @Id
