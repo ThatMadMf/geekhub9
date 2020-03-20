@@ -1,8 +1,8 @@
-create table if not exists reddit.votes (
-    id serial primary key,
-    voter_login varchar(64) not null references reddit.users(login),
-    post_id integer references reddit.posts(id),
-    comment_id integer references reddit.comments(id),
-    vote boolean,
-    vote_date timestamp not null
+CREATE TABLE IF NOT EXISTS reddit.votes (
+    id              SERIAL PRIMARY KEY,
+    voter_login     VARCHAR(64) NOT NULL REFERENCES reddit.users(login),
+    post_id         INTEGER REFERENCES reddit.posts(id),
+    comment_id      INTEGER REFERENCES reddit.comments(id),
+    vote            BOOLEAN,
+    vote_date       TIMESTAMP NOT NULL
 );

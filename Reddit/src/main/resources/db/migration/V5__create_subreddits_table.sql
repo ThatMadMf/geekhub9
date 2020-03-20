@@ -1,6 +1,6 @@
-create table if not exists reddit.subreddits (
-    id serial primary key,
-    name varchar(30) unique not null,
-    creator_login varchar(64) not null references reddit.users(login),
-    creation_date timestamp not null
+CREATE TABLE IF NOT EXISTS reddit.subreddits (
+    id              SERIAL PRIMARY KEY,
+    name            VARCHAR(30) UNIQUE NOT NULL,
+    creator_login   VARCHAR(64) NOT NULL REFERENCES reddit.users(login),
+    creation_date   TIMESTAMP NOT NULL
 );

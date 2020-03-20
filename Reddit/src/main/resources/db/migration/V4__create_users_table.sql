@@ -1,7 +1,7 @@
-create table if not exists reddit.users (
-    id varchar(64) primary key,
-    login varchar(30) unique not null,
-    email varchar(30) unique,
-    password varchar(256),
-    registration_date timestamp not null
+CREATE TABLE IF NOT EXISTS reddit.users (
+    id                  VARCHAR(64) PRIMARY KEY,
+    login               VARCHAR(30) UNIQUE NOT NULL,
+    email               VARCHAR(30) UNIQUE,
+    password            VARCHAR(256),
+    registration_date   TIMESTAMP NOT NULL
 );
