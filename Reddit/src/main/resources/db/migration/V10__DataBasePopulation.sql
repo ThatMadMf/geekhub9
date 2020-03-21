@@ -1,7 +1,7 @@
 INSERT  INTO reddit.users VALUES ('adsdfasdfasdfasdfasd','dude', 'mail@mali', 'password', select now() -3);
 INSERT  INTO reddit.users VALUES ('xcvbcxvbxcvbxcvbxxbc','me', 'mail@gmai.com', 'qwerty', select now() -2);
 INSERT  INTO reddit.users VALUES ('dasasdfasdfasdfasdff','user', 'usermail@mali', '1234', select now() -2);
-INSERT  INTO reddit.users VALUES ('wqewqerqwerqwerqwrqw','admin', 'admom@mali', '111111', select now() -3);
+INSERT  INTO reddit.users VALUES ('wqewqerqwerqwerqwrqw','admin', 'admm@mali', 'geekhub', select now() -3);
 INSERT  INTO reddit.users VALUES ('uytoyutyouytyityotry','guy', 'gymail@mali', 'pas1234', select now() -3);
 
 INSERT  INTO reddit.subreddits (name, creator_login, creation_date)
@@ -26,13 +26,13 @@ INSERT  INTO reddit.comments (creator_login, post_id, content, creation_date)
 VALUES ('guy', 2, 'It does not exist yet', select now() -2);
 
 INSERT  INTO reddit.votes (voter_login, post_id, vote, vote_date)
-VALUES ('dude', 2, true, select now() -1);
+VALUES ('dude', 2, TRUE, select now() -1);
 INSERT  INTO reddit.votes (voter_login, post_id, vote, vote_date)
-VALUES ('me', 2, true, select now() -1);
+VALUES ('me', 2, TRUE , select now() -1);
 INSERT  INTO reddit.votes (voter_login, post_id, vote, vote_date)
-VALUES ('user', 2, true, select now() -1);
+VALUES ('user', 2, TRUE , select now() -1);
 INSERT  INTO reddit.votes (voter_login, post_id, vote, vote_date)
-VALUES ('guy', 2, true, select now() -1);
+VALUES ('guy', 2, TRUE , select now() -1);
 
 INSERT  INTO reddit.subreddit_user (user_login, subreddit_id) VALUES ('admin', 1);
 INSERT  INTO reddit.subreddit_user (user_login, subreddit_id) VALUES ('dude', 1);

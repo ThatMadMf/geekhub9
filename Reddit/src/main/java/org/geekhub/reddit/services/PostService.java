@@ -51,14 +51,6 @@ public class PostService {
         return commentService.getAllCommentsByPostId(id);
     }
 
-    public List<Vote> getAllVotesByCommentId(int id) {
-        return voteService.getAllVotesByCommentId(id);
-    }
-
-    public Vote voteComment(Vote vote) {
-        return voteService.voteComment(vote);
-    }
-
     public Vote votePost(Vote vote) {
         return voteService.votePost(vote);
     }

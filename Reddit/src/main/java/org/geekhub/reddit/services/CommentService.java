@@ -1,6 +1,7 @@
 package org.geekhub.reddit.services;
 
 import org.geekhub.reddit.db.models.Comment;
+import org.geekhub.reddit.db.models.Vote;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,15 @@ import java.util.List;
 @Service
 public class CommentService {
     private JdbcTemplate jdbcTemplate;
+    private VoteService voteService;
 
-    public CommentService(JdbcTemplate jdbcTemplate) {
+    public CommentService(JdbcTemplate jdbcTemplate, VoteService voteService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.voteService = voteService;
+    }
+
+    public List<Vote> getAllVotesByCommentId(int id) {
+        return voteService.getAllVotesByCommentId(id);
     }
 
     public List<Comment> getAllCommentsByPostId(int postId) {
@@ -36,5 +43,9 @@ public class CommentService {
         jdbcTemplate.update(sql, comment.getCreatorLogin(), comment.getPostId(), comment.getCreationDate(),
                 comment.getContent());
         return comment;
+    }
+
+    public Vote voteComment(Vote vote) {
+        return voteService.voteComment(vote);
     }
 }

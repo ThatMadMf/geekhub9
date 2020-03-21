@@ -1,6 +1,7 @@
 package org.geekhub.reddit.services;
 
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class VoteService {
     }
 
     public List<Vote> getAllVotesByPostId(int postId) {
-        String sql = "select * from reddit.votes where post_id = ?";
+        String sql = "select (vote) from reddit.votes where post_id = ?";
         return jdbcTemplate.query(sql, new Object[]{postId}, new BeanPropertyRowMapper<>(Vote.class));
     }
 
@@ -38,28 +39,36 @@ public class VoteService {
 
     public Vote votePost(Vote vote) {
         if(voteExists(vote)) {
-            throw new RuntimeException("Vote already exists");
+            throw new DataBaseRowException("Vote already exists");
         }
         String sql = "insert into reddit.votes (voter_login, post_id, vote_date, vote)" +
                 " values (?, ?, ?, ?)";
         jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getPostId(), vote.getVoteDate(),
-                vote.isUpvote());
+                vote.isVote());
         return vote;
     }
 
     public Vote voteComment(Vote vote) {
         if(voteExists(vote)) {
-            throw new RuntimeException("Vote already exists");
+            throw new DataBaseRowException("Vote already exists");
         }
         String sql = "insert into reddit.votes (voter_login, comment_id, vote_date, vote)" +
                 " values (?, ?, ?, ?)";
         jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getCommentId(), vote.getVoteDate(),
-                vote.isUpvote());
+                vote.isVote());
         return vote;
     }
 
     private boolean voteExists(Vote vote) {
-        String sql = "select exists (select * from reddit.votes where post_id = ? or comment_id = ?)";
+        String sql = "select exists (select * from reddit.votes where post_id = ? and comment_id = ?)";
         return jdbcTemplate.queryForObject(sql, new Object[]{vote.getPostId(), vote.getCommentId()}, Boolean.class);
+    }
+
+    public void deleteVote(Vote vote) {
+        if (!voteExists(vote)) {
+            throw new DataBaseRowException("Vote is absent in database");
+        }
+        String sql = "delete v.* from reddit.votes v where v.id = ?";
+        jdbcTemplate.update(sql, vote.getId());
     }
 }

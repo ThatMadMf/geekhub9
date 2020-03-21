@@ -1,7 +1,6 @@
 package org.geekhub.reddit.web.rest;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,9 +10,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {RuntimeException.class})
-    public ResponseEntity<Object> handle(RuntimeException ex, WebRequest webRequest) {
-        String message = "Internal error occurred";
-        return handleExceptionInternal(ex, message, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
+
+    @ExceptionHandler(value = {DataBaseRowException.class})
+    public ResponseEntity<Object> handle(DataBaseRowException ex, WebRequest webRequest) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
+
 }

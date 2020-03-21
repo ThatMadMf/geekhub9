@@ -5,7 +5,7 @@ import org.geekhub.reddit.db.dtos.CommentDto;
 import org.geekhub.reddit.db.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Vote;
-import org.geekhub.reddit.services.PostService;
+import org.geekhub.reddit.services.CommentService;
 import org.geekhub.reddit.web.configuration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -38,7 +38,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     @MockBean
-    private PostService postService;
+    private CommentService commentService;
 
     @Autowired
     @MockBean
@@ -51,7 +51,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         commentList.add(new Comment(new CommentDto("man", 3, "text text")));
 
 
-        when(postService.getAllCommentsByPostId(3)).thenReturn(commentList);
+        when(commentService.getAllCommentsByPostId(3)).thenReturn(commentList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/3/comments")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
@@ -67,7 +67,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         voteList.add(new Vote(new VoteDto("man", true, 0, 3)));
 
 
-        when(postService.getAllVotesByCommentId(3)).thenReturn(voteList);
+        when(commentService.getAllVotesByCommentId(3)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/1/comments/3/votes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
@@ -84,7 +84,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         voteList.add(new Vote(new VoteDto("man", true, 0, 1)));
 
 
-        when(postService.getAllVotesByCommentId(1)).thenReturn(voteList);
+        when(commentService.getAllVotesByCommentId(1)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/comments/1/votes-count")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -99,7 +99,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         CommentDto commentDto = new CommentDto("login", 1, "CONTENT");
         Comment comment = new Comment(commentDto);
 
-        when(postService.addComment(comment)).thenReturn(comment);
+        when(commentService.addComment(comment)).thenReturn(comment);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/1/comments")
                 .content(objectMapper.writeValueAsString(commentDto))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -113,7 +113,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         Vote vote = new Vote(voteDto);
 
 
-        when(postService.voteComment(vote)).thenReturn(vote);
+        when(commentService.voteComment(vote)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/2/comments/1/votes")
                 .content(objectMapper.writeValueAsString(voteDto))
                 .contentType(MediaType.APPLICATION_JSON))
