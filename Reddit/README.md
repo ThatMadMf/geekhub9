@@ -6,7 +6,7 @@
 5 - Error and exception handling : Done  
 6 - Deploy : Done  
 7 - Downvotes  
-8 - User feed  
+8 - User feed : Done  
 9 - Popular feed  
 10 - Threads to comments  
 11- Global refactor  
