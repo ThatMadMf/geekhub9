@@ -3,7 +3,7 @@ package org.geekhub.reddit.db.dtos;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class Login {
+public class RegistrationDto {
 
     @NotNull
     @NotEmpty

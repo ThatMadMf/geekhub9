@@ -1,6 +1,6 @@
 package org.geekhub.reddit.web.configuration;
 
-import org.geekhub.reddit.db.dtos.Login;
+import org.geekhub.reddit.db.dtos.RegistrationDto;
 import org.geekhub.reddit.db.dtos.UserDao;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.services.PostService;
@@ -43,15 +43,15 @@ public class RegistrationService implements UserDetailsService, UserDao {
     }
 
     @Override
-    public void register(Login login) {
+    public void register(RegistrationDto registrationDto) {
         String sql = "insert into reddit.users (id, login, email, password, registration_date) " +
                 "values (?, ?, ?, ?, ?)";
 
         RedditUser redditUser = new RedditUser();
 
-        redditUser.setLogin(login.getLogin());
-        redditUser.setEmail(login.getEmail());
-        redditUser.setPassword(login.getPassword());
+        redditUser.setLogin(registrationDto.getLogin());
+        redditUser.setEmail(registrationDto.getEmail());
+        redditUser.setPassword(new BCryptPasswordEncoder().encode(registrationDto.getPassword()));
         redditUser.setDate(LocalDate.now());
         redditUser.setUserId(UUID.randomUUID());
 

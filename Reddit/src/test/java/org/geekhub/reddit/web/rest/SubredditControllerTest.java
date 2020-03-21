@@ -2,6 +2,7 @@ package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.geekhub.reddit.db.dtos.SubredditDto;
+import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.geekhub.reddit.services.SubredditService;
 import org.geekhub.reddit.web.configuration.RegistrationService;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +80,34 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
 
         when(subredditService.addSubreddit(subreddit)).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits")
+                .content(objectMapper.writeValueAsString(subreddit))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(201))
+                .andDo(print());
+    }
+
+    @Test
+    public void testGetSubscribers() throws Exception {
+        List<RedditUser> redditUsers = new ArrayList<>();
+        redditUsers.add(new RedditUser("user1", "mail@mail", "111", LocalDate.now()));
+        redditUsers.add(new RedditUser("user2", "mail@mail", "111", LocalDate.now()));
+
+        when(subredditService.getSubscribers(1)).thenReturn(redditUsers);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/subscribers")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[1].login", is("user2")))
+                .andExpect(jsonPath("$[1].email", is("mail@mail")))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andDo(print());
+    }
+
+    @Test
+    public void testSubscribeUser() throws Exception {
+        Subreddit subreddit = new Subreddit(new SubredditDto("AskReddit", "new post"));
+
+        when(subredditService.subscribeUser(1, "user")).thenReturn(subreddit);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/subscribe")
                 .content(objectMapper.writeValueAsString(subreddit))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))

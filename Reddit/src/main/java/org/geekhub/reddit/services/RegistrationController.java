@@ -1,6 +1,6 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.db.dtos.Login;
+import org.geekhub.reddit.db.dtos.RegistrationDto;
 import org.geekhub.reddit.db.dtos.UserDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +21,16 @@ public class RegistrationController {
 
     @GetMapping("registration")
     public String showRegistrationPage(Model model) {
-        Login login = new Login();
-        model.addAttribute("login", login);
+        RegistrationDto registrationDto = new RegistrationDto();
+        model.addAttribute("login", registrationDto);
         return "thymeleaf/registration";
     }
 
     @PostMapping("registration")
     @ResponseBody
-    public void registerUser(@Valid Login login) {
-        if (login.getPassword().equals(login.getMatchingPassword())) {
-            userDao.register(login);
+    public void registerUser(@Valid RegistrationDto registrationDto) {
+        if (registrationDto.getPassword().equals(registrationDto.getMatchingPassword())) {
+            userDao.register(registrationDto);
         } else {
         }
     }

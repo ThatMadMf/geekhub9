@@ -25,8 +25,18 @@ public class RedditUser {
     @NotEmpty
     private String password;
 
-    private String matchingPassword;
     private LocalDate date;
+
+    public RedditUser() {
+    }
+
+    public RedditUser(@NotNull @NotEmpty String login, @NotNull @NotEmpty String email,
+                      @NotNull @NotEmpty String password, LocalDate date) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.date = date;
+    }
 
     public String getLogin() {
         return login;
@@ -44,10 +54,6 @@ public class RedditUser {
         this.password = password;
     }
 
-    public String getMatchingPassword() {
-        return matchingPassword;
-    }
-
     public UUID getUserId() {
         return id;
     }
@@ -56,9 +62,6 @@ public class RedditUser {
         this.id = id;
     }
 
-    public void setMatchingPassword(String matchingPassword) {
-        this.matchingPassword = matchingPassword;
-    }
 
     public String getEmail() {
         return email;
