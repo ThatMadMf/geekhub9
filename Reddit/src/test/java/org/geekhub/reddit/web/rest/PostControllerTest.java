@@ -8,7 +8,6 @@ import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.services.PostService;
-import org.geekhub.reddit.services.UserService;
 import org.geekhub.reddit.web.configuration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -93,38 +92,6 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testGetPostComments() throws Exception {
-        List<Comment> commentList = new ArrayList<>();
-        commentList.add(new Comment(new CommentDto("user", 3, "text")));
-        commentList.add(new Comment(new CommentDto("man", 3, "text text")));
-
-
-        when(postService.getAllCommentsByPostId(3)).thenReturn(commentList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/3/comments")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[1].content", is("text text")))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andDo(print());
-    }
-
-    @Test
-    public void testGetPostCommentVotes() throws Exception {
-        List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto("user", true, 0, 3)));
-        voteList.add(new Vote(new VoteDto("man", true, 0, 3)));
-
-
-        when(postService.getAllVotesByCommentId(3)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/1/comments/3/votes")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[1].voterLogin", is("man")))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andDo(print());
-    }
-
-    @Test
     public void testGetPostVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
         voteList.add(new Vote(new VoteDto("user", true, 2, 0)));
@@ -156,37 +123,6 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testGetCommentVotesCount() throws Exception {
-        List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto("user", true, 0, 1)));
-        voteList.add(new Vote(new VoteDto("man", true, 0, 1)));
-        voteList.add(new Vote(new VoteDto("man", true, 0, 1)));
-
-
-        when(postService.getAllVotesByCommentId(1)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/comments/1/votes-count")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(3)))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andDo(print());
-    }
-
-    @Test
-    public void testAddVoteToComment() throws Exception {
-        VoteDto voteDto = new VoteDto("user", true, 0, 1);
-        Vote vote = new Vote(voteDto);
-
-
-        when(postService.voteComment(vote)).thenReturn(vote);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/2/comments/1/votes")
-                .content(objectMapper.writeValueAsString(voteDto))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(201))
-                .andDo(print());
-    }
-
-    @Test
     public void testAddVoteToPost() throws Exception {
         VoteDto voteDto = new VoteDto("user", true, 1, 0);
         Vote vote = new Vote(voteDto);
@@ -200,20 +136,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testAddCommentToPost() throws Exception{
-        CommentDto commentDto = new CommentDto("login", 1, "CONTENT");
-        Comment comment = new Comment(commentDto);
-
-        when(postService.addComment(comment)).thenReturn(comment);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/1/comments")
-                .content(objectMapper.writeValueAsString(commentDto))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(201))
-                .andDo(print());
-    }
-
-    @Test
-    public void testCreatePost() throws Exception{
+    public void testCreatePost() throws Exception {
         PostDto postDto = new PostDto("login", 1, "new post", "content");
         Post post = new Post(postDto);
 
