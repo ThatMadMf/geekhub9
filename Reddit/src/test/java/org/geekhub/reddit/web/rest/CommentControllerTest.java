@@ -5,6 +5,7 @@ import org.geekhub.reddit.db.dtos.CommentDto;
 import org.geekhub.reddit.db.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.db.models.VoteApplicable;
 import org.geekhub.reddit.services.CommentService;
 import org.geekhub.reddit.web.configuration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,8 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostCommentVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto("user", true, 0, 3)));
-        voteList.add(new Vote(new VoteDto("man", true, 0, 3)));
+        voteList.add(new Vote(new VoteDto("dude", true, VoteApplicable.COMMENT), 1));
+        voteList.add(new Vote(new VoteDto("man", true, VoteApplicable.COMMENT), 2));
 
 
         when(commentService.getAllVotesByCommentId(3)).thenReturn(voteList);
@@ -79,10 +80,9 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetCommentVotesCount() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto("user", true, 0, 1)));
-        voteList.add(new Vote(new VoteDto("man", true, 0, 1)));
-        voteList.add(new Vote(new VoteDto("man", true, 0, 1)));
-
+        voteList.add(new Vote(new VoteDto("dude", true, VoteApplicable.COMMENT), 1));
+        voteList.add(new Vote(new VoteDto("man", true, VoteApplicable.COMMENT), 2));
+        voteList.add(new Vote(new VoteDto("man2", true, VoteApplicable.COMMENT), 3));
 
         when(commentService.getAllVotesByCommentId(1)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/comments/1/votes-count")
@@ -109,8 +109,8 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testAddVoteToComment() throws Exception {
-        VoteDto voteDto = new VoteDto("user", true, 0, 1);
-        Vote vote = new Vote(voteDto);
+        VoteDto voteDto = new VoteDto("man", true, VoteApplicable.COMMENT);
+        Vote vote = new Vote(voteDto, 1);
 
 
         when(commentService.voteComment(vote)).thenReturn(vote);

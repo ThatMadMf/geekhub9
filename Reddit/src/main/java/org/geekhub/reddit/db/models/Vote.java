@@ -20,9 +20,11 @@ public class Vote {
     @NotEmpty
     private boolean vote;
 
-    private Integer postId;
+    @NotNull
+    @NotEmpty
+    private int appliedId;
 
-    private Integer commentId;
+    private VoteApplicable voteApplicable;
 
     private LocalDate voteDate;
 
@@ -30,12 +32,12 @@ public class Vote {
 
     }
 
-    public Vote(VoteDto voteDto) {
+    public Vote(VoteDto voteDto, int appliedId) {
+        voteApplicable = voteDto.getApplicable();
         voterLogin = voteDto.getVoterLogin();
         vote = voteDto.isVote();
-        postId = voteDto.getPostId();
-        commentId = voteDto.getCommentId();
         voteDate = LocalDate.now();
+        this.appliedId = appliedId;
     }
 
     public int getId() {
@@ -62,27 +64,27 @@ public class Vote {
         this.vote = vote;
     }
 
-    public Integer getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
-
-    public Integer getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
-    }
-
     public LocalDate getVoteDate() {
         return voteDate;
     }
 
     public void setVoteDate(LocalDate voteDate) {
         this.voteDate = voteDate;
+    }
+
+    public int getAppliedId() {
+        return appliedId;
+    }
+
+    public void setAppliedId(int appliedId) {
+        this.appliedId = appliedId;
+    }
+
+    public VoteApplicable getVoteApplicable() {
+        return voteApplicable;
+    }
+
+    public void setVoteApplicable(String voteApplicable) {
+        this.voteApplicable = VoteApplicable.valueOf(voteApplicable);
     }
 }

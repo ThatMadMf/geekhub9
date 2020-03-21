@@ -52,7 +52,7 @@ public class PostService {
     }
 
     public Vote votePost(Vote vote) {
-        return voteService.votePost(vote);
+        return voteService.vote(vote);
     }
 
     public Comment addComment(Comment comment) {

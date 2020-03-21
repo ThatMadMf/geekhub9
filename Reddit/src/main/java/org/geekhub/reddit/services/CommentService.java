@@ -46,6 +46,6 @@ public class CommentService {
     }
 
     public Vote voteComment(Vote vote) {
-        return voteService.voteComment(vote);
+        return voteService.vote(vote);
     }
 }

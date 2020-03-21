@@ -7,6 +7,7 @@ import org.geekhub.reddit.db.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.db.models.VoteApplicable;
 import org.geekhub.reddit.services.PostService;
 import org.geekhub.reddit.web.configuration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,15 +95,15 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto("user", true, 2, 0)));
-        voteList.add(new Vote(new VoteDto("man", false, 2, 0)));
+        voteList.add(new Vote(new VoteDto("dude", true, VoteApplicable.POST), 1));
+        voteList.add(new Vote(new VoteDto("man", false, VoteApplicable.POST), 2));
 
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/votes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[1].upvote", is(false)))
+                .andExpect(jsonPath("$[1].vote", is(false)))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
@@ -110,8 +111,9 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostVotesCount() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto("user", true, 2, 0)));
-        voteList.add(new Vote(new VoteDto("man", true, 2, 0)));
+        voteList.add(new Vote(new VoteDto("dude", true, VoteApplicable.POST), 1));
+        voteList.add(new Vote(new VoteDto("man", true, VoteApplicable.POST), 2));
+
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/votes-count")
@@ -124,8 +126,9 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testAddVoteToPost() throws Exception {
-        VoteDto voteDto = new VoteDto("user", true, 1, 0);
-        Vote vote = new Vote(voteDto);
+        VoteDto voteDto = new VoteDto("man", true, VoteApplicable.COMMENT);
+        Vote vote = new Vote(voteDto, 1);
+
 
         when(postService.votePost(vote)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/1/votes")

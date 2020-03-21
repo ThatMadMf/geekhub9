@@ -1,5 +1,7 @@
 package org.geekhub.reddit.db.dtos;
 
+import org.geekhub.reddit.db.models.VoteApplicable;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,18 +15,15 @@ public class VoteDto {
     @NotNull
     private boolean vote;
 
-    private Integer postId;
-
-    private Integer commentId;
+    private VoteApplicable applicable;
 
     public VoteDto() {
     }
 
-    public VoteDto(@NotNull @NotEmpty String voterLogin, @NotEmpty @NotNull boolean vote, Integer postId, Integer commentId) {
+    public VoteDto(@NotNull @NotEmpty String voterLogin, @NotEmpty @NotNull boolean vote, VoteApplicable applicable) {
         this.voterLogin = voterLogin;
         this.vote = vote;
-        this.postId = postId;
-        this.commentId = commentId;
+        this.applicable = applicable;
     }
 
     public String getVoterLogin() {
@@ -43,19 +42,11 @@ public class VoteDto {
         this.vote = vote;
     }
 
-    public Integer getPostId() {
-        return postId;
+    public VoteApplicable getApplicable() {
+        return applicable;
     }
 
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
-
-    public Integer getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
+    public void setApplicable(VoteApplicable applicable) {
+        this.applicable = applicable;
     }
 }

@@ -41,7 +41,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "{id}/votes")
     public Vote addVoteToComment(@PathVariable("id") int id, @RequestBody VoteDto voteDto) {
-        return commentService.voteComment(new Vote(voteDto));
+        return commentService.voteComment(new Vote(voteDto, id));
     }
 
     @ResponseStatus(HttpStatus.CREATED)

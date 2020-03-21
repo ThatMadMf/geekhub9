@@ -53,7 +53,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{id}/votes")
     public Vote addVoteToPost(@PathVariable("id") int id, @RequestBody VoteDto voteDto) {
-        return postService.votePost(new Vote(voteDto));
+        return postService.votePost(new Vote(voteDto, id));
     }
 
     @ResponseStatus(HttpStatus.CREATED)

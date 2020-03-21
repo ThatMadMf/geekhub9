@@ -18,12 +18,12 @@ public class VoteService {
     }
 
     public List<Vote> getAllVotesByPostId(int postId) {
-        String sql = "select (vote) from reddit.votes where post_id = ?";
+        String sql = "select * from reddit.votes where applied_id = ? and vote_applicable = 'POST'";
         return jdbcTemplate.query(sql, new Object[]{postId}, new BeanPropertyRowMapper<>(Vote.class));
     }
 
     public List<Vote> getAllVotesByCommentId(int commentId) {
-        String sql = "select * from reddit.votes where comment_id = ?";
+        String sql = "select * from reddit.votes where applied_id = ? and vote_applicable = 'COMMENT'";
         return jdbcTemplate.query(sql, new Object[]{commentId}, new BeanPropertyRowMapper<>(Vote.class));
     }
 
@@ -37,31 +37,22 @@ public class VoteService {
         return jdbcTemplate.queryForObject(sql, new Object[]{voteId}, new BeanPropertyRowMapper<>(Vote.class));
     }
 
-    public Vote votePost(Vote vote) {
-        if(voteExists(vote)) {
+    public Vote vote(Vote vote) {
+        if (voteExists(vote)) {
             throw new DataBaseRowException("Vote already exists");
         }
-        String sql = "insert into reddit.votes (voter_login, post_id, vote_date, vote)" +
-                " values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getPostId(), vote.getVoteDate(),
-                vote.isVote());
-        return vote;
-    }
-
-    public Vote voteComment(Vote vote) {
-        if(voteExists(vote)) {
-            throw new DataBaseRowException("Vote already exists");
-        }
-        String sql = "insert into reddit.votes (voter_login, comment_id, vote_date, vote)" +
-                " values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getCommentId(), vote.getVoteDate(),
-                vote.isVote());
+        String sql = "insert into reddit.votes (voter_login, vote_date, applied_id, vote, vote_applicable)" +
+                " values (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getVoteDate(), vote.getAppliedId(), vote.isVote(),
+                vote.getVoteApplicable().name());
         return vote;
     }
 
     private boolean voteExists(Vote vote) {
-        String sql = "select exists (select * from reddit.votes where post_id = ? and comment_id = ?)";
-        return jdbcTemplate.queryForObject(sql, new Object[]{vote.getPostId(), vote.getCommentId()}, Boolean.class);
+        String sql = "select exists (select v.* from reddit.votes v where v.applied_id = ? and v.vote_applicable = ? " +
+                "and v.voter_login = ?)";
+        return jdbcTemplate.queryForObject(sql, new Object[]{vote.getAppliedId(), vote.getVoteApplicable().name(),
+                vote.getVoterLogin()}, Boolean.class);
     }
 
     public void deleteVote(Vote vote) {
