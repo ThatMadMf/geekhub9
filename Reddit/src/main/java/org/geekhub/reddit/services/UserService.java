@@ -59,10 +59,16 @@ public class UserService implements UserDetailsService, UserDao {
     }
 
     public List<RedditUser> findUsersBySubredditId(int subredditId) {
-        String sql = "select u" +
-                "from reddit.users AS u INNER JOIN reddit.subreddit_user AS su ON u.login = su.user_login" +
-                "where su.subreddit_id = ?";
-        return jdbcTemplate.query(sql, new Object[]{subredditId}, new BeanPropertyRowMapper<>(RedditUser.class));
+       try {
+           String sql = "select u.*" +
+                   "from reddit.users AS u INNER JOIN reddit.subreddit_user AS su ON u.login = su.user_login " +
+                   "where su.subreddit_id = ?";
+           var p = jdbcTemplate.query(sql, new Object[]{subredditId}, new BeanPropertyRowMapper<>(RedditUser.class));
+           return p;
+       } catch (Exception e) {
+           System.out.println(e.getMessage());
+           throw e;
+       }
     }
 
     private RedditUser findUserById(String login) {
