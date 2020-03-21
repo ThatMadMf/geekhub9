@@ -1,6 +1,5 @@
 package org.geekhub.reddit.web.configuration;
 
-import org.geekhub.reddit.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -15,10 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
+    private RegistrationService registrationService;
 
-    public SecurityConfiguration(UserService userService) {
-        this.userService = userService;
+    public SecurityConfiguration(RegistrationService registrationService) {
+        this.registrationService = registrationService;
     }
 
     @Bean
@@ -28,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(registrationService).passwordEncoder(passwordEncoder());
     }
 
     @Override

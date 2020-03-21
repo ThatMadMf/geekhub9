@@ -1,4 +1,4 @@
-package org.geekhub.reddit.web.controller;
+package org.geekhub.reddit.services;
 
 import org.geekhub.reddit.db.dtos.Login;
 import org.geekhub.reddit.db.dtos.UserDao;

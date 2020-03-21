@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.geekhub.reddit.db.dtos.SubredditDto;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.geekhub.reddit.services.SubredditService;
-import org.geekhub.reddit.services.UserService;
+import org.geekhub.reddit.web.configuration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -40,7 +40,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     @MockBean
-    private UserService userService;
+    private RegistrationService registrationService;
 
     @Test
     public void testGetAllSubreddits() throws Exception {
