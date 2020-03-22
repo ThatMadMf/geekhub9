@@ -1,6 +1,5 @@
 package org.geekhub.reddit.services;
 
-import org.apache.catalina.User;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

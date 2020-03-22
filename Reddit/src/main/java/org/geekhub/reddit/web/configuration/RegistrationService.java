@@ -28,7 +28,7 @@ public class RegistrationService implements UserDetailsService, UserDao {
 
     @Override
     public UserDetails loadUserByUsername(String login) {
-        RedditUser user = findUserById(login);
+        RegistrationDto user = findUserById(login);
 
         User.UserBuilder builder;
         if (user != null) {
@@ -47,21 +47,13 @@ public class RegistrationService implements UserDetailsService, UserDao {
         String sql = "insert into reddit.users (id, login, email, password, registration_date) " +
                 "values (?, ?, ?, ?, ?)";
 
-        RedditUser redditUser = new RedditUser();
-
-        redditUser.setLogin(registrationDto.getLogin());
-        redditUser.setEmail(registrationDto.getEmail());
-        redditUser.setPassword(new BCryptPasswordEncoder().encode(registrationDto.getPassword()));
-        redditUser.setDate(LocalDate.now());
-        redditUser.setUserId(UUID.randomUUID());
-
-        jdbcTemplate.update(sql, redditUser.getUserId(), redditUser.getLogin(), redditUser.getEmail(),
-                redditUser.getPassword(), redditUser.getDate());
+        jdbcTemplate.update(sql, UUID.randomUUID(), registrationDto.getLogin(), registrationDto.getEmail(),
+                new BCryptPasswordEncoder().encode(registrationDto.getPassword()), LocalDate.now());
     }
 
-    private RedditUser findUserById(String login) {
+    private RegistrationDto findUserById(String login) {
         String sql = "select * from reddit.users where login = ?";
 
-        return jdbcTemplate.queryForObject(sql, new Object[]{login}, new BeanPropertyRowMapper<>(RedditUser.class));
+        return jdbcTemplate.queryForObject(sql, new Object[]{login}, new BeanPropertyRowMapper<>(RegistrationDto.class));
     }
 }

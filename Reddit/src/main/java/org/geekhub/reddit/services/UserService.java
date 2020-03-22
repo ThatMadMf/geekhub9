@@ -22,15 +22,10 @@ public class UserService {
     }
 
     public List<RedditUser> findUsersBySubredditId(int subredditId) {
-        try {
-            String sql = "select u.*" +
-                    "from reddit.users AS u INNER JOIN reddit.subreddit_user AS su ON u.login = su.user_login " +
-                    "where su.subreddit_id = ?";
-            return jdbcTemplate.query(sql, new Object[]{subredditId}, new BeanPropertyRowMapper<>(RedditUser.class));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw e;
-        }
+        String sql = "select u.*" +
+                "from reddit.users AS u INNER JOIN reddit.subreddit_user AS su ON u.login = su.user_login " +
+                "where su.subreddit_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{subredditId}, new BeanPropertyRowMapper<>(RedditUser.class));
     }
 
     public List<Post> getUserFeed(String userLogin) {

@@ -11,31 +11,28 @@ public class RedditUser {
 
 
     @Id
-    private UUID id;
+    private String id;
 
     @NotNull
     @NotEmpty
     private String login;
 
-    @NotNull
-    @NotEmpty
-    private String email;
-
-    @NotNull
-    @NotEmpty
-    private String password;
-
-    private LocalDate date;
+    private LocalDate registrationDate;
 
     public RedditUser() {
     }
 
-    public RedditUser(@NotNull @NotEmpty String login, @NotNull @NotEmpty String email,
-                      @NotNull @NotEmpty String password, LocalDate date) {
+    public RedditUser(@NotNull @NotEmpty String login, LocalDate date) {
         this.login = login;
-        this.email = email;
-        this.password = password;
-        this.date = date;
+        this.registrationDate = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -46,36 +43,11 @@ public class RedditUser {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UUID getUserId() {
-        return id;
-    }
-
-    public void setUserId(UUID id) {
-        this.id = id;
-    }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

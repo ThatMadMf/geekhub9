@@ -5,7 +5,6 @@ import org.geekhub.reddit.db.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.services.CommentService;
-import org.geekhub.reddit.services.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class CommentController {
     @GetMapping("{id}/votes-count")
     public int getCommentVotesCount(@PathVariable("id") int id) {
         return commentService.getAllVotesByCommentId(id).stream()
-                .mapToInt(vote -> vote.isVote() ? 1 : -1 ).sum();
+                .mapToInt(vote -> vote.isVote() ? 1 : -1).sum();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
