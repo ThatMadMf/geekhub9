@@ -30,6 +30,7 @@ deploy:
   stage: deploy
   image: ruby:latest
   script:
+    - chmod +x /var/lib/apt/lists/lock
     - apt-get update
     - apt-get install rubygems ruby-dev -y
     - gem install dpl
