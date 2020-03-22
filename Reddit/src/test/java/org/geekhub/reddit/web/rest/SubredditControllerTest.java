@@ -89,15 +89,15 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetSubscribers() throws Exception {
         List<RedditUser> redditUsers = new ArrayList<>();
-        redditUsers.add(new RedditUser("user1", "mail@mail", "111", LocalDate.now()));
-        redditUsers.add(new RedditUser("user2", "mail@mail", "111", LocalDate.now()));
+        redditUsers.add(new RedditUser("user1", LocalDate.now()));
+        redditUsers.add(new RedditUser("user2", LocalDate.now()));
 
         when(subredditService.getSubscribers(1)).thenReturn(redditUsers);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/subscribers")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].login", is("user1")))
                 .andExpect(jsonPath("$[1].login", is("user2")))
-                .andExpect(jsonPath("$[1].email", is("mail@mail")))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
