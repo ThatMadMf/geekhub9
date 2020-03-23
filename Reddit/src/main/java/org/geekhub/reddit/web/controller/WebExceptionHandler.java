@@ -1,5 +1,6 @@
 package org.geekhub.reddit.web.controller;
 
+import org.geekhub.reddit.exception.RegistrationException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
