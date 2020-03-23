@@ -32,12 +32,12 @@ public class Vote {
 
     }
 
-    public Vote(VoteDto voteDto, int appliedId) {
-        voteApplicable = voteDto.getApplicable();
-        voterLogin = voteDto.getVoterLogin();
-        vote = voteDto.isVote();
-        voteDate = LocalDate.now();
+    public Vote(VoteDto voteDto, String voterLogin, int appliedId) {
+        this.voterLogin = voterLogin;
         this.appliedId = appliedId;
+        this.voteApplicable = voteDto.getApplicable();
+        this.vote = voteDto.isVote();
+        voteDate = LocalDate.now();
     }
 
     public int getId() {

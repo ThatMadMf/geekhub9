@@ -1,14 +1,15 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.db.dtos.CommentDto;
 import org.geekhub.reddit.db.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -39,13 +40,15 @@ public class CommentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "{id}/votes")
-    public Vote addVoteToComment(@PathVariable("id") int id, @RequestBody VoteDto voteDto) {
-        return commentService.voteComment(new Vote(voteDto, id));
+    public Vote addVoteToComment(@PathVariable("id") int id, @AuthenticationPrincipal Principal principal,
+                                 @RequestBody VoteDto voteDto) {
+        return commentService.voteComment(new Vote(voteDto, principal.getName(), id));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Comment addCommentToPost(@PathVariable("postId") int id, @RequestBody CommentDto commentDto) {
-        return commentService.addComment(new Comment(commentDto));
+    public Comment addCommentToPost(@PathVariable("postId") int id, @RequestBody String content,
+                                    @AuthenticationPrincipal Principal principal) {
+        return commentService.addComment(new Comment(content, principal.getName(), id));
     }
 }

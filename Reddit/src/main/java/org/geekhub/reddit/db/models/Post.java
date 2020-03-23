@@ -39,10 +39,10 @@ public class Post {
         comments = new ArrayList<>();
     }
 
-    public Post(PostDto postDto) {
+    public Post(PostDto postDto, String creatorLogin,int subredditId) {
         this.title = postDto.getTitle();
-        this.creatorLogin = postDto.getCreatorLogin();
-        this.subredditId = postDto.getSubredditId();
+        this.creatorLogin = creatorLogin;
+        this.subredditId = subredditId;
         this.content = postDto.getContent();
         creationDate = LocalDate.now();
         comments = new ArrayList<>();

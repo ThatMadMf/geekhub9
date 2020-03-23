@@ -7,10 +7,6 @@ import javax.validation.constraints.NotNull;
 
 public class VoteDto {
 
-    @NotNull
-    @NotEmpty
-    private String voterLogin;
-
     @NotEmpty
     @NotNull
     private boolean vote;
@@ -20,18 +16,9 @@ public class VoteDto {
     public VoteDto() {
     }
 
-    public VoteDto(@NotNull @NotEmpty String voterLogin, @NotEmpty @NotNull boolean vote, VoteApplicable applicable) {
-        this.voterLogin = voterLogin;
+    public VoteDto( @NotEmpty @NotNull boolean vote, VoteApplicable applicable) {
         this.vote = vote;
         this.applicable = applicable;
-    }
-
-    public String getVoterLogin() {
-        return voterLogin;
-    }
-
-    public void setVoterLogin(String voterLogin) {
-        this.voterLogin = voterLogin;
     }
 
     public boolean isVote() {

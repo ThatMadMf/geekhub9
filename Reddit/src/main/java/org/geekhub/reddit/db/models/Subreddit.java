@@ -1,6 +1,5 @@
 package org.geekhub.reddit.db.models;
 
-import org.geekhub.reddit.db.dtos.SubredditDto;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;
@@ -28,14 +27,14 @@ public class Subreddit {
 
     private List<Post> posts;
 
-    public Subreddit(SubredditDto subredditDto) {
-        this.name = subredditDto.getName();
-        this.creatorLogin = subredditDto.getCreatorLogin();
-        this.creationDate = LocalDate.now();
+    public Subreddit() {
         posts = new ArrayList<>();
     }
 
-    public Subreddit() {
+    public Subreddit(String name, String login) {
+        this.name = name;
+        this.creatorLogin = login;
+        this.creationDate = LocalDate.now();
         posts = new ArrayList<>();
     }
 

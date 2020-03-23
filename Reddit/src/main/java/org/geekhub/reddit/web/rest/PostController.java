@@ -7,11 +7,13 @@ import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.services.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
-@RequestMapping(value = "api/posts", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/subreddits/{subredditId}/posts", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 public class PostController {
 
@@ -21,16 +23,10 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("subreddit/{id}")
+    @GetMapping
     @ResponseBody
-    public List<Post> getAllPostBySubredditId(@PathVariable("id") int subredditId) {
+    public List<Post> getAllPostBySubredditId(@PathVariable("subredditId") int subredditId) {
         return postService.getAllPostBySubredditId(subredditId);
-    }
-
-    @GetMapping("author/{id}")
-    @ResponseBody
-    public List<Post> getAllPostByUserLogin(@PathVariable("id") String creatorLogin) {
-        return postService.getAllPostByUserLogin(creatorLogin);
     }
 
     @GetMapping("{id}")
@@ -47,18 +43,20 @@ public class PostController {
     @GetMapping("{id}/votes-count")
     public int getPostVotesCount(@PathVariable("id") int id) {
         return postService.getAllVotesByPostId(id).stream()
-                .mapToInt(vote -> vote.isVote() ? 1 : -1 ).sum();
+                .mapToInt(vote -> vote.isVote() ? 1 : -1).sum();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{id}/votes")
-    public Vote addVoteToPost(@PathVariable("id") int id, @RequestBody VoteDto voteDto) {
-        return postService.submitVote(new Vote(voteDto, id));
+    public Vote addVoteToPost(@PathVariable("id") int id, @RequestBody VoteDto voteDto,
+                              @AuthenticationPrincipal Principal principal) {
+        return postService.submitVote(new Vote(voteDto, principal.getName(), id));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Post createPost(@RequestBody PostDto postDto) {
-        return postService.addPost(new Post(postDto));
+    public Post createPost(@PathVariable("subredditId") int subredditId, @RequestBody PostDto postDto,
+                           @AuthenticationPrincipal Principal principal) {
+        return postService.addPost(new Post(postDto, principal.getName(), subredditId));
     }
 }

@@ -1,11 +1,11 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.db.dtos.SubredditDto;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.geekhub.reddit.services.SubredditService;
 import org.geekhub.reddit.web.configuration.RegistrationService;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testng.annotations.Test;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,8 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetAllSubreddits() throws Exception {
         List<Subreddit> subreddits = new ArrayList<>();
-        subreddits.add(new Subreddit(new SubredditDto("Subreddit 1", "user-creator")));
-        subreddits.add(new Subreddit(new SubredditDto("Subreddit 2", "user-creator")));
+        subreddits.add(new Subreddit("Subreddit 1", "user-creator"));
+        subreddits.add(new Subreddit("Subreddit 2", "user-creator"));
 
         when(subredditService.getAllSubreddits()).thenReturn(subreddits);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits")
@@ -62,7 +63,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testGetSubredditById() throws Exception {
-        Subreddit subreddit = new Subreddit(new SubredditDto("Subreddit by id", "user-creator"));
+        Subreddit subreddit = new Subreddit("Subreddit by id", "user-creator");
 
         when(subredditService.getSubredditById(1)).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1")
@@ -76,10 +77,13 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateSubreddits() throws Exception {
-        Subreddit subreddit = new Subreddit(new SubredditDto("AskReddit", "new post"));
+        Subreddit subreddit = new Subreddit("AskReddit", "new post");
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("login");
 
         when(subredditService.addSubreddit(subreddit)).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits")
+                .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(subreddit))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
@@ -104,7 +108,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testSubscribeUser() throws Exception {
-        Subreddit subreddit = new Subreddit(new SubredditDto("AskReddit", "new post"));
+        Subreddit subreddit = new Subreddit("AskReddit", "new post");
 
         when(subredditService.subscribeUser(1, "user")).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/subscribe")

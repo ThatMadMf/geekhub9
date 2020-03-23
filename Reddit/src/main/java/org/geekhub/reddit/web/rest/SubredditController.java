@@ -1,13 +1,14 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.db.dtos.SubredditDto;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.geekhub.reddit.services.SubredditService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -41,8 +42,8 @@ public class SubredditController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Subreddit createSubreddits(@RequestBody SubredditDto subredditDto) {
-        return subredditService.addSubreddit(new Subreddit(subredditDto));
+    public Subreddit createSubreddits(@RequestBody String name, @AuthenticationPrincipal Principal principal) {
+        return subredditService.addSubreddit(new Subreddit(name, principal.getName()));
     }
 
     @ResponseStatus(HttpStatus.CREATED)

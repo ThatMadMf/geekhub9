@@ -8,14 +8,6 @@ public class PostDto {
 
     @NotNull
     @NotEmpty
-    private String creatorLogin;
-
-    @NotNull
-    @NotEmpty
-    private int subredditId;
-
-    @NotNull
-    @NotEmpty
     private  String title;
 
     private String content;
@@ -23,28 +15,9 @@ public class PostDto {
     public PostDto() {
     }
 
-    public PostDto(String creatorLogin, int subredditId, String title, String content) {
-
-        this.creatorLogin = creatorLogin;
-        this.subredditId = subredditId;
+    public PostDto(String title, String content) {
         this.title = title;
         this.content = content;
-    }
-
-    public String getCreatorLogin() {
-        return creatorLogin;
-    }
-
-    public void setCreatorLogin(String creatorLogin) {
-        this.creatorLogin = creatorLogin;
-    }
-
-    public int getSubredditId() {
-        return subredditId;
-    }
-
-    public void setSubredditId(int subredditId) {
-        this.subredditId = subredditId;
     }
 
     public String getTitle() {
