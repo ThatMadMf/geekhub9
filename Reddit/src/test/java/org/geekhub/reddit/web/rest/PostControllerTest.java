@@ -1,10 +1,8 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.db.dtos.CommentDto;
 import org.geekhub.reddit.db.dtos.PostDto;
 import org.geekhub.reddit.db.dtos.VoteDto;
-import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.db.models.VoteApplicable;
@@ -130,7 +128,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
         Vote vote = new Vote(voteDto, 1);
 
 
-        when(postService.votePost(vote)).thenReturn(vote);
+        when(postService.submitVote(vote)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/1/votes")
                 .content(objectMapper.writeValueAsString(voteDto))
                 .contentType(MediaType.APPLICATION_JSON))

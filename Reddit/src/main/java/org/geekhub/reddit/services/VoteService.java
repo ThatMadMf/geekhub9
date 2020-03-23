@@ -37,7 +37,7 @@ public class VoteService {
         return jdbcTemplate.queryForObject(sql, new Object[]{voteId}, new BeanPropertyRowMapper<>(Vote.class));
     }
 
-    public Vote vote(Vote vote) {
+    public Vote submitVote(Vote vote) {
         if (voteExists(vote)) {
             throw new DataBaseRowException("Vote already exists");
         }
