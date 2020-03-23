@@ -15,6 +15,7 @@ import java.util.List;
 
 @RequestMapping(value = "api/subreddits/{subredditId}/posts", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
+@ResponseBody
 public class PostController {
 
     private PostService postService;
@@ -24,13 +25,11 @@ public class PostController {
     }
 
     @GetMapping
-    @ResponseBody
     public List<Post> getAllPostBySubredditId(@PathVariable("subredditId") int subredditId) {
         return postService.getAllPostBySubredditId(subredditId);
     }
 
     @GetMapping("{id}")
-    @ResponseBody
     public Post getPostById(@PathVariable int id) {
         return postService.getPostById(id);
     }
@@ -58,5 +57,11 @@ public class PostController {
     public Post createPost(@PathVariable("subredditId") int subredditId, @RequestBody PostDto postDto,
                            @AuthenticationPrincipal Principal principal) {
         return postService.addPost(new Post(postDto, principal.getName(), subredditId));
+    }
+
+    @PutMapping("{id}")
+    public Post editPost(@PathVariable("id") int postId, @RequestBody PostDto postDto,
+                         @AuthenticationPrincipal Principal principal) {
+        return postService.editPost(postDto, postId, principal.getName());
     }
 }

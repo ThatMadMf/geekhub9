@@ -1,5 +1,6 @@
 package org.geekhub.reddit.services;
 
+import org.geekhub.reddit.db.dtos.RegistrationDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
@@ -38,5 +39,20 @@ public class UserService {
         return subscribedSubreddits.stream()
                 .flatMap(subreddit -> postService.getAllPostBySubredditId(subreddit.getId()).stream())
                 .collect(Collectors.toList());
+    }
+
+    public List<Post> getUserPosts(String login) {
+        return postService.getAllPostByUserLogin(login);
+    }
+
+    public void deleteUser(String login) {
+        String sql = environment.getRequiredProperty("delete-user.login");
+        jdbcTemplate.update(sql, login);
+    }
+
+    public RegistrationDto getUserData(String login) {
+        String sql = environment.getRequiredProperty("select-user.login");
+        return jdbcTemplate.queryForObject(sql, new Object[]{login},
+                new BeanPropertyRowMapper<>(RegistrationDto.class));
     }
 }

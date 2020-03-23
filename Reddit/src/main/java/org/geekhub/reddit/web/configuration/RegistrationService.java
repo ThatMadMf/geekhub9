@@ -54,7 +54,7 @@ public class RegistrationService implements UserDetailsService, UserDao {
     }
 
     private RegistrationDto findUserById(String login) {
-        String sql = environment.getRequiredProperty("select-user.byId");
+        String sql = environment.getRequiredProperty("select-user.login");
         return jdbcTemplate.queryForObject(sql, new Object[]{login},
                 new BeanPropertyRowMapper<>(RegistrationDto.class));
     }

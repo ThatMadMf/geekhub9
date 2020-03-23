@@ -1,7 +1,9 @@
 package org.geekhub.reddit.services;
 
+import org.geekhub.reddit.db.dtos.PostDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.exception.NoRightsException;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -57,5 +59,17 @@ public class PostService {
 
     public List<Vote> getAllVotesByPostId(int id) {
         return voteService.getAllVotesByPostId(id);
+    }
+
+
+    public Post editPost(PostDto postDto, int postId, String login) {
+        Post editedPost = getPostById(postId);
+        if(!editedPost.getCreatorLogin().equals(login)) {
+            throw new NoRightsException("You have no rights to edit this post");
+        }
+
+        String sql = environment.getRequiredProperty("update-post.id");
+        jdbcTemplate.update(sql, postDto.getTitle(), postDto.getContent(), postId);
+        return  getPostById(postId);
     }
 }
