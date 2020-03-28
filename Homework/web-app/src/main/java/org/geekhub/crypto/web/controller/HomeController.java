@@ -82,6 +82,7 @@ public class HomeController {
 
         HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, algorithm);
         historyManager.addToHistory(record);
-        return encoderFactory.getEncoder(algorithm).encode(text);
+        var res =  encoderFactory.getEncoder(algorithm).encode(text);
+        return res;
     }
 }
