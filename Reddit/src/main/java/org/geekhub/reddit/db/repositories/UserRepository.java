@@ -7,9 +7,12 @@ import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.util.ResourceReader;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class UserRepository {
@@ -20,6 +23,7 @@ public class UserRepository {
     private static final String SELECT_SUBREDDITS = "select-subreddits_id.sql";
     private static final String SELECT_POSTS = "select-posts_id.sql";
     private static final String DELETE_BY_ID = "delete.sql";
+    private static final String INSERT_USER = "insert.sql";
 
     private final BeanPropertyRowMapper<RegistrationDto> registrationMapper;
     private final BeanPropertyRowMapper<RedditUser> userMapper;
@@ -44,6 +48,12 @@ public class UserRepository {
     public RegistrationDto getUserInfo(int id) {
         String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_BY_ID);
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, registrationMapper);
+    }
+
+    public void registerUser(RegistrationDto registrationDto) {
+        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + INSERT_USER);
+        jdbcTemplate.update(sql, registrationDto.getLogin(), registrationDto.getEmail(),
+                new BCryptPasswordEncoder().encode(registrationDto.getPassword()), LocalDate.now());
     }
 
     public List<Subreddit> getSubscriptions(int id) {

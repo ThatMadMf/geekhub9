@@ -1,35 +1,25 @@
 package org.geekhub.reddit.web.configuration;
 
+import org.geekhub.reddit.db.repositories.UserRepository;
 import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.exception.RegistrationException;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.util.UUID;
 
-@Repository
-@PropertySource("classpath:templates/sql/user_queries.properties")
+@Service
 public class RegistrationService implements UserDetailsService {
 
-    private final JdbcTemplate jdbcTemplate;
-    private final Environment environment;
+    private final UserRepository userRepository;
 
-    public RegistrationService(JdbcTemplate jdbcTemplate, Environment environment) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.environment = environment;
+    public RegistrationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String login) {
@@ -48,10 +38,8 @@ public class RegistrationService implements UserDetailsService {
     }
 
     public void register(HttpServletRequest request, RegistrationDto registrationDto) {
-        String sql = environment.getRequiredProperty("insert-user");
         try {
-            jdbcTemplate.update(sql, UUID.randomUUID(), registrationDto.getLogin(), registrationDto.getEmail(),
-                    new BCryptPasswordEncoder().encode(registrationDto.getPassword()), LocalDate.now());
+            userRepository.registerUser(registrationDto);
         } catch (Exception ex) {
             throw new RegistrationException("Login or email is taken. Try another one");
         }
@@ -68,8 +56,6 @@ public class RegistrationService implements UserDetailsService {
 
 
     private RegistrationDto findUserById(String login) {
-        String sql = environment.getRequiredProperty("select-user.login");
-        return jdbcTemplate.queryForObject(sql, new Object[]{login},
-                new BeanPropertyRowMapper<>(RegistrationDto.class));
+        return userRepository.getUserInfo(userRepository.getUserByLogin(login).getId());
     }
 }
