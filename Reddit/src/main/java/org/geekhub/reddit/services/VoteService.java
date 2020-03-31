@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@PropertySource("classpath:templates/sql/vote_queries.properties")
 public class VoteService {
 
     private final VoteRepository voteRepository;
