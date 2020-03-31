@@ -1,6 +1,6 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.db.dtos.PostDto;
+import org.geekhub.reddit.dtos.PostDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.exception.NoRightsException;

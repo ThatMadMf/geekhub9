@@ -1,22 +1,17 @@
 package org.geekhub.reddit.web.configuration;
 
-import org.geekhub.reddit.db.dtos.RegistrationDto;
-import org.geekhub.reddit.db.dtos.UserDao;
+import org.geekhub.reddit.dtos.RegistrationDto;
+import org.geekhub.reddit.dtos.UserDao;
 import org.geekhub.reddit.exception.RegistrationException;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Repository;
 
 import javax.servlet.ServletException;

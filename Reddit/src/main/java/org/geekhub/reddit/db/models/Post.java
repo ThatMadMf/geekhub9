@@ -1,6 +1,6 @@
 package org.geekhub.reddit.db.models;
 
-import org.geekhub.reddit.db.dtos.PostDto;
+import org.geekhub.reddit.dtos.PostDto;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;

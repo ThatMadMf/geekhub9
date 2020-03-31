@@ -1,6 +1,6 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.db.dtos.RegistrationDto;
+import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;

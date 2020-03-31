@@ -1,7 +1,7 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.db.dtos.PostDto;
-import org.geekhub.reddit.db.dtos.VoteDto;
+import org.geekhub.reddit.dtos.PostDto;
+import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.services.PostService;

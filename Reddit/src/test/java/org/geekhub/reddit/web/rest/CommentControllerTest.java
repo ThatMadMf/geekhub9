@@ -1,7 +1,7 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.db.dtos.VoteDto;
+import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Vote;
 import org.geekhub.reddit.db.models.VoteApplicable;

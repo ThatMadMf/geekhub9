@@ -1,4 +1,4 @@
-package org.geekhub.reddit.db.dtos;
+package org.geekhub.reddit.dtos;
 
 
 import javax.validation.constraints.NotEmpty;

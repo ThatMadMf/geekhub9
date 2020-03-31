@@ -1,6 +1,6 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.db.dtos.RegistrationDto;
+import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.services.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

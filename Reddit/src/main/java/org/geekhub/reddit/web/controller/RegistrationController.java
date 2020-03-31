@@ -1,7 +1,7 @@
 package org.geekhub.reddit.web.controller;
 
-import org.geekhub.reddit.db.dtos.RegistrationDto;
-import org.geekhub.reddit.db.dtos.UserDao;
+import org.geekhub.reddit.dtos.RegistrationDto;
+import org.geekhub.reddit.dtos.UserDao;
 import org.geekhub.reddit.exception.RegistrationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

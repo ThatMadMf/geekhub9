@@ -1,6 +1,6 @@
 package org.geekhub.reddit.db.models;
 
-import org.geekhub.reddit.db.dtos.VoteDto;
+import org.geekhub.reddit.dtos.VoteDto;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;
