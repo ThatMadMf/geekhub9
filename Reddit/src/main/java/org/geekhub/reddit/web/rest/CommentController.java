@@ -42,13 +42,13 @@ public class CommentController {
     @PostMapping(value = "{id}/votes")
     public Vote addVoteToComment(@PathVariable("id") int id, @AuthenticationPrincipal Principal principal,
                                  @RequestBody VoteDto voteDto) {
-        return commentService.voteComment(new Vote(voteDto, principal.getName(), id));
+        return commentService.voteComment(voteDto, principal.getName(), id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Comment addCommentToPost(@PathVariable("postId") int id, @RequestBody String content,
                                     @AuthenticationPrincipal Principal principal) {
-        return commentService.addComment(new Comment(content, principal.getName(), id));
+        return commentService.addComment(content, principal.getName(), id);
     }
 }

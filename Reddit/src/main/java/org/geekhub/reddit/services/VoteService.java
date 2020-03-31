@@ -37,7 +37,7 @@ public class VoteService {
             throw new DataBaseRowException("Vote already exists");
         }
         String sql = environment.getRequiredProperty("insert-vote");
-        jdbcTemplate.update(sql, vote.getVoterLogin(), vote.getVoteDate(), vote.getAppliedId(), vote.isVote(),
+        jdbcTemplate.update(sql, vote.getVoterId(), vote.getVoteDate(), vote.getAppliedId(), vote.isVote(),
                 vote.getVoteApplicable().name());
         return vote;
     }
@@ -45,7 +45,7 @@ public class VoteService {
     private boolean voteExists(Vote vote) {
         String sql = environment.getRequiredProperty("select-exists-vote");
         return jdbcTemplate.queryForObject(sql, new Object[]{vote.getAppliedId(), vote.getVoteApplicable().name(),
-                vote.getVoterLogin()}, Boolean.class);
+                vote.getVoterId()}, Boolean.class);
     }
 
     public void deleteVote(Vote vote) {

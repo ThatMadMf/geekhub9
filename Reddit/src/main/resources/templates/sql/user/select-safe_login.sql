@@ -1,0 +1,1 @@
+SELECT u.* FROM users u WHERE u.login = ?

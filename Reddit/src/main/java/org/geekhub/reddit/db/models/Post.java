@@ -1,7 +1,6 @@
 package org.geekhub.reddit.db.models;
 
 import org.geekhub.reddit.dtos.PostDto;
-import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,6 @@ import java.util.List;
 
 public class Post {
 
-    @Id
     private int id;
 
     @NotNull
@@ -20,7 +18,7 @@ public class Post {
 
     @NotNull
     @NotEmpty
-    private String creatorLogin;
+    private int creatorId;
 
     @NotNull
     @NotEmpty
@@ -39,9 +37,9 @@ public class Post {
         comments = new ArrayList<>();
     }
 
-    public Post(PostDto postDto, String creatorLogin,int subredditId) {
+    public Post(PostDto postDto, int creatorId, int subredditId) {
         this.title = postDto.getTitle();
-        this.creatorLogin = creatorLogin;
+        this.creatorId = creatorId;
         this.subredditId = subredditId;
         this.content = postDto.getContent();
         creationDate = LocalDate.now();
@@ -64,12 +62,12 @@ public class Post {
         this.title = title;
     }
 
-    public String getCreatorLogin() {
-        return creatorLogin;
+    public int getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreatorLogin(String creatorLogin) {
-        this.creatorLogin = creatorLogin;
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
     }
 
     public int getSubredditId() {

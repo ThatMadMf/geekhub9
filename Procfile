@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=prod -Dserver.port=$PORT $JAVA_OPTS -jar Reddit/build/libs/Reddit.jar
+web: java -Dspring.profiles.active=production -Dserver.port=$PORT $JAVA_OPTS -jar Reddit/build/libs/Reddit.jar

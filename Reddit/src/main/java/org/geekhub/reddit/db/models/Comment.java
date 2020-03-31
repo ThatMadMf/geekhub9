@@ -1,19 +1,16 @@
 package org.geekhub.reddit.db.models;
 
-import org.springframework.data.annotation.Id;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class Comment {
 
-    @Id
     private int id;
 
     @NotEmpty
     @NotNull
-    private String creatorLogin;
+    private int creatorId;
 
     @NotEmpty
     @NotNull
@@ -28,8 +25,8 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String content, String creatorLogin, int postId) {
-        this.creatorLogin = creatorLogin;
+    public Comment(String content, int creatorId, int postId) {
+        this.creatorId = creatorId;
         this.postId = postId;
         this.content = content;
         this.creationDate = LocalDate.now();
@@ -43,12 +40,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getCreatorLogin() {
-        return creatorLogin;
+    public int getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreatorLogin(String creatorLogin) {
-        this.creatorLogin = creatorLogin;
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
     }
 
     public int getPostId() {

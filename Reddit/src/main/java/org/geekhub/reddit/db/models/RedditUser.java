@@ -1,17 +1,13 @@
 package org.geekhub.reddit.db.models;
 
-import org.springframework.data.annotation.Id;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class RedditUser {
 
 
-    @Id
-    private String id;
+    private int id;
 
     @NotNull
     @NotEmpty
@@ -27,11 +23,11 @@ public class RedditUser {
         this.registrationDate = date;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

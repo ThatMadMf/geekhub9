@@ -43,7 +43,7 @@ public class SubredditController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Subreddit createSubreddits(@RequestBody String name, @AuthenticationPrincipal Principal principal) {
-        return subredditService.addSubreddit(new Subreddit(name, principal.getName()));
+        return subredditService.addSubreddit(name, principal.getName());
     }
 
     @ResponseStatus(HttpStatus.CREATED)

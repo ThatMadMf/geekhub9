@@ -1,8 +1,8 @@
 package org.geekhub.reddit.web.controller;
 
 import org.geekhub.reddit.dtos.RegistrationDto;
-import org.geekhub.reddit.dtos.UserDao;
 import org.geekhub.reddit.exception.RegistrationException;
+import org.geekhub.reddit.web.configuration.RegistrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +17,10 @@ import java.io.IOException;
 @Controller
 public class RegistrationController {
 
-    private UserDao userDao;
+    private final RegistrationService registrationService;
 
-    public RegistrationController(UserDao userDao) {
-        this.userDao = userDao;
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
     }
 
     @GetMapping("registration")
@@ -35,7 +35,7 @@ public class RegistrationController {
     public void registerUser(@Valid RegistrationDto registrationDto, HttpServletRequest request,
                              HttpServletResponse response) throws IOException {
         if (registrationDto.getPassword().equals(registrationDto.getMatchingPassword())) {
-            userDao.register(request, registrationDto);
+            registrationService.register(request, registrationDto);
             response.sendRedirect("/swagger-ui.html");
         } else {
             throw new RegistrationException("Passwords not matching");

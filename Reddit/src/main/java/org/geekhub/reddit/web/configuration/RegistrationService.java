@@ -1,7 +1,6 @@
 package org.geekhub.reddit.web.configuration;
 
 import org.geekhub.reddit.dtos.RegistrationDto;
-import org.geekhub.reddit.dtos.UserDao;
 import org.geekhub.reddit.exception.RegistrationException;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -21,7 +20,7 @@ import java.util.UUID;
 
 @Repository
 @PropertySource("classpath:templates/sql/user_queries.properties")
-public class RegistrationService implements UserDetailsService, UserDao {
+public class RegistrationService implements UserDetailsService {
 
     private final JdbcTemplate jdbcTemplate;
     private final Environment environment;
@@ -48,7 +47,6 @@ public class RegistrationService implements UserDetailsService, UserDao {
         return builder.build();
     }
 
-    @Override
     public void register(HttpServletRequest request, RegistrationDto registrationDto) {
         String sql = environment.getRequiredProperty("insert-user");
         try {

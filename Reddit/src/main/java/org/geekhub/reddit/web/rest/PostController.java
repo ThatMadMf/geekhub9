@@ -49,14 +49,14 @@ public class PostController {
     @PostMapping("{id}/votes")
     public Vote addVoteToPost(@PathVariable("id") int id, @RequestBody VoteDto voteDto,
                               @AuthenticationPrincipal Principal principal) {
-        return postService.submitVote(new Vote(voteDto, principal.getName(), id));
+        return postService.submitVote(voteDto, principal.getName(), id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Post createPost(@PathVariable("subredditId") int subredditId, @RequestBody PostDto postDto,
                            @AuthenticationPrincipal Principal principal) {
-        return postService.addPost(new Post(postDto, principal.getName(), subredditId));
+        return postService.addPost(postDto, principal.getName(), subredditId);
     }
 
     @PutMapping("{id}")

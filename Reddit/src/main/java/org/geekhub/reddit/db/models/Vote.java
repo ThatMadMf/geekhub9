@@ -1,7 +1,6 @@
 package org.geekhub.reddit.db.models;
 
 import org.geekhub.reddit.dtos.VoteDto;
-import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -9,12 +8,11 @@ import java.time.LocalDate;
 
 public class Vote {
 
-    @Id
     private int id;
 
     @NotNull
     @NotEmpty
-    private String voterLogin;
+    private int voterId;
 
     @NotNull
     @NotEmpty
@@ -32,8 +30,8 @@ public class Vote {
 
     }
 
-    public Vote(VoteDto voteDto, String voterLogin, int appliedId) {
-        this.voterLogin = voterLogin;
+    public Vote(VoteDto voteDto, int voterId, int appliedId) {
+        this.voterId = voterId;
         this.appliedId = appliedId;
         this.voteApplicable = voteDto.getApplicable();
         this.vote = voteDto.isVote();
@@ -48,12 +46,12 @@ public class Vote {
         this.id = id;
     }
 
-    public String getVoterLogin() {
-        return voterLogin;
+    public int getVoterId() {
+        return voterId;
     }
 
-    public void setVoterLogin(String voterLogin) {
-        this.voterLogin = voterLogin;
+    public void setVoterId(int voterId) {
+        this.voterId = voterId;
     }
 
     public boolean isVote() {

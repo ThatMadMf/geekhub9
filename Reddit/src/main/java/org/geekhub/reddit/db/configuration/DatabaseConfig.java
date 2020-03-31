@@ -14,7 +14,7 @@ public class DatabaseConfig {
 
     @Bean
     @Profile("production")
-    public DataSource getHikariProdConfig(
+    public DataSource hikariProdConfig(
             @Value("${spring.datasource.url}") String url,
             @Value("${spring.datasource.driver-class-name}") String driver,
             @Value("${spring.datasource.username}") String user,
@@ -30,12 +30,11 @@ public class DatabaseConfig {
 
     @Bean
     @Profile("dev")
-    public DataSource getHikariDevConfig(
+    public DataSource hikariDevConfig(
             @Value("${spring.datasource.url}") String url,
             @Value("${spring.datasource.driver-class-name}") String driver,
             @Value("${spring.datasource.username}") String user,
             @Value("${spring.datasource.password}") String password
-
     ) {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(url);

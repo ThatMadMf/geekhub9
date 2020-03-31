@@ -1,8 +1,10 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.dtos.PostDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.db.repositories.UserRepository;
+import org.geekhub.reddit.dtos.PostDto;
+import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -16,17 +18,19 @@ import java.util.List;
 @PropertySource("classpath:templates/sql/post_queries.properties")
 public class PostService {
 
-    private JdbcTemplate jdbcTemplate;
-    private CommentService commentService;
-    private VoteService voteService;
-    private Environment environment;
+    private final JdbcTemplate jdbcTemplate;
+    private final CommentService commentService;
+    private final VoteService voteService;
+    private final Environment environment;
+    private final UserRepository userRepository;
 
     public PostService(JdbcTemplate jdbcTemplate, CommentService commentService,
-                       VoteService voteService, Environment environment) {
+                       VoteService voteService, Environment environment, UserRepository userRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commentService = commentService;
         this.voteService = voteService;
         this.environment = environment;
+        this.userRepository = userRepository;
     }
 
     public List<Post> getAllPostBySubredditId(int subredditId) {
@@ -46,14 +50,16 @@ public class PostService {
         return post;
     }
 
-    public Post addPost(Post post) {
+    public Post addPost(PostDto postDto, String authorLogin, int id) {
+        Post post = new Post(postDto, userRepository.getUserByLogin(authorLogin).getId(), id);
         String sql = environment.getRequiredProperty("insert-post");
-        jdbcTemplate.update(sql, post.getCreatorLogin(), post.getSubredditId(), post.getTitle(), post.getCreationDate(),
+        jdbcTemplate.update(sql, post.getCreatorId(), post.getSubredditId(), post.getTitle(), post.getCreationDate(),
                 post.getContent());
         return post;
     }
 
-    public Vote submitVote(Vote vote) {
+    public Vote submitVote(VoteDto voteDto, String authorLogin, int id) {
+        Vote vote = new Vote(voteDto, userRepository.getUserByLogin(authorLogin).getId(), id);
         return voteService.submitVote(vote);
     }
 
@@ -62,14 +68,14 @@ public class PostService {
     }
 
 
-    public Post editPost(PostDto postDto, int postId, String login) {
+    public Post editPost(PostDto postDto, int postId, String editorLogin) {
         Post editedPost = getPostById(postId);
-        if(!editedPost.getCreatorLogin().equals(login)) {
+        if (editedPost.getCreatorId() != userRepository.getUserByLogin(editorLogin).getId()) {
             throw new NoRightsException("You have no rights to edit this post");
         }
 
         String sql = environment.getRequiredProperty("update-post.id");
         jdbcTemplate.update(sql, postDto.getTitle(), postDto.getContent(), postId);
-        return  getPostById(postId);
+        return getPostById(postId);
     }
 }

@@ -1,7 +1,8 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.db.models.Post;
+import org.geekhub.reddit.db.models.RedditUser;
+import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.services.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,8 @@ public class UserController {
 
     @GetMapping("feed")
     public List<Post> getUserFeed(@AuthenticationPrincipal Principal principal) {
-        return userService.getUserFeed(principal.getName());
+        RedditUser redditUser = userService.getUser(principal.getName());
+        return userService.getUserFeed(redditUser.getId());
     }
 
     @GetMapping("posts")
@@ -32,11 +34,13 @@ public class UserController {
 
     @GetMapping
     public RegistrationDto getPersonalData(@AuthenticationPrincipal Principal principal) {
-        return userService.getUserData(principal.getName());
+        RedditUser redditUser = userService.getUser(principal.getName());
+        return userService.getUserPrivateData(redditUser.getId());
     }
 
     @DeleteMapping
     public void deleteUser(@AuthenticationPrincipal Principal principal) {
-        userService.deleteUser(principal.getName());
+        RedditUser redditUser = userService.getUser(principal.getName());
+        userService.deleteUser(redditUser.getId());
     }
 }

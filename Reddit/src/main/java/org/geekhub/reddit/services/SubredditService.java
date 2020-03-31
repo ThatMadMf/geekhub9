@@ -1,5 +1,6 @@
 package org.geekhub.reddit.services;
 
+import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.springframework.context.annotation.PropertySource;
@@ -32,21 +33,26 @@ public class SubredditService {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Subreddit.class));
     }
 
-    public Subreddit getSubredditById(int id) {
-        String sql = environment.getRequiredProperty("select-subreddit.id");
-        Subreddit subreddit = jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(Subreddit.class));
-        subreddit.setPosts(postService.getAllPostBySubredditId(subreddit.getId()));
-        return subreddit;
-    }
-
-    public Subreddit addSubreddit(Subreddit subreddit) {
-        String sql = environment.getRequiredProperty("insert.subreddit");
-        jdbcTemplate.update(sql, subreddit.getName(), subreddit.getCreatorLogin(), subreddit.getCreationDate());
-        return subreddit;
-    }
 
     public List<RedditUser> getSubscribers(int subredditId) {
-        return userService.findUsersBySubredditId(subredditId);
+        String sql = environment.getRequiredProperty("select-user.subredditId");
+        return jdbcTemplate.query(sql, new Object[]{subredditId}, new BeanPropertyRowMapper<>(RedditUser.class));
+    }
+
+    public Subreddit getSubredditById(int id) {
+        String sql = environment.getRequiredProperty("select-subreddit.id");
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(Subreddit.class));
+    }
+
+    public List<Post> getPosts(int subredditId) {
+        return postService.getAllPostBySubredditId(subredditId);
+    }
+
+    public Subreddit addSubreddit(String subredditName, String creatorName) {
+        Subreddit subreddit = new Subreddit(subredditName, userService.getUser(creatorName).getId());
+        String sql = environment.getRequiredProperty("insert.subreddit");
+        jdbcTemplate.update(sql, subreddit.getName(), subreddit.getCreatorId(), subreddit.getCreationDate());
+        return subreddit;
     }
 
     public Subreddit subscribeUser(int subredditId, String userLogin) {

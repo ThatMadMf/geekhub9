@@ -1,58 +1,44 @@
 package org.geekhub.reddit.services;
 
-import org.geekhub.reddit.dtos.RegistrationDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.RedditUser;
-import org.geekhub.reddit.db.models.Subreddit;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.geekhub.reddit.db.repositories.UserRepository;
+import org.geekhub.reddit.dtos.RegistrationDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-@PropertySource("classpath:templates/sql/user_queries.properties")
+@Service
 public class UserService {
 
-    private final JdbcTemplate jdbcTemplate;
     private final PostService postService;
-    private final Environment environment;
+    private final UserRepository userRepository;
 
-    public UserService(JdbcTemplate jdbcTemplate, PostService postService, Environment environment) {
-        this.jdbcTemplate = jdbcTemplate;
+    public UserService(PostService postService, UserRepository userRepository) {
         this.postService = postService;
-        this.environment = environment;
+        this.userRepository = userRepository;
     }
 
-    public List<RedditUser> findUsersBySubredditId(int subredditId) {
-        String sql = environment.getRequiredProperty("select-user.subredditId");
-        return jdbcTemplate.query(sql, new Object[]{subredditId}, new BeanPropertyRowMapper<>(RedditUser.class));
+    public RedditUser getUser(String login) {
+        return userRepository.getUserByLogin(login);
     }
 
-    public List<Post> getUserFeed(String userLogin) {
-        String sql = environment.getRequiredProperty("select-posts.subredditId");
-        List<Subreddit> subscribedSubreddits = jdbcTemplate.query(sql, new Object[]{userLogin},
-                new BeanPropertyRowMapper<>(Subreddit.class));
-        return subscribedSubreddits.stream()
+    public List<Post> getUserFeed(int id) {
+        return userRepository.getSubscriptions(id).stream()
                 .flatMap(subreddit -> postService.getAllPostBySubredditId(subreddit.getId()).stream())
                 .collect(Collectors.toList());
     }
 
     public List<Post> getUserPosts(String login) {
-        return postService.getAllPostByUserLogin(login);
+        return userRepository.getPosts(getUser(login).getId());
     }
 
-    public void deleteUser(String login) {
-        String sql = environment.getRequiredProperty("delete-user.login");
-        jdbcTemplate.update(sql, login);
+    public void deleteUser(int id) {
+        userRepository.deleteUser(id);
     }
 
-    public RegistrationDto getUserData(String login) {
-        String sql = environment.getRequiredProperty("select-user.login");
-        return jdbcTemplate.queryForObject(sql, new Object[]{login},
-                new BeanPropertyRowMapper<>(RegistrationDto.class));
+    public RegistrationDto getUserPrivateData(int id) {
+        return userRepository.getUserInfo(id);
     }
 }
