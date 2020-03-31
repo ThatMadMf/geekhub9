@@ -1,11 +1,9 @@
 package org.geekhub.reddit.services;
 
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.db.repositories.VoteRepository;
 import org.geekhub.reddit.exception.DataBaseRowException;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,45 +12,35 @@ import java.util.List;
 @PropertySource("classpath:templates/sql/vote_queries.properties")
 public class VoteService {
 
-    private final JdbcTemplate jdbcTemplate;
-    private final Environment environment;
+    private final VoteRepository voteRepository;
 
-    public VoteService(JdbcTemplate jdbcTemplate, Environment environment) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.environment = environment;
+    public VoteService(VoteRepository voteRepository) {
+        this.voteRepository = voteRepository;
     }
 
     public List<Vote> getAllVotesByPostId(int postId) {
-        String sql = environment.getRequiredProperty("select-vote.postId");
-        return jdbcTemplate.query(sql, new Object[]{postId}, new BeanPropertyRowMapper<>(Vote.class));
+        return voteRepository.getVotesByPostId(postId);
     }
 
     public List<Vote> getAllVotesByCommentId(int commentId) {
-        String sql = environment.getRequiredProperty("select-vote.commentId");
-        return jdbcTemplate.query(sql, new Object[]{commentId}, new BeanPropertyRowMapper<>(Vote.class));
+        return voteRepository.getVotesByCommentId(commentId);
     }
 
     public Vote submitVote(Vote vote) {
         if (voteExists(vote)) {
             throw new DataBaseRowException("Vote already exists");
         }
-        String sql = environment.getRequiredProperty("insert-vote");
-        jdbcTemplate.update(sql, vote.getVoterId(), vote.getVoteDate(), vote.getAppliedId(), vote.isVote(),
-                vote.getVoteApplicable().name());
-        return vote;
+        return voteRepository.submitVote(vote);
     }
 
     private boolean voteExists(Vote vote) {
-        String sql = environment.getRequiredProperty("select-exists-vote");
-        return jdbcTemplate.queryForObject(sql, new Object[]{vote.getAppliedId(), vote.getVoteApplicable().name(),
-                vote.getVoterId()}, Boolean.class);
+        return voteRepository.voteExists(vote);
     }
 
     public void deleteVote(Vote vote) {
         if (!voteExists(vote)) {
             throw new DataBaseRowException("Vote is absent in database");
         }
-        String sql = environment.getRequiredProperty("delete-vote");
-        jdbcTemplate.update(sql, vote.getId());
+        voteRepository.deleteVote(vote);
     }
 }
