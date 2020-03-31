@@ -19,7 +19,7 @@ public class DatabaseConfig {
             @Value("${spring.datasource.driver-class-name}") String driver,
             @Value("${spring.datasource.username}") String user,
             @Value("${spring.datasource.password}") String password,
-            @Value("${spring.datasource.schema}") String schema
+            @Value("${spring.datasource.hikari.schema}") String schema
     ) {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(url);
