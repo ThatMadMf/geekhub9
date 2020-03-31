@@ -48,40 +48,40 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetAllSubreddits() throws Exception {
         List<Subreddit> subreddits = new ArrayList<>();
-        subreddits.add(new Subreddit("Subreddit 1", "user-creator"));
-        subreddits.add(new Subreddit("Subreddit 2", "user-creator"));
+        subreddits.add(new Subreddit("Subreddit 1", 1));
+        subreddits.add(new Subreddit("Subreddit 2", 11));
 
         when(subredditService.getAllSubreddits()).thenReturn(subreddits);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Subreddit 1")))
-                .andExpect(jsonPath("$[1].creatorLogin", is("user-creator")))
+                .andExpect(jsonPath("$[1].creatorId", is(11)))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 
     @Test
     public void testGetSubredditById() throws Exception {
-        Subreddit subreddit = new Subreddit("Subreddit by id", "user-creator");
+        Subreddit subreddit = new Subreddit("Subreddit by id", 22);
 
         when(subredditService.getSubredditById(1)).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Subreddit by id")))
-                .andExpect(jsonPath("$.creatorLogin", is("user-creator")))
+                .andExpect(jsonPath("$.creatorId", is(22)))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 
     @Test
     public void testCreateSubreddits() throws Exception {
-        Subreddit subreddit = new Subreddit("AskReddit", "new post");
+        Subreddit subreddit = new Subreddit("AskReddit", 111);
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(subredditService.addSubreddit(subreddit)).thenReturn(subreddit);
+        when(subredditService.addSubreddit("AskReddit", "author")).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(subreddit))
@@ -108,7 +108,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testSubscribeUser() throws Exception {
-        Subreddit subreddit = new Subreddit("AskReddit", "new post");
+        Subreddit subreddit = new Subreddit("AskReddit", 69);
 
         when(subredditService.subscribeUser(1, "user")).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/subscribe")

@@ -50,8 +50,8 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetAllPostBySubredditId() throws Exception {
         List<Post> postList = new ArrayList<>();
-        postList.add(new Post(new PostDto("title", "content"), "login", 1));
-        postList.add(new Post(new PostDto("title2", "content2"), "login2", 1));
+        postList.add(new Post(new PostDto("title", "content"), 1, 1));
+        postList.add(new Post(new PostDto("title2", "content2"), 2, 1));
 
         when(postService.getAllPostBySubredditId(1)).thenReturn(postList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/posts")
@@ -63,14 +63,14 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testGetPostById() throws Exception {
-        Post post = new Post(new PostDto("title", "content"), "login", 1);
+        Post post = new Post(new PostDto("title", "content"), 1, 1);
 
         when(postService.getPostById(1)).thenReturn(post);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/posts/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.creatorLogin", is("login")))
+                .andExpect(jsonPath("$.creatorId", is(1)))
                 .andExpect(jsonPath("$.title", is("title")))
                 .andExpect(jsonPath("$.content", is("content")))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -80,8 +80,8 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), "dude", 1));
-        voteList.add(new Vote(new VoteDto(false, VoteApplicable.POST), "man", 2));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), 1, 1));
+        voteList.add(new Vote(new VoteDto(false, VoteApplicable.POST), 2, 2));
 
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
@@ -96,8 +96,8 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostVotesCount() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), "dude", 1));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), "man", 2));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), 2, 1));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), 4, 2));
 
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
@@ -113,12 +113,12 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     public void testAddVoteToPost() throws Exception {
 
         VoteDto voteDto = new VoteDto(true, VoteApplicable.POST);
-        Vote vote = new Vote(voteDto, "dude", 1);
+        Vote vote = new Vote(voteDto, 22, 1);
 
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(postService.submitVote(vote)).thenReturn(vote);
+        when(postService.submitVote(voteDto, "author", 1)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/posts/1/votes")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(voteDto))
@@ -131,12 +131,12 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     public void testCreatePost() throws Exception {
 
         PostDto postDto = new PostDto("new post", "content");
-        Post post = new Post(postDto, "login", 1);
+        Post post = new Post(postDto, 1, 1);
 
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(postService.addPost(post)).thenReturn(post);
+        when(postService.addPost(postDto, "author", 1)).thenReturn(post);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/posts")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(postDto))

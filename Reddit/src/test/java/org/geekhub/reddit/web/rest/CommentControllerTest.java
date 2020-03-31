@@ -50,8 +50,8 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostComments() throws Exception {
         List<Comment> commentList = new ArrayList<>();
-        commentList.add(new Comment("text", "user", 3));
-        commentList.add(new Comment("text text", "man", 3));
+        commentList.add(new Comment("text", 1, 3));
+        commentList.add(new Comment("text text", 2, 3));
 
 
         when(commentService.getAllCommentsByPostId(3)).thenReturn(commentList);
@@ -66,15 +66,15 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostCommentVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), "dude", 1));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), "man", 2));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 2, 1));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 1, 2));
 
 
         when(commentService.getAllVotesByCommentId(3)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/1/comments/3/votes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[1].voterLogin", is("man")))
+                .andExpect(jsonPath("$[1].voterId", is(1)))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
@@ -82,9 +82,9 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetCommentVotesCount() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), "dude", 1));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), "man", 2));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), "man2", 3));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 1, 1));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 2, 2));
+        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 3, 3));
 
         when(commentService.getAllVotesByCommentId(1)).thenReturn(voteList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/comments/1/votes-count")
@@ -98,11 +98,11 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testAddCommentToPost() throws Exception {
-        Comment comment = new Comment("CONTENT", "login", 1);
+        Comment comment = new Comment("CONTENT", 1, 1);
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(commentService.addComment(comment)).thenReturn(comment);
+        when(commentService.addComment("CONTENT", "author", 1)).thenReturn(comment);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/1/comments")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString("CONTENT"))
@@ -114,11 +114,11 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testAddVoteToComment() throws Exception {
         VoteDto voteDto = new VoteDto(true, VoteApplicable.COMMENT);
-        Vote vote = new Vote(voteDto, "man", 1);
+        Vote vote = new Vote(voteDto, 1, 1);
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(commentService.voteComment(vote)).thenReturn(vote);
+        when(commentService.voteComment(voteDto, "author", 1)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/2/comments/1/votes")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(voteDto))
