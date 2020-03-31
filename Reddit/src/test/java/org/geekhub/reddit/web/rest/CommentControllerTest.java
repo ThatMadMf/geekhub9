@@ -55,7 +55,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
 
         when(commentService.getAllCommentsByPostId(3)).thenReturn(commentList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/3/comments")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/p/3/comments")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[1].content", is("text text")))
@@ -71,7 +71,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
 
         when(commentService.getAllVotesByCommentId(3)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/1/comments/3/votes")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/p/1/comments/3/votes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[1].voterId", is(1)))
@@ -81,13 +81,9 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testGetCommentVotesCount() throws Exception {
-        List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 1, 1));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 2, 2));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 3, 3));
 
-        when(commentService.getAllVotesByCommentId(1)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/2/comments/1/votes-count")
+        when(commentService.getVotesCount(1)).thenReturn(3);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/p/2/comments/1/votes-count")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(3)))
@@ -103,7 +99,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         when(mockPrincipal.getName()).thenReturn("login");
 
         when(commentService.addComment("CONTENT", "author", 1)).thenReturn(comment);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/1/comments")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/p/1/comments")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString("CONTENT"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -119,7 +115,7 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
         when(mockPrincipal.getName()).thenReturn("login");
 
         when(commentService.voteComment(voteDto, "author", 1)).thenReturn(vote);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/posts/2/comments/1/votes")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/p/2/comments/1/votes")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(voteDto))
                 .contentType(MediaType.APPLICATION_JSON))

@@ -1,11 +1,10 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Comment;
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.services.CommentService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/posts/{postId}/comments")
+@RequestMapping("api/p/{postId}/comments")
 public class CommentController {
 
     private final CommentService commentService;
@@ -34,8 +33,7 @@ public class CommentController {
 
     @GetMapping("{id}/votes-count")
     public int getCommentVotesCount(@PathVariable("id") int id) {
-        return commentService.getAllVotesByCommentId(id).stream()
-                .mapToInt(vote -> vote.isVote() ? 1 : -1).sum();
+        return commentService.getVotesCount(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
