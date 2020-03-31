@@ -18,13 +18,15 @@ public class DatabaseConfig {
             @Value("${spring.datasource.url}") String url,
             @Value("${spring.datasource.driver-class-name}") String driver,
             @Value("${spring.datasource.username}") String user,
-            @Value("${spring.datasource.password}") String password
+            @Value("${spring.datasource.password}") String password,
+            @Value("${spring.datasource.schema}") String schema
     ) {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(url);
         hikariConfig.setDriverClassName(driver);
         hikariConfig.setUsername(user);
         hikariConfig.setPassword(password);
+        hikariConfig.setSchema(schema);
         return new HikariDataSource(hikariConfig);
     }
 
