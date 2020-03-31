@@ -1,5 +1,6 @@
 package org.geekhub.reddit.web.rest;
 
+import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.RedditUser;
 import org.geekhub.reddit.db.models.Subreddit;
 import org.geekhub.reddit.services.SubredditService;
@@ -12,7 +13,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/subreddits", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/r", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SubredditController {
 
     private SubredditService subredditService;
@@ -33,7 +34,6 @@ public class SubredditController {
         return subredditService.getSubredditById(id);
     }
 
-
     @GetMapping("{id}/subscribers")
     @ResponseBody
     public List<RedditUser> getSubscribers(@PathVariable int id) {
@@ -48,7 +48,7 @@ public class SubredditController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{id}/subscribe")
-    public Subreddit subscribeUser(@PathVariable int id, String login) {
-        return subredditService.subscribeUser(id, login);
+    public Subreddit subscribeUser(@PathVariable int id, @AuthenticationPrincipal Principal principal) {
+        return subredditService.subscribeUser(id, principal.getName());
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-@RequestMapping(value = "api/subreddits/{subredditId}/posts", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/r/{subredditId}/posts", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 @ResponseBody
 public class PostController {

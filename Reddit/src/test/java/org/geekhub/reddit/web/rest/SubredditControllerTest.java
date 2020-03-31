@@ -52,7 +52,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
         subreddits.add(new Subreddit("Subreddit 2", 11));
 
         when(subredditService.getAllSubreddits()).thenReturn(subreddits);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Subreddit 1")))
@@ -66,7 +66,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
         Subreddit subreddit = new Subreddit("Subreddit by id", 22);
 
         when(subredditService.getSubredditById(1)).thenReturn(subreddit);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Subreddit by id")))
@@ -82,7 +82,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
         when(mockPrincipal.getName()).thenReturn("login");
 
         when(subredditService.addSubreddit("AskReddit", "author")).thenReturn(subreddit);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/r")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(subreddit))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -97,7 +97,7 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
         redditUsers.add(new RedditUser("user2", LocalDate.now()));
 
         when(subredditService.getSubscribers(1)).thenReturn(redditUsers);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/subscribers")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/subscribers")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].login", is("user1")))
@@ -110,8 +110,12 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
     public void testSubscribeUser() throws Exception {
         Subreddit subreddit = new Subreddit("AskReddit", 69);
 
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("user");
+
         when(subredditService.subscribeUser(1, "user")).thenReturn(subreddit);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/subscribe")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/r/1/subscribe")
+                .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(subreddit))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))

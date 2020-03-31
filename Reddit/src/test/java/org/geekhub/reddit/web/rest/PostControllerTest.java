@@ -54,7 +54,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
         postList.add(new Post(new PostDto("title2", "content2"), 2, 1));
 
         when(postService.getAllPostBySubredditId(1)).thenReturn(postList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/posts")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/posts")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -67,7 +67,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
         when(postService.getPostById(1)).thenReturn(post);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/posts/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/posts/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.creatorId", is(1)))
@@ -85,7 +85,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/posts/2/votes")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/posts/2/votes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[1].vote", is(false)))
@@ -101,7 +101,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/subreddits/1/posts/2/votes-count")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/posts/2/votes-count")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(2)))
@@ -119,7 +119,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
         when(mockPrincipal.getName()).thenReturn("login");
 
         when(postService.submitVote(voteDto, "author", 1)).thenReturn(vote);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/posts/1/votes")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/r/1/posts/1/votes")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(voteDto))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -137,7 +137,7 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
         when(mockPrincipal.getName()).thenReturn("login");
 
         when(postService.addPost(postDto, "author", 1)).thenReturn(post);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/subreddits/1/posts")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/r/1/posts")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(postDto))
                 .contentType(MediaType.APPLICATION_JSON))
