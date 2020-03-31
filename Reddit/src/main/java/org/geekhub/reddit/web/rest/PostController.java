@@ -1,21 +1,19 @@
 package org.geekhub.reddit.web.rest;
 
-import org.geekhub.reddit.dtos.PostDto;
-import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.db.models.Post;
 import org.geekhub.reddit.db.models.Vote;
+import org.geekhub.reddit.dtos.PostDto;
+import org.geekhub.reddit.dtos.VoteDto;
 import org.geekhub.reddit.services.PostService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
-@RequestMapping(value = "api/r/{subredditId}/posts", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
-@ResponseBody
+@RequestMapping(value = "api/r/{subredditId}/posts")
 public class PostController {
 
     private PostService postService;
@@ -41,8 +39,7 @@ public class PostController {
 
     @GetMapping("{id}/votes-count")
     public int getPostVotesCount(@PathVariable("id") int id) {
-        return postService.getAllVotesByPostId(id).stream()
-                .mapToInt(vote -> vote.isVote() ? 1 : -1).sum();
+        return postService.getVotesCount(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -65,3 +62,5 @@ public class PostController {
         return postService.editPost(postDto, postId, principal.getName());
     }
 }
+
+

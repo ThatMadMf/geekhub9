@@ -5,8 +5,6 @@ import org.geekhub.reddit.dtos.PostDto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Post {
 
@@ -30,11 +28,8 @@ public class Post {
     @NotEmpty
     private LocalDate creationDate;
 
-    private List<Comment> comments;
-
 
     public Post() {
-        comments = new ArrayList<>();
     }
 
     public Post(PostDto postDto, int creatorId, int subredditId) {
@@ -43,7 +38,6 @@ public class Post {
         this.subredditId = subredditId;
         this.content = postDto.getContent();
         creationDate = LocalDate.now();
-        comments = new ArrayList<>();
     }
 
     public int getId() {
@@ -92,13 +86,5 @@ public class Post {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 }

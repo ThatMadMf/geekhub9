@@ -11,7 +11,6 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@ResponseBody
 @RequestMapping("user")
 public class UserController {
 

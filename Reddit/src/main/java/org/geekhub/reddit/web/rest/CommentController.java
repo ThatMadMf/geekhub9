@@ -13,7 +13,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/posts/{postId}/comments", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("api/posts/{postId}/comments")
 public class CommentController {
 
     private final CommentService commentService;

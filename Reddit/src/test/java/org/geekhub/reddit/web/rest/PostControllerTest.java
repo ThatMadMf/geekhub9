@@ -95,13 +95,9 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testGetPostVotesCount() throws Exception {
-        List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), 2, 1));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), 4, 2));
 
-
-        when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/posts/2/votes-count")
+        when(postService.getVotesCount(4)).thenReturn(2);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/r/1/posts/4/votes-count")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(2)))
