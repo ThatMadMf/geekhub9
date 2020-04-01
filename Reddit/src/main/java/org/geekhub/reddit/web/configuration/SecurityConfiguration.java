@@ -8,6 +8,7 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -43,6 +44,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
+                .logout()
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .and()
+                .sessionManagement()
+                .invalidSessionUrl("/login")
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").permitAll()
                 .antMatchers("/api/**").hasAuthority("ROLE_USER");
@@ -56,5 +65,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         return roleHierarchy;
     }
-
 }
