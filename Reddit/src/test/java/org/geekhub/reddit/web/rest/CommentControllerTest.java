@@ -1,12 +1,13 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.dtos.VoteDto;
-import org.geekhub.reddit.db.models.Comment;
-import org.geekhub.reddit.db.models.Vote;
-import org.geekhub.reddit.db.models.VoteApplicable;
-import org.geekhub.reddit.services.CommentService;
-import org.geekhub.reddit.web.configuration.RegistrationService;
+import org.geekhub.reddit.comment.CommentController;
+import org.geekhub.reddit.vote.VoteDto;
+import org.geekhub.reddit.comment.Comment;
+import org.geekhub.reddit.vote.Vote;
+import org.geekhub.reddit.vote.VoteApplicable;
+import org.geekhub.reddit.comment.CommentService;
+import org.geekhub.reddit.user.RegistrationService;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

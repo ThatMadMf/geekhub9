@@ -1,10 +1,11 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.db.models.RedditUser;
-import org.geekhub.reddit.db.models.Subreddit;
-import org.geekhub.reddit.services.SubredditService;
-import org.geekhub.reddit.web.configuration.RegistrationService;
+import org.geekhub.reddit.subreddit.SubredditController;
+import org.geekhub.reddit.user.RedditUser;
+import org.geekhub.reddit.subreddit.Subreddit;
+import org.geekhub.reddit.subreddit.SubredditService;
+import org.geekhub.reddit.user.RegistrationService;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
