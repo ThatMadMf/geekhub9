@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping
-    public RegistrationDto getPersonalData(@AuthenticationPrincipal Principal principal) {
+    public PrivateRedditUser getPersonalData(@AuthenticationPrincipal Principal principal) {
         RedditUser redditUser = userService.getUser(principal.getName());
         return userService.getUserPrivateData(redditUser.getId());
     }

@@ -21,13 +21,13 @@ public class RegistrationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) {
-        RegistrationDto user = findUserById(login);
+        PrivateRedditUser user = findUserById(login);
 
         if (user != null) {
             User.UserBuilder builder;
             builder = org.springframework.security.core.userdetails.User.withUsername(user.getLogin());
             builder.password(user.getPassword());
-            builder.roles("USER");
+            builder.roles(user.getRole());
             return builder.build();
         } else {
             throw new UsernameNotFoundException("User not found.");
@@ -52,7 +52,7 @@ public class RegistrationService implements UserDetailsService {
     }
 
 
-    private RegistrationDto findUserById(String login) {
+    private PrivateRedditUser findUserById(String login) {
         return userRepository.getUserInfo(userRepository.getUserByLogin(login).getId());
     }
 }

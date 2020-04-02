@@ -26,6 +26,18 @@ VALUES (1, 2, TRUE, 'POST', current_date- 1),
        (3, 2, TRUE, 'POST', current_date- 1),
        (5, 2, TRUE, 'POST', current_date- 1);
 
+INSERT INTO roles (role)
+VALUES  ('SUPER_ADMIN'),
+        ('ADMIN'),
+        ('USER');
+
+INSERT INTO role_user (user_id, role_id)
+VALUES  (1, 3),
+        (2, 3),
+        (3, 3),
+        (4, 1),
+        (5, 3);
+
 INSERT INTO subreddit_user (user_id, subreddit_id)
 VALUES (4, 1),
        (1, 1),

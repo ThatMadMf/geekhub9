@@ -1,1 +1,1 @@
-SELECT u.* FROM users u WHERE u.login = ?
+SELECT u.id, u.login, u.registration_date FROM users u WHERE u.login = ?

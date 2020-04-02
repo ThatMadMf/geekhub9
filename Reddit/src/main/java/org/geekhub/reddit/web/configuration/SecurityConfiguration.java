@@ -54,14 +54,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").permitAll()
-                .antMatchers("/api/**").hasAuthority("ROLE_USER");
+                .antMatchers("/api/**").hasAuthority("ROLE_USER")
+                .antMatchers("/admin-panel/**").hasAuthority("ROLE_ADMIN");
     }
 
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
 
-        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER > ROLE_GUEST");
+        roleHierarchy.setHierarchy("ROLE_SUPER_ADMIN > ROLE_ADMIN > ROLE_USER");
 
         return roleHierarchy;
     }

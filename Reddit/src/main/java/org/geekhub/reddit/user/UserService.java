@@ -36,7 +36,9 @@ public class UserService {
         userRepository.deleteUser(id);
     }
 
-    public RegistrationDto getUserPrivateData(int id) {
-        return userRepository.getUserInfo(id);
+    public PrivateRedditUser getUserPrivateData(int id) {
+        PrivateRedditUser userInfo = userRepository.getUserInfo(id);
+        userInfo.setPassword(null);
+        return userInfo;
     }
 }

@@ -22,7 +22,7 @@ public class UserRepository {
     private static final String DELETE_BY_ID = "delete.sql";
     private static final String INSERT_USER = "insert.sql";
 
-    private final BeanPropertyRowMapper<RegistrationDto> registrationMapper;
+    private final BeanPropertyRowMapper<PrivateRedditUser> privateDataMapper;
     private final BeanPropertyRowMapper<RedditUser> userMapper;
     private final BeanPropertyRowMapper<Subreddit> subredditMapper;
     private final BeanPropertyRowMapper<Post> postMapper;
@@ -31,7 +31,7 @@ public class UserRepository {
 
     public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        registrationMapper = new BeanPropertyRowMapper<>(RegistrationDto.class);
+        privateDataMapper = new BeanPropertyRowMapper<>(PrivateRedditUser.class);
         userMapper = new BeanPropertyRowMapper<>(RedditUser.class);
         subredditMapper = new BeanPropertyRowMapper<>(Subreddit.class);
         postMapper = new BeanPropertyRowMapper<>(Post.class);
@@ -42,9 +42,9 @@ public class UserRepository {
         return jdbcTemplate.queryForObject(sql, new Object[]{login}, userMapper);
     }
 
-    public RegistrationDto getUserInfo(int id) {
+    public PrivateRedditUser getUserInfo(int id) {
         String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_BY_ID);
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, registrationMapper);
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, privateDataMapper);
     }
 
     public void registerUser(RegistrationDto registrationDto) {
