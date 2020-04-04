@@ -9,14 +9,14 @@ public class VoteDto {
     @NotNull
     private boolean vote;
 
-    private VoteApplicable applicable;
+    private int appliedId;
 
     public VoteDto() {
     }
 
-    public VoteDto( @NotEmpty @NotNull boolean vote, VoteApplicable applicable) {
+    public VoteDto(@NotEmpty @NotNull boolean vote, int appliedId) {
         this.vote = vote;
-        this.applicable = applicable;
+        this.appliedId = appliedId;
     }
 
     public boolean isVote() {
@@ -27,11 +27,11 @@ public class VoteDto {
         this.vote = vote;
     }
 
-    public VoteApplicable getApplicable() {
-        return applicable;
+    public int getAppliedId() {
+        return appliedId;
     }
 
-    public void setApplicable(VoteApplicable applicable) {
-        this.applicable = applicable;
+    public void setAppliedId(int appliedId) {
+        this.appliedId = appliedId;
     }
 }

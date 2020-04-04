@@ -16,23 +16,17 @@ public class Vote {
     @NotEmpty
     private boolean vote;
 
-    @NotNull
-    @NotEmpty
     private int appliedId;
-
-    private VoteApplicable voteApplicable;
 
     private LocalDate voteDate;
 
     public Vote() {
-
     }
 
-    public Vote(VoteDto voteDto, int voterId, int appliedId) {
+    public Vote(boolean vote, int voterId, int appliedId) {
         this.voterId = voterId;
+        this.vote = vote;
         this.appliedId = appliedId;
-        this.voteApplicable = voteDto.getApplicable();
-        this.vote = voteDto.isVote();
         voteDate = LocalDate.now();
     }
 
@@ -77,10 +71,6 @@ public class Vote {
     }
 
     public VoteApplicable getVoteApplicable() {
-        return voteApplicable;
-    }
-
-    public void setVoteApplicable(String voteApplicable) {
-        this.voteApplicable = VoteApplicable.valueOf(voteApplicable);
+        return null;
     }
 }

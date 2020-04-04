@@ -1,14 +1,13 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.post.PostController;
 import org.geekhub.reddit.post.PostDto;
-import org.geekhub.reddit.vote.VoteDto;
-import org.geekhub.reddit.post.Post;
-import org.geekhub.reddit.vote.Vote;
-import org.geekhub.reddit.vote.VoteApplicable;
 import org.geekhub.reddit.post.PostService;
 import org.geekhub.reddit.user.RegistrationService;
+import org.geekhub.reddit.vote.PostVote;
+import org.geekhub.reddit.vote.Vote;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -81,8 +80,8 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.POST), 1, 1));
-        voteList.add(new Vote(new VoteDto(false, VoteApplicable.POST), 2, 2));
+        voteList.add(new PostVote(true, 1, 1));
+        voteList.add(new PostVote(false, 2, 2));
 
 
         when(postService.getAllVotesByPostId(2)).thenReturn(voteList);
@@ -109,16 +108,15 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testAddVoteToPost() throws Exception {
 
-        VoteDto voteDto = new VoteDto(true, VoteApplicable.POST);
-        Vote vote = new Vote(voteDto, 22, 1);
+        Vote vote = new PostVote(true, 22, 1);
 
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(postService.submitVote(voteDto, "author", 1)).thenReturn(vote);
+        when(postService.submitVote(true, "author", 1)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/r/1/posts/1/votes")
                 .principal(mockPrincipal)
-                .content(objectMapper.writeValueAsString(voteDto))
+                .content(objectMapper.writeValueAsString(true))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
                 .andDo(print());

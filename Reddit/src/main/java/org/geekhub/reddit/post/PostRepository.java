@@ -15,6 +15,7 @@ public class PostRepository {
     private static final String SELECT_BY_ID = "select_id.sql";
     private static final String INSERT_POST = "insert.sql";
     private static final String UPDATE_POST_BY_ID = "update_id.sql";
+    private static final String DELETE_POST_CONTENT = "delete_id.sql";
 
     private final BeanPropertyRowMapper<Post> postMapper;
     private final JdbcTemplate jdbcTemplate;
@@ -46,5 +47,11 @@ public class PostRepository {
         String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + UPDATE_POST_BY_ID);
         jdbcTemplate.update(sql, postDto.getTitle(), postDto.getTitle(), postId);
         return getPostById(postId);
+    }
+
+    public void deletePost(int postId) {
+        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + DELETE_POST_CONTENT);
+
+        jdbcTemplate.update(sql, postId);
     }
 }

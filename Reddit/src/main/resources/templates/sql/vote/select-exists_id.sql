@@ -1,1 +1,1 @@
-SELECT COUNT (*) FROM votes v WHERE v.applied_id = ? AND v.vote_applicable = ? AND v.voter_id = ?
+SELECT COUNT (*) FROM votes v WHERE v.id = ?

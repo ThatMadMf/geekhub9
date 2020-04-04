@@ -1,0 +1,1 @@
+UPDATE commets SET content = ? WHERE id = ?

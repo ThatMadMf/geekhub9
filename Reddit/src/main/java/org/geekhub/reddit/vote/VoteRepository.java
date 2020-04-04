@@ -11,11 +11,9 @@ import java.util.List;
 public class VoteRepository {
 
     private static final String RESOURCE_PATH = "templates/sql/vote/";
-    private static final String SELECT_ALL_BY_POST_ID = "select_postId.sql";
-    private static final String SELECT_ALL_BY_COMMENT_ID = "select_commentId.sql";
     private static final String INSERT_VOTE = "insert.sql";
-    private static final String SELECT_EXISTS_BY_ID = "select-exists_id.sql";
-    private static final String DELETE_BY_ID = "delete.sql";
+    private static final String SELECT_BY_APPLIED_ID = "select_appliedId.sql";
+    private static final String DELETE_BY_ID = "delete_id.sql";
 
     private final BeanPropertyRowMapper<Vote> voteMapper;
 
@@ -26,14 +24,9 @@ public class VoteRepository {
         voteMapper = new BeanPropertyRowMapper<>(Vote.class);
     }
 
-    public List<Vote> getVotesByPostId(int postId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_ALL_BY_POST_ID);
-        return jdbcTemplate.query(sql, new Object[]{postId}, voteMapper);
-    }
-
-    public List<Vote> getVotesByCommentId(int commentId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_ALL_BY_COMMENT_ID);
-        return jdbcTemplate.query(sql, new Object[]{commentId}, voteMapper);
+    public List<Vote> getVotesByAppliedId(int appliedId, VoteApplicable voteApplicable) {
+        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_BY_APPLIED_ID);
+        return jdbcTemplate.query(sql, new Object[]{appliedId, voteApplicable.name()}, voteMapper);
     }
 
     public Vote submitVote(Vote vote) {
@@ -43,15 +36,8 @@ public class VoteRepository {
         return vote;
     }
 
-    public boolean voteExists(Vote vote) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_EXISTS_BY_ID);
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, vote.getAppliedId(),
-                vote.getVoteApplicable().name(), vote.getVoterId());
-        return count != null && count > 0;
-    }
-
-    public void deleteVote(Vote vote) {
+    public void deleteVoteById(int id) {
         String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + DELETE_BY_ID);
-        jdbcTemplate.update(sql, vote.getId());
+        jdbcTemplate.update(sql, id);
     }
 }

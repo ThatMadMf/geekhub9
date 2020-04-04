@@ -1,0 +1,1 @@
+DELETE posts WHERE id = ?

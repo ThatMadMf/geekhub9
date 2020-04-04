@@ -1,7 +1,6 @@
 package org.geekhub.reddit.comment;
 
 import org.geekhub.reddit.vote.Vote;
-import org.geekhub.reddit.vote.VoteDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +36,8 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "{id}/votes")
     public Vote addVoteToComment(@PathVariable("id") int id, @AuthenticationPrincipal Principal principal,
-                                 @RequestBody VoteDto voteDto) {
-        return commentService.voteComment(voteDto, principal.getName(), id);
+                                 @RequestBody boolean vote) {
+        return commentService.voteComment(vote, principal.getName(), id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +45,17 @@ public class CommentController {
     public Comment addCommentToPost(@PathVariable("postId") int id, @RequestBody String content,
                                     @AuthenticationPrincipal Principal principal) {
         return commentService.addComment(content, principal.getName(), id);
+    }
+
+    @PutMapping("{id}")
+    public Comment editComment(@PathVariable("id") int id, @RequestBody String content,
+                               @AuthenticationPrincipal Principal principal) {
+        return commentService.editComment(content, principal.getName(), id);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("{id}")
+    public void deleteComment(@PathVariable("id") int id, @AuthenticationPrincipal Principal principal) {
+        commentService.deleteComment(principal.getName(), id);
     }
 }

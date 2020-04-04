@@ -1,10 +1,11 @@
 package org.geekhub.reddit.post;
 
-import org.geekhub.reddit.vote.Vote;
-import org.geekhub.reddit.vote.VoteDto;
 import org.geekhub.reddit.exception.NoRightsException;
-import org.geekhub.reddit.vote.VoteService;
 import org.geekhub.reddit.user.UserRepository;
+import org.geekhub.reddit.vote.PostVote;
+import org.geekhub.reddit.vote.Vote;
+import org.geekhub.reddit.vote.VoteApplicable;
+import org.geekhub.reddit.vote.VoteService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,21 +36,19 @@ public class PostService {
         return postRepository.createPost(post);
     }
 
-    public Vote submitVote(VoteDto voteDto, String authorLogin, int id) {
-        Vote vote = new Vote(voteDto, userRepository.getUserByLogin(authorLogin).getId(), id);
+    public Vote submitVote(boolean voteValue, String authorLogin, int id) {
+        Vote vote = new PostVote(voteValue, userRepository.getUserByLogin(authorLogin).getId(), id);
         return voteService.submitVote(vote);
     }
 
     public List<Vote> getAllVotesByPostId(int id) {
-        return voteService.getAllVotesByPostId(id);
+        return voteService.getAllVotesByAppliedId(id, VoteApplicable.POST);
     }
 
 
     public Post editPost(PostDto postDto, int postId, String editorLogin) {
         Post editedPost = getPostById(postId);
-        if (editedPost.getCreatorId() != userRepository.getUserByLogin(editorLogin).getId()) {
-            throw new NoRightsException("You have no rights to edit this post");
-        }
+        checkAuthority(editedPost, editorLogin);
 
         return postRepository.editPost(postDto, postId);
     }
@@ -57,5 +56,18 @@ public class PostService {
     public int getVotesCount(int id) {
         return getAllVotesByPostId(id).stream()
                 .mapToInt(vote -> vote.isVote() ? 1 : -1).sum();
+    }
+
+    public void deletePostContent(int postId, String editorLogin) {
+        Post editedPost = getPostById(postId);
+        checkAuthority(editedPost, editorLogin);
+
+        postRepository.deletePost(postId);
+    }
+
+    private void checkAuthority(Post editedPost, String editorLogin) {
+        if (editedPost.getCreatorId() != userRepository.getUserByLogin(editorLogin).getId()) {
+            throw new NoRightsException("You have no rights to edit this post");
+        }
     }
 }

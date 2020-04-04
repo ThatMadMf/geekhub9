@@ -1,7 +1,6 @@
 package org.geekhub.reddit.post;
 
 import org.geekhub.reddit.vote.Vote;
-import org.geekhub.reddit.vote.VoteDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -41,9 +40,9 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{id}/votes")
-    public Vote addVoteToPost(@PathVariable("id") int id, @RequestBody VoteDto voteDto,
+    public Vote addVoteToPost(@PathVariable("id") int id, @RequestBody boolean vote,
                               @AuthenticationPrincipal Principal principal) {
-        return postService.submitVote(voteDto, principal.getName(), id);
+        return postService.submitVote(vote, principal.getName(), id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,6 +56,12 @@ public class PostController {
     public Post editPost(@PathVariable("id") int postId, @RequestBody PostDto postDto,
                          @AuthenticationPrincipal Principal principal) {
         return postService.editPost(postDto, postId, principal.getName());
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("{id}")
+    public void deletePost(@PathVariable("id") int postId, @AuthenticationPrincipal Principal principal) {
+        postService.deletePostContent(postId, principal.getName());
     }
 }
 

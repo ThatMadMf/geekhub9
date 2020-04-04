@@ -1,13 +1,12 @@
 package org.geekhub.reddit.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.comment.CommentController;
-import org.geekhub.reddit.vote.VoteDto;
 import org.geekhub.reddit.comment.Comment;
-import org.geekhub.reddit.vote.Vote;
-import org.geekhub.reddit.vote.VoteApplicable;
+import org.geekhub.reddit.comment.CommentController;
 import org.geekhub.reddit.comment.CommentService;
 import org.geekhub.reddit.user.RegistrationService;
+import org.geekhub.reddit.vote.CommentVote;
+import org.geekhub.reddit.vote.Vote;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -67,8 +66,8 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetPostCommentVotes() throws Exception {
         List<Vote> voteList = new ArrayList<>();
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 2, 1));
-        voteList.add(new Vote(new VoteDto(true, VoteApplicable.COMMENT), 1, 2));
+        voteList.add(new CommentVote(true, 2, 1));
+        voteList.add(new CommentVote(true, 1, 2));
 
 
         when(commentService.getAllVotesByCommentId(3)).thenReturn(voteList);
@@ -110,15 +109,14 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testAddVoteToComment() throws Exception {
-        VoteDto voteDto = new VoteDto(true, VoteApplicable.COMMENT);
-        Vote vote = new Vote(voteDto, 1, 1);
+        Vote vote = new CommentVote(true, 1, 1);
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("login");
 
-        when(commentService.voteComment(voteDto, "author", 1)).thenReturn(vote);
+        when(commentService.voteComment(true, "author", 1)).thenReturn(vote);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/p/2/comments/1/votes")
                 .principal(mockPrincipal)
-                .content(objectMapper.writeValueAsString(voteDto))
+                .content(objectMapper.writeValueAsString(true))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
                 .andDo(print());

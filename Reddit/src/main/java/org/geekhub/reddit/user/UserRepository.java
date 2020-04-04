@@ -1,5 +1,6 @@
 package org.geekhub.reddit.user;
 
+import org.geekhub.reddit.comment.Comment;
 import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.subreddit.Subreddit;
 import org.geekhub.reddit.util.ResourceReader;
@@ -19,7 +20,7 @@ public class UserRepository {
     private static final String SELECT_BY_LOGIN = "select-safe_login.sql";
     private static final String SELECT_SUBREDDITS = "select-subreddits_id.sql";
     private static final String SELECT_POSTS = "select-posts_id.sql";
-    private static final String DELETE_BY_ID = "delete.sql";
+    private static final String DELETE_BY_ID = "delete_id.sql";
     private static final String INSERT_USER = "insert.sql";
 
     private final BeanPropertyRowMapper<PrivateRedditUser> privateDataMapper;
@@ -67,5 +68,4 @@ public class UserRepository {
         String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + DELETE_BY_ID);
         jdbcTemplate.update(sql, id);
     }
-
 }
