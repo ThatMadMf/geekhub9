@@ -28,8 +28,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public List<Post> getUserPosts(String login) {
-        return userRepository.getPosts(getUser(login).getId());
+    public List<Post> getUserPosts(int id) {
+        return userRepository.getPosts(id);
     }
 
     public void deleteUser(int id) {
