@@ -1,1 +1,1 @@
-DELETE * FROM comments WHERE id = ?
+DELETE FROM comments WHERE id = ?

@@ -1,1 +1,1 @@
-UPDATE commets SET content = ? WHERE id = ?
+UPDATE comments SET content = ? WHERE id = ?

@@ -1,9 +1,6 @@
-package org.geekhub.reddit.web.rest;
+package org.geekhub.reddit.comment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.comment.Comment;
-import org.geekhub.reddit.comment.CommentController;
-import org.geekhub.reddit.comment.CommentService;
 import org.geekhub.reddit.user.RegistrationService;
 import org.geekhub.reddit.vote.CommentVote;
 import org.geekhub.reddit.vote.Vote;
@@ -12,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CommentController.class)
+@ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
 public class CommentControllerTest extends AbstractTestNGSpringContextTests {
 
@@ -119,6 +119,34 @@ public class CommentControllerTest extends AbstractTestNGSpringContextTests {
                 .content(objectMapper.writeValueAsString(true))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
+                .andDo(print());
+    }
+
+
+    @Test
+    public void testEditComment() throws Exception {
+        Comment comment = new Comment("EDITED_CONTENT", 1, 1);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("login");
+
+        when(commentService.editComment("EDITED_CONTENT", "login", 1)).thenReturn(comment);
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/p/2/comments/1")
+                .principal(mockPrincipal)
+                .content(objectMapper.writeValueAsString("EDITED_CONTENT"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andDo(print());
+    }
+
+    @Test
+    public void testDeleteComment() throws Exception {
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("login");
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/p/2/comments/1")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(204))
                 .andDo(print());
     }
 }

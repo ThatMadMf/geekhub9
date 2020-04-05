@@ -1,5 +1,6 @@
 package org.geekhub.reddit.comment;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.geekhub.reddit.user.UserRepository;
 import org.geekhub.reddit.vote.CommentVote;
@@ -37,7 +38,10 @@ public class CommentService {
     public Comment addComment(String content, String authorName, int id) {
         Comment comment = new Comment(content, userRepository.getUserByLogin(authorName).getId(), id);
 
-        return commentRepository.createComment(comment);
+        if (commentRepository.createComment(comment) == 1) {
+            return comment;
+        }
+        throw new DataBaseRowException("Failed to add comment");
     }
 
     public Vote voteComment(boolean vote, String authorLogin, int id) {
@@ -54,7 +58,10 @@ public class CommentService {
         Comment comment = getCommentById(id);
         checkAuthority(comment, name);
 
-        return commentRepository.editComment(content, id);
+        if (commentRepository.editComment(content, id) == 1) {
+            return comment;
+        }
+        throw new DataBaseRowException("Failed to edit comment");
     }
 
     private void checkAuthority(Comment comment, String name) {
