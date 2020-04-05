@@ -1,5 +1,6 @@
 package org.geekhub.reddit.post;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.geekhub.reddit.user.UserRepository;
 import org.geekhub.reddit.vote.PostVote;
@@ -33,7 +34,10 @@ public class PostService {
 
     public Post addPost(PostDto postDto, String authorLogin, int id) {
         Post post = new Post(postDto, userRepository.getUserByLogin(authorLogin).getId(), id);
-        return postRepository.createPost(post);
+        if (postRepository.createPost(post) == 1) {
+            return post;
+        }
+        throw new DataBaseRowException("Failed to add post");
     }
 
     public Vote submitVote(boolean voteValue, String authorLogin, int id) {
@@ -50,7 +54,10 @@ public class PostService {
         Post editedPost = getPostById(postId);
         checkAuthority(editedPost, editorLogin);
 
-        return postRepository.editPost(postDto, postId);
+        if (postRepository.editPost(postDto, postId) == 1) {
+            return editedPost;
+        }
+        throw new DataBaseRowException("Failed to edit post");
     }
 
     public int getVotesCount(int id) {

@@ -1,6 +1,8 @@
 package org.geekhub.reddit.post;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.util.ResourceReader;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -31,22 +33,24 @@ public class PostRepository {
     }
 
     public Post getPostById(int postId) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{postId}, postMapper);
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{postId}, postMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new DataBaseRowException("There is no post with the id");
+        }
     }
 
-    public Post createPost(Post post) {
-        jdbcTemplate.update(INSERT_POST, post.getCreatorId(), post.getSubredditId(), post.getTitle(),
+    public int createPost(Post post) {
+        return jdbcTemplate.update(INSERT_POST, post.getCreatorId(), post.getSubredditId(), post.getTitle(),
                 post.getCreationDate(), post.getContent());
-        return post;
     }
 
-    public Post editPost(PostDto postDto, int postId) {
-        jdbcTemplate.update(UPDATE_POST_BY_ID, postDto.getTitle(), postDto.getTitle(), postId);
-        return getPostById(postId);
+    public int editPost(PostDto postDto, int postId) {
+        return jdbcTemplate.update(UPDATE_POST_BY_ID, postDto.getTitle(), postDto.getTitle(), postId);
     }
 
-    public void deletePost(int postId) {
-        jdbcTemplate.update(DELETE_POST_CONTENT, postId);
+    public int deletePost(int postId) {
+        return jdbcTemplate.update(DELETE_POST_CONTENT, postId);
     }
 
     private static String getSql(String fileName) {

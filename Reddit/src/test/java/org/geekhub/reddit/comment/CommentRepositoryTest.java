@@ -20,7 +20,7 @@ import static org.testng.Assert.assertNotNull;
 @SpringBootTest(classes = {RedditMain.class, DatabaseConfig.class})
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class CommentRepositoryTest extends AbstractTestNGSpringContextTests {
 
     private static final Comment first_comment = new Comment("FIRST_COMMENT", 1, 4);

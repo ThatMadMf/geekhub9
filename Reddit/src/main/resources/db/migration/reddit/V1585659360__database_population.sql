@@ -6,9 +6,10 @@ VALUES ('dude', 'mail@mali', '$2y$12$0xtZnhhNZZw5HxRTE/R8/.cSRM404qEARMT3VFv9rnk
        ('guy', 'gymail@mali', '$2y$12$ihOc1iJVf34WcOC8ace7CO85kznOJZqdCGt18YwkDNrNFbzkRTyTa', current_date- 3);
 
 INSERT INTO subreddits (name, creator_id, creation_date)
-VALUES ('AskReddit', 4, current_date- 3),
-       ('java', 4, current_date- 3),
-       ('AskUbuntu', 4, current_date- 3);
+VALUES ('AskReddit', 4, current_date - 3),
+       ('java', 4, current_date - 3),
+       ('AskUbuntu', 4, current_date - 3),
+       ('Test', 4, current_date - 4);
 
 INSERT INTO posts (title, creator_id, subreddit_id, content, creation_date)
 VALUES ('Subreddit created', 4, 1, 'Subreddit where you can ask any questions', current_date- 3),

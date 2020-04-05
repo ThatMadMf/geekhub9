@@ -1,4 +1,4 @@
-package org.geekhub.reddit.web.rest;
+package org.geekhub.reddit.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.geekhub.reddit.post.Post;
@@ -140,5 +140,36 @@ public class PostControllerTest extends AbstractTestNGSpringContextTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
                 .andDo(print());
+    }
+
+    @Test
+    public void testEditPost() throws Exception {
+        PostDto postDto = new PostDto("new post", "content");
+        Post post = new Post(postDto, 0, 1);
+
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("login");
+
+        when(postService.editPost(postDto, 2, "login")).thenReturn(post);
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/r/1/posts/2")
+                .principal(mockPrincipal)
+                .content(objectMapper.writeValueAsString(postDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andDo(print());
+
+    }
+
+    @Test
+    public void testDeletePost() throws Exception {
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("login");
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/r/1/posts/2")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(204))
+                .andDo(print());
+
     }
 }
