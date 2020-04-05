@@ -11,11 +11,11 @@ import java.util.List;
 public class PostRepository {
 
     private static final String RESOURCE_PATH = "templates/sql/post/";
-    private static final String SELECT_ALL_BY_SUBREDDIT_ID = "select_subredditId.sql";
-    private static final String SELECT_BY_ID = "select_id.sql";
-    private static final String INSERT_POST = "insert.sql";
-    private static final String UPDATE_POST_BY_ID = "update_id.sql";
-    private static final String DELETE_POST_CONTENT = "delete_id.sql";
+    private static final String SELECT_ALL_BY_SUBREDDIT_ID = getSql("select_subredditId.sql");
+    private static final String SELECT_BY_ID = getSql("select_id.sql");
+    private static final String INSERT_POST = getSql("insert.sql");
+    private static final String UPDATE_POST_BY_ID = getSql("update_id.sql");
+    private static final String DELETE_POST_CONTENT = getSql("delete_id.sql");
 
     private final BeanPropertyRowMapper<Post> postMapper;
     private final JdbcTemplate jdbcTemplate;
@@ -27,31 +27,29 @@ public class PostRepository {
     }
 
     public List<Post> getPostsBySubredditId(int subredditId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_ALL_BY_SUBREDDIT_ID);
-        return jdbcTemplate.query(sql, new Object[]{subredditId}, postMapper);
+        return jdbcTemplate.query(SELECT_ALL_BY_SUBREDDIT_ID, new Object[]{subredditId}, postMapper);
     }
 
     public Post getPostById(int postId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_BY_ID);
-        return jdbcTemplate.queryForObject(sql, new Object[]{postId}, postMapper);
+        return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{postId}, postMapper);
     }
 
     public Post createPost(Post post) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + INSERT_POST);
-        jdbcTemplate.update(sql, post.getCreatorId(), post.getSubredditId(), post.getTitle(), post.getCreationDate(),
-                post.getContent());
+        jdbcTemplate.update(INSERT_POST, post.getCreatorId(), post.getSubredditId(), post.getTitle(),
+                post.getCreationDate(), post.getContent());
         return post;
     }
 
     public Post editPost(PostDto postDto, int postId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + UPDATE_POST_BY_ID);
-        jdbcTemplate.update(sql, postDto.getTitle(), postDto.getTitle(), postId);
+        jdbcTemplate.update(UPDATE_POST_BY_ID, postDto.getTitle(), postDto.getTitle(), postId);
         return getPostById(postId);
     }
 
     public void deletePost(int postId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + DELETE_POST_CONTENT);
+        jdbcTemplate.update(DELETE_POST_CONTENT, postId);
+    }
 
-        jdbcTemplate.update(sql, postId);
+    private static String getSql(String fileName) {
+        return ResourceReader.getSql(RESOURCE_PATH + fileName);
     }
 }

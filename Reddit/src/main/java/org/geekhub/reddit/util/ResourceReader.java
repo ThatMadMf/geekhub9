@@ -20,7 +20,7 @@ public class ResourceReader {
     private static final String CLASSPATH = "classpath:";
 
 
-    public static String resourceByLocation(String location) {
+    public static String getSql(String location) {
         Resource resource = resourceLoader.getResource(location);
         try (Reader reader = new InputStreamReader(resource.getInputStream(), UTF_8)) {
             return FileCopyUtils.copyToString(reader);

@@ -12,11 +12,11 @@ import java.util.List;
 public class SubredditRepository {
 
     private static final String RESOURCE_PATH = "templates/sql/subreddit/";
-    private static final String SELECT_ALL = "select_all.sql";
-    private static final String SELECT_SUBSCRIBERS = "select-users_id.sql";
-    private static final String SELECT_BY_ID = "select_id.sql";
-    private static final String INSERT_SUBREDDIT = "insert.sql";
-    private static final String BIND_USER_SUBREDDIT = "bind_user-subreddit.sql";
+    private static final String SELECT_ALL = getSql("select_all.sql");
+    private static final String SELECT_SUBSCRIBERS = getSql("select-users_id.sql");
+    private static final String SELECT_BY_ID = getSql("select_id.sql");
+    private static final String INSERT_SUBREDDIT = getSql("insert.sql");
+    private static final String BIND_USER_SUBREDDIT = getSql("bind_user-subreddit.sql");
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -31,30 +31,30 @@ public class SubredditRepository {
     }
 
     public List<Subreddit> getAllSubreddits() {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_ALL);
-        return jdbcTemplate.query(sql, subredditMapper);
+        return jdbcTemplate.query(SELECT_ALL, subredditMapper);
     }
 
 
     public List<RedditUser> getSubscribers(int subredditId) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_SUBSCRIBERS);
-        return jdbcTemplate.query(sql, new Object[]{subredditId}, userMapper);
+        return jdbcTemplate.query(SELECT_SUBSCRIBERS, new Object[]{subredditId}, userMapper);
     }
 
     public Subreddit getSubredditById(int id) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + SELECT_BY_ID);
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, subredditMapper);
+        return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{id}, subredditMapper);
     }
 
     public Subreddit createSubreddit(Subreddit subreddit) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + INSERT_SUBREDDIT);
-        jdbcTemplate.update(sql, subreddit.getName(), subreddit.getCreatorId(), subreddit.getCreationDate());
+        jdbcTemplate.update(INSERT_SUBREDDIT, subreddit.getName(), subreddit.getCreatorId(),
+                subreddit.getCreationDate());
         return subreddit;
     }
 
     public Subreddit subscribeUser(int subredditId, int id) {
-        String sql = ResourceReader.resourceByLocation(RESOURCE_PATH + BIND_USER_SUBREDDIT);
-        jdbcTemplate.update(sql, id, subredditId);
+        jdbcTemplate.update(BIND_USER_SUBREDDIT, id, subredditId);
         return getSubredditById(subredditId);
+    }
+
+    private static String getSql(String fileName) {
+        return ResourceReader.getSql(RESOURCE_PATH + fileName);
     }
 }
