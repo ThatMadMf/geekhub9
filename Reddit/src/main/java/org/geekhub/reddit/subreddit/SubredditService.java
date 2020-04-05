@@ -1,7 +1,8 @@
 package org.geekhub.reddit.subreddit;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.user.RedditUser;
-import org.geekhub.reddit.user.UserService;
+import org.geekhub.reddit.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,11 +10,11 @@ import java.util.List;
 @Service
 public class SubredditService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final SubredditRepository subredditRepository;
 
-    public SubredditService(UserService userService, SubredditRepository subredditRepository) {
-        this.userService = userService;
+    public SubredditService(UserRepository userRepository, SubredditRepository subredditRepository) {
+        this.userRepository = userRepository;
         this.subredditRepository = subredditRepository;
     }
 
@@ -30,11 +31,17 @@ public class SubredditService {
     }
 
     public Subreddit addSubreddit(String subredditName, String creatorName) {
-        Subreddit subreddit = new Subreddit(subredditName, userService.getUser(creatorName).getId());
-        return subredditRepository.createSubreddit(subreddit);
+        Subreddit subreddit = new Subreddit(subredditName, userRepository.getUserByLogin(creatorName).getId());
+        if (subredditRepository.createSubreddit(subreddit) == 1) {
+            return subreddit;
+        }
+        throw new DataBaseRowException("Failed to create subreddit");
     }
 
-    public Subreddit subscribeUser(int subredditId, String userLogin) {
-        return subredditRepository.subscribeUser(subredditId, userService.getUser(userLogin).getId());
+    public void subscribeUser(int subredditId, String userLogin) {
+        int userId = userRepository.getUserByLogin(userLogin).getId();
+        if (subredditRepository.subscribeUser(subredditId, userId) != 1) {
+            throw new DataBaseRowException("Failed to add comment");
+        }
     }
 }

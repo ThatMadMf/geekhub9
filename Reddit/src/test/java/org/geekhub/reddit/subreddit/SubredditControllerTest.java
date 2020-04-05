@@ -1,4 +1,4 @@
-package org.geekhub.reddit.web.rest;
+package org.geekhub.reddit.subreddit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.geekhub.reddit.subreddit.SubredditController;
@@ -116,7 +116,6 @@ public class SubredditControllerTest extends AbstractTestNGSpringContextTests {
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("user");
 
-        when(subredditService.subscribeUser(1, "user")).thenReturn(subreddit);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/r/1/subscribe")
                 .principal(mockPrincipal)
                 .content(objectMapper.writeValueAsString(subreddit))

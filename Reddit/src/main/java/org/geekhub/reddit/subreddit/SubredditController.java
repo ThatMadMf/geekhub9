@@ -44,7 +44,7 @@ public class SubredditController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{id}/subscribe")
-    public Subreddit subscribeUser(@PathVariable int id, @AuthenticationPrincipal Principal principal) {
-        return subredditService.subscribeUser(id, principal.getName());
+    public void subscribeUser(@PathVariable int id, @AuthenticationPrincipal Principal principal) {
+        subredditService.subscribeUser(id, principal.getName());
     }
 }

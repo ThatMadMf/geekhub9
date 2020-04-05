@@ -43,15 +43,13 @@ public class SubredditRepository {
         return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{id}, subredditMapper);
     }
 
-    public Subreddit createSubreddit(Subreddit subreddit) {
-        jdbcTemplate.update(INSERT_SUBREDDIT, subreddit.getName(), subreddit.getCreatorId(),
+    public int createSubreddit(Subreddit subreddit) {
+        return jdbcTemplate.update(INSERT_SUBREDDIT, subreddit.getName(), subreddit.getCreatorId(),
                 subreddit.getCreationDate());
-        return subreddit;
     }
 
-    public Subreddit subscribeUser(int subredditId, int id) {
-        jdbcTemplate.update(BIND_USER_SUBREDDIT, id, subredditId);
-        return getSubredditById(subredditId);
+    public int subscribeUser(int subredditId, int id) {
+        return jdbcTemplate.update(BIND_USER_SUBREDDIT, id, subredditId);
     }
 
     private static String getSql(String fileName) {
