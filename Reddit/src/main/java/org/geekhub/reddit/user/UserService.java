@@ -41,4 +41,12 @@ public class UserService {
         userInfo.setPassword(null);
         return userInfo;
     }
+
+    public PrivateRedditUser editUser(int id, UserDto userDto) {
+        return userRepository.editUser(id, userDto);
+    }
+
+    public PrivateRedditUser editUserRole(int id, Role role) {
+        return userRepository.editUserRole(id, role);
+    }
 }

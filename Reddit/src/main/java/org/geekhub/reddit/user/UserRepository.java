@@ -1,5 +1,6 @@
 package org.geekhub.reddit.user;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.subreddit.Subreddit;
 import org.geekhub.reddit.util.ResourceReader;
@@ -21,6 +22,10 @@ public class UserRepository {
     private static final String SELECT_POSTS = getSql("select-posts_id.sql");
     private static final String DELETE_BY_ID = getSql("delete_id.sql");
     private static final String INSERT_USER = getSql("insert.sql");
+    private static final String INSERT_USER_ROLE = getSql("insert-role_id.sql");
+    private static final String UPDATE_USER = getSql("update_id.sql");
+    private static final String UPDATE_USER_ROLE = getSql("update-role_id.sql");
+
 
     private final BeanPropertyRowMapper<PrivateRedditUser> privateDataMapper;
     private final BeanPropertyRowMapper<RedditUser> userMapper;
@@ -48,6 +53,10 @@ public class UserRepository {
     public void registerUser(RegistrationDto registrationDto) {
         jdbcTemplate.update(INSERT_USER, registrationDto.getLogin(), registrationDto.getEmail(),
                 new BCryptPasswordEncoder().encode(registrationDto.getPassword()), LocalDate.now());
+
+        int id = getUserByLogin(registrationDto.getLogin()).getId();
+
+        jdbcTemplate.update(INSERT_USER_ROLE, id);
     }
 
     public List<Subreddit> getSubscriptions(int id) {
@@ -64,5 +73,21 @@ public class UserRepository {
 
     private static String getSql(String fileName) {
         return ResourceReader.getSql(RESOURCE_PATH + fileName);
+    }
+
+    public PrivateRedditUser editUser(int id, UserDto userDto) {
+        int queryResult = jdbcTemplate.update(UPDATE_USER, userDto.getLogin(), userDto.getEmail(), id);
+        if (queryResult == 1) {
+            return getUserInfo(id);
+        }
+        throw new DataBaseRowException("Failed to update user data");
+    }
+
+    public PrivateRedditUser editUserRole(int id, Role role) {
+        int queryResult = jdbcTemplate.update(UPDATE_USER_ROLE, role.name(), id);
+        if (queryResult == 1) {
+            return getUserInfo(id);
+        }
+        throw new DataBaseRowException("Failed to update user role");
     }
 }

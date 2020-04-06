@@ -1,12 +1,9 @@
 package org.geekhub.reddit.user;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin-panel")
+@RequestMapping("api/admin-panel")
 public class AdminPanelController {
 
     private final UserService userService;
@@ -20,4 +17,13 @@ public class AdminPanelController {
         return userService.getUserPrivateData(id);
     }
 
+    @PutMapping("user/{id}")
+    public PrivateRedditUser editUser(@PathVariable int id, @RequestBody UserDto userDto) {
+        return userService.editUser(id, userDto);
+    }
+
+    @PutMapping("set-role/user/{id}")
+    public PrivateRedditUser editUserRole(@PathVariable int id, @RequestBody Role role) {
+        return userService.editUserRole(id, role);
+    }
 }
