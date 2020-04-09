@@ -41,7 +41,7 @@ public class SubredditService {
     public void subscribeUser(int subredditId, String userLogin) {
         int userId = userRepository.getUserByLogin(userLogin).getId();
         if (subredditRepository.subscribeUser(subredditId, userId) != 1) {
-            throw new DataBaseRowException("Failed to add comment");
+            throw new DataBaseRowException("Failed to subscribe");
         }
     }
 }

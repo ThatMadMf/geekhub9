@@ -2,6 +2,7 @@ package org.geekhub.reddit.subreddit;
 
 import org.geekhub.reddit.RedditMain;
 import org.geekhub.reddit.db.configuration.DatabaseConfig;
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.user.RedditUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -11,8 +12,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
 
@@ -62,5 +65,10 @@ public class SubredditRepositoryTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testSubscribeUser() {
         assertEquals(subredditRepository.subscribeUser(2, 1), 1);
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_getting_subreddit_with_invalid_id() {
+        subredditRepository.getSubredditById(6969);
     }
 }

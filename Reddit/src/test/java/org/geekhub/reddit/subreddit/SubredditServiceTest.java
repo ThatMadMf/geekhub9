@@ -1,5 +1,6 @@
 package org.geekhub.reddit.subreddit;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.user.RedditUser;
 import org.geekhub.reddit.user.UserRepository;
 import org.testng.annotations.BeforeMethod;
@@ -90,5 +91,25 @@ public class SubredditServiceTest {
         when(userRepository.getUserByLogin("subscriber")).thenReturn(redditUser);
 
         subredditService.subscribeUser(1, "subscriber");
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_creating_subreddit() {
+        RedditUser redditUser = new RedditUser("login", LocalDate.now());
+
+        when(userRepository.getUserByLogin("login")).thenReturn(redditUser);
+        when(subredditRepository.createSubreddit(any(Subreddit.class))).thenReturn(0);
+
+        subredditService.addSubreddit("Test", "login");
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_editing_not_existing_post() {
+        RedditUser redditUser = new RedditUser("login", LocalDate.now());
+
+        when(userRepository.getUserByLogin("login")).thenReturn(redditUser);
+        when(subredditRepository.subscribeUser(100, 0)).thenReturn(0);
+
+        subredditService.subscribeUser(10, "login");
     }
 }

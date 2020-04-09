@@ -1,7 +1,9 @@
 package org.geekhub.reddit.subreddit;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.user.RedditUser;
 import org.geekhub.reddit.util.ResourceReader;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,7 +42,12 @@ public class SubredditRepository {
     }
 
     public Subreddit getSubredditById(int id) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{id}, subredditMapper);
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{id}, subredditMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new DataBaseRowException("Subreddit with the id do not exists");
+        }
+
     }
 
     public int createSubreddit(Subreddit subreddit) {

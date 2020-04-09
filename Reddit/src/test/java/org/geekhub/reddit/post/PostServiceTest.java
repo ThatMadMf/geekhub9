@@ -1,5 +1,6 @@
 package org.geekhub.reddit.post;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.geekhub.reddit.user.RedditUser;
 import org.geekhub.reddit.user.UserRepository;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
@@ -136,5 +138,22 @@ public class PostServiceTest {
         when(userRepository.getUserByLogin("login")).thenReturn(redditUser);
         when(postRepository.getPostById(7)).thenReturn(new Post(new PostDto(), 2, 2));
         postService.deletePostContent(7, "login");
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_adding_post_with_not_existing_subreddit() {
+        when(userRepository.getUserByLogin("login")).thenReturn(redditUser);
+        when(postRepository.createPost(any(Post.class))).thenReturn(0);
+
+        postService.addPost(new PostDto("TITLE", "CONTENT"), "login", 122);
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_editing_not_existing_post() {
+        when(userRepository.getUserByLogin("login")).thenReturn(redditUser);
+        when(postRepository.getPostById(200)).thenReturn(post);
+        when(postRepository.editPost(any(PostDto.class), anyInt())).thenReturn(0);
+
+        postService.editPost(new PostDto("TITLE", "CONTENT"), 200, "login");
     }
 }
