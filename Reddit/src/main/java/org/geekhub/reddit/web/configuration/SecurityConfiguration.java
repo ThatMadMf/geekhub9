@@ -6,13 +6,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private RegistrationService registrationService;
@@ -53,10 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
+                .antMatchers("api/**").hasAuthority("ROLE_USER")
                 .antMatchers("/login", "/registration").permitAll()
-                .antMatchers("api/admin-panel/set-role/**").hasAuthority("ROLE_SUPER_ADMIN")
-                .antMatchers("/api/admin-panel/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/api/**").hasAuthority("ROLE_USER");
+                .anyRequest().authenticated();
     }
 
     @Bean

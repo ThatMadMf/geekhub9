@@ -1,8 +1,10 @@
 package org.geekhub.reddit.user;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Secured("ROLE_ADMIN")
 @RequestMapping("api/admin-panel")
 public class AdminPanelController {
 
@@ -22,6 +24,7 @@ public class AdminPanelController {
         return userService.editUser(id, userDto);
     }
 
+    @Secured("ROLE_SUPER_ADMIN")
     @PutMapping("set-role/user/{id}")
     public PrivateRedditUser editUserRole(@PathVariable int id, @RequestBody Role role) {
         return userService.editUserRole(id, role);

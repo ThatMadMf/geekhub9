@@ -1,5 +1,6 @@
 package org.geekhub.reddit.comment;
 
+import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.geekhub.reddit.user.RedditUser;
 import org.geekhub.reddit.user.UserRepository;
@@ -134,5 +135,22 @@ public class CommentServiceTest extends AbstractTestNGSpringContextTests {
         when(userRepository.getUserByLogin("login")).thenReturn(redditUser);
 
         commentService.deleteComment("login", 1);
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_adding_comment_to_not_existing_post() {
+        when(userRepository.getUserByLogin("fail")).thenReturn(redditUser);
+        when(commentRepository.createComment(any(Comment.class))).thenReturn(0);
+
+        commentService.addComment("Should", "fail", 222);
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_edit_not_existing_comment() {
+        when(commentRepository.getCommentById(22)).thenReturn(comment);
+        when(userRepository.getUserByLogin("fail")).thenReturn(redditUser);
+        when(commentRepository.editComment("COMMENT", 22)).thenReturn(0);
+
+        commentService.editComment("Should", "fail", 22);
     }
 }

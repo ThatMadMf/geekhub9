@@ -6,6 +6,9 @@ import org.geekhub.reddit.exception.DataBaseRowException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -14,6 +17,10 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -68,5 +75,18 @@ public class CommentRepositoryTest extends AbstractTestNGSpringContextTests {
     public void testDeleteComment() {
 
         assertEquals(commentRepository.deleteComment(1), 1);
+    }
+
+    @Test(expectedExceptions = DataBaseRowException.class)
+    public void throwing_exception_when_creating_comment_with_not_existing_post() {
+
+        JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
+
+        doThrow(EmptyResultDataAccessException.class).when(jdbcTemplate).update(
+                anyString(),
+                any(Object[].class)
+        );
+
+        commentRepository.createComment(new Comment("SHOULD FAIL", 1, 6969));
     }
 }
