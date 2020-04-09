@@ -25,6 +25,8 @@ public class PostRepositoryTest extends AbstractTestNGSpringContextTests {
     @Autowired
     PostRepository postRepository;
 
+    private static final int NOT_EXISTING_POST_ID = 874;
+
     private static final PostDto POST_DTO = new PostDto("TITLE", "CONTENT");
     private static final Post FIRST_POST = new Post(POST_DTO, 1, 4);
     private static final Post SECOND_POST = new Post(POST_DTO, 2, 4);
@@ -46,7 +48,7 @@ public class PostRepositoryTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = DataBaseRowException.class)
     public void testGetPostByIdShouldFail() {
-        postRepository.getPostById(223);
+        postRepository.getPostById(NOT_EXISTING_POST_ID);
     }
 
     @Test
@@ -58,11 +60,11 @@ public class PostRepositoryTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testEditPost() {
-        assertEquals(postRepository.editPost(POST_DTO, 874), 0);
+        assertEquals(postRepository.editPost(POST_DTO, NOT_EXISTING_POST_ID), 0);
     }
 
     @Test
     public void testDeletePost() {
-        assertEquals(postRepository.deletePost(1), 1);
+        assertEquals(postRepository.deletePost(-1), 0);
     }
 }

@@ -104,4 +104,31 @@ public class UserServiceTest {
 
         assertEquals(result, privateRedditUser);
     }
+
+    @Test
+    public void testEditUser() {
+        UserDto userDto = new UserDto("login", "mail");
+        PrivateRedditUser privateRedditUser = new PrivateRedditUser(
+                "login", LocalDate.now(),
+                "USER",
+                "mail"
+        );
+
+        when(userRepository.editUser(1, userDto)).thenReturn(privateRedditUser);
+
+        assertEquals(userService.editUser(1, userDto), privateRedditUser);
+    }
+
+    @Test
+    public void testEditUserRole() {
+        PrivateRedditUser privateRedditUser = new PrivateRedditUser(
+                "login", LocalDate.now(),
+                "ADMIN",
+                "mail"
+        );
+
+        when(userRepository.editUserRole(1, Role.ADMIN)).thenReturn(privateRedditUser);
+
+        assertEquals(userService.editUserRole(1, Role.ADMIN), privateRedditUser);
+    }
 }

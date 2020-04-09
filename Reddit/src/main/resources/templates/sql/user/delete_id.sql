@@ -1,1 +1,1 @@
-DELETE from users WHERE login = ?
+DELETE from users WHERE id = ?

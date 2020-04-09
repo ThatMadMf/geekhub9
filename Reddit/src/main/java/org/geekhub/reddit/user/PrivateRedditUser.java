@@ -22,6 +22,14 @@ public class PrivateRedditUser extends RedditUser {
         this.email = email;
     }
 
+    public PrivateRedditUser(@NotNull @NotEmpty String login, LocalDate date, String role,
+                             String email, String password) {
+        super(login, date);
+        this.role = role;
+        this.email = email;
+        this.password = password;
+    }
+
     public String getRole() {
         return role;
     }

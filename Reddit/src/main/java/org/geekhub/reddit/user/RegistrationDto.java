@@ -20,6 +20,16 @@ public class RegistrationDto {
 
     private String matchingPassword;
 
+    public RegistrationDto() {
+    }
+
+    public RegistrationDto(@NotNull @NotEmpty String login, @NotNull @NotEmpty String email,
+                           @NotNull @NotEmpty String password) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
+
     public String getLogin() {
         return login;
     }
