@@ -1,6 +1,7 @@
 package org.geekhub.reddit.user;
 
 import org.geekhub.reddit.exception.RegistrationException;
+import org.geekhub.reddit.user.dto.RegistrationDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,5 +41,10 @@ public class RegistrationController {
     @GetMapping("home")
     public String home() {
         return "index";
+    }
+
+    @GetMapping("/")
+    public String popular() {
+        return "popular";
     }
 }

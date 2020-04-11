@@ -5,5 +5,7 @@ var demoApp = angular.module('demo', [ 'ui.bootstrap', 'demo.controllers',
 demoApp.constant("CONSTANTS", {
     getUser : "/api/user",
     getUserPosts : "/api/user/posts",
-    registration : "/registration"
+    registration : "/registration",
+    getPopular : "api/r/popular",
+    getComments : "api/r/"
 });

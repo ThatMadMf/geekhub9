@@ -6,6 +6,7 @@
 
 .form-input {
     border-radius:5px;
+    color: black;
     display:inline;
 }
 
@@ -74,5 +75,11 @@ button {
 
 .form-button-reset {
     background-color:lightpink;
+}
+
+div.form
+{
+    display: block;
+    text-align: center;
 }
 

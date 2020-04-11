@@ -1,10 +1,7 @@
 package org.geekhub.reddit.subreddit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.geekhub.reddit.subreddit.SubredditController;
-import org.geekhub.reddit.user.RedditUser;
-import org.geekhub.reddit.subreddit.Subreddit;
-import org.geekhub.reddit.subreddit.SubredditService;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.geekhub.reddit.user.RegistrationService;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

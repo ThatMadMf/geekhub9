@@ -9,7 +9,10 @@ import org.geekhub.reddit.vote.VoteApplicable;
 import org.geekhub.reddit.vote.VoteService;
 import org.springframework.stereotype.Service;
 
+import java.util.AbstractMap;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -76,5 +79,12 @@ public class PostService {
         if (editedPost.getCreatorId() != userRepository.getUserByLogin(editorLogin).getId()) {
             throw new NoRightsException("You have no rights to edit this post");
         }
+    }
+
+    public List<Post> getPopularPosts() {
+        return postRepository.getAllPosts().stream()
+                .sorted(Comparator.comparingInt(p -> getVotesCount(p.getId())))
+                .limit(50)
+                .collect(Collectors.toList());
     }
 }

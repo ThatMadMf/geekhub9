@@ -1,8 +1,9 @@
 package org.geekhub.reddit.subreddit;
 
 import org.geekhub.reddit.exception.DataBaseRowException;
-import org.geekhub.reddit.user.RedditUser;
+import org.geekhub.reddit.post.PostService;
 import org.geekhub.reddit.user.UserRepository;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,12 +20,14 @@ public class SubredditServiceTest {
     private UserRepository userRepository;
     private SubredditRepository subredditRepository;
     private SubredditService subredditService;
+    private PostService postService;
 
     @BeforeMethod
     public void setUp() {
         userRepository = mock(UserRepository.class);
         subredditRepository = mock(SubredditRepository.class);
-        subredditService = new SubredditService(userRepository, subredditRepository);
+        postService = mock(PostService.class);
+        subredditService = new SubredditService(userRepository, subredditRepository, postService);
     }
 
     @Test

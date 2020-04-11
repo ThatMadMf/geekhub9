@@ -2,6 +2,9 @@ package org.geekhub.reddit.user;
 
 import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.RegistrationException;
+import org.geekhub.reddit.user.dto.PrivateRedditUser;
+import org.geekhub.reddit.user.dto.RedditUser;
+import org.geekhub.reddit.user.dto.RegistrationDto;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

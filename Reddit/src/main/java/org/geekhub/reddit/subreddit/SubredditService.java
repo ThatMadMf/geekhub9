@@ -1,8 +1,10 @@
 package org.geekhub.reddit.subreddit;
 
 import org.geekhub.reddit.exception.DataBaseRowException;
-import org.geekhub.reddit.user.RedditUser;
+import org.geekhub.reddit.post.Post;
+import org.geekhub.reddit.post.PostService;
 import org.geekhub.reddit.user.UserRepository;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +14,13 @@ public class SubredditService {
 
     private final UserRepository userRepository;
     private final SubredditRepository subredditRepository;
+    private final PostService postService;
 
-    public SubredditService(UserRepository userRepository, SubredditRepository subredditRepository) {
+    public SubredditService(UserRepository userRepository, SubredditRepository subredditRepository,
+                            PostService postService) {
         this.userRepository = userRepository;
         this.subredditRepository = subredditRepository;
+        this.postService = postService;
     }
 
     public List<Subreddit> getAllSubreddits() {
@@ -43,5 +48,9 @@ public class SubredditService {
         if (subredditRepository.subscribeUser(subredditId, userId) != 1) {
             throw new DataBaseRowException("Failed to subscribe");
         }
+    }
+
+    public List<Post> getPopularPosts() {
+        return postService.getPopularPosts();
     }
 }

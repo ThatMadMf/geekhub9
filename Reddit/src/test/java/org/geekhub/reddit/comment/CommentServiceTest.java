@@ -2,7 +2,7 @@ package org.geekhub.reddit.comment;
 
 import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
-import org.geekhub.reddit.user.RedditUser;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.geekhub.reddit.user.UserRepository;
 import org.geekhub.reddit.vote.Vote;
 import org.geekhub.reddit.vote.VoteApplicable;

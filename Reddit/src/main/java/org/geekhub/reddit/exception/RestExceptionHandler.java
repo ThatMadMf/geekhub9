@@ -1,5 +1,6 @@
 package org.geekhub.reddit.exception;
 
+import org.h2.jdbc.JdbcSQLDataException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleRegistration(RegistrationException ex, WebRequest webRequest) {
         String message = "Cannot register :  " + ex.getMessage();
         return handleExceptionInternal(ex, message, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+    }
+
+    @ExceptionHandler(value = {JdbcSQLDataException.class})
+    public ResponseEntity<Object> handleDataBaseException(JdbcSQLDataException ex, WebRequest webRequest) {
+        return handleExceptionInternal(ex, "Internal error", new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
     }
 }

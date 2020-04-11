@@ -1,6 +1,8 @@
 package org.geekhub.reddit.user;
 
 import org.geekhub.reddit.exception.RegistrationException;
+import org.geekhub.reddit.user.dto.PrivateRedditUser;
+import org.geekhub.reddit.user.dto.RegistrationDto;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,12 +1,28 @@
-body{
-    background-color: #efefef;
+body {
+    background-color: black;
+    color: white
 }
-span.spacing{
+
+span.spacing {
     margin-right: 10px;
 }
-input.custom-width{
+
+.center {
+    margin: auto;
+    width: 35%;
+    border: white;
+    padding: 30px;
+}
+
+p {
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+input.custom-width {
     width: 200px;
 }
-input.spacing{
+
+input.spacing {
     margin-right: 5px;
 }

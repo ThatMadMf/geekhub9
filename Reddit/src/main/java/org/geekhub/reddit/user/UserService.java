@@ -2,6 +2,9 @@ package org.geekhub.reddit.user;
 
 import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.post.PostService;
+import org.geekhub.reddit.user.dto.PrivateRedditUser;
+import org.geekhub.reddit.user.dto.RedditUser;
+import org.geekhub.reddit.user.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

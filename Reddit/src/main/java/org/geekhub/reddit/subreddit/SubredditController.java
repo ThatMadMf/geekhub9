@@ -1,6 +1,7 @@
 package org.geekhub.reddit.subreddit;
 
-import org.geekhub.reddit.user.RedditUser;
+import org.geekhub.reddit.post.Post;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,11 @@ public class SubredditController {
     @ResponseBody
     public List<RedditUser> getSubscribers(@PathVariable int id) {
         return subredditService.getSubscribers(id);
+    }
+
+    @GetMapping("popular")
+    public List<Post> getPopularPosts() {
+        return subredditService.getPopularPosts();
     }
 
     @ResponseStatus(HttpStatus.CREATED)

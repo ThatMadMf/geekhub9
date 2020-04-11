@@ -1,7 +1,7 @@
 package org.geekhub.reddit.subreddit;
 
 import org.geekhub.reddit.exception.DataBaseRowException;
-import org.geekhub.reddit.user.RedditUser;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.geekhub.reddit.util.ResourceReader;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

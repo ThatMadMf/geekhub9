@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Popular</title>
+</head>
+<body>
+<div ng-controller="PostController" data-ng-init="getPopularPosts()">
+    <ul ng-repeat="post in posts" class="center">
+        <li>
+            <div>
+                <label>{{post.title}}</label>
+                <p>{{post.content}}</p>
+                <p>{{post.creationDate}}</p>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../lib/angular.min.js"></script>
+<script src="../lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="../app/app.js"></script>
+<script src="../app/PostController.js"></script>
+<script src="../app/PostService.js"></script>
+<link rel="stylesheet" href="../lib/bootstrap.min.css"/>
+<link rel="stylesheet" href="../css/app.css"/>
+</html>

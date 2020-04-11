@@ -4,6 +4,9 @@ import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.post.PostDto;
 import org.geekhub.reddit.post.PostService;
 import org.geekhub.reddit.subreddit.Subreddit;
+import org.geekhub.reddit.user.dto.PrivateRedditUser;
+import org.geekhub.reddit.user.dto.RedditUser;
+import org.geekhub.reddit.user.dto.UserDto;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

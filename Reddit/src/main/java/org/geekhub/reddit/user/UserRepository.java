@@ -4,6 +4,7 @@ import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.subreddit.Subreddit;
+import org.geekhub.reddit.user.dto.*;
 import org.geekhub.reddit.util.ResourceReader;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

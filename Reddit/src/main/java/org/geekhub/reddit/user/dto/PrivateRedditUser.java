@@ -1,4 +1,4 @@
-package org.geekhub.reddit.user;
+package org.geekhub.reddit.user.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

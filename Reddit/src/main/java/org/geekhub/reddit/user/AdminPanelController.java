@@ -1,5 +1,7 @@
 package org.geekhub.reddit.user;
 
+import org.geekhub.reddit.user.dto.PrivateRedditUser;
+import org.geekhub.reddit.user.dto.UserDto;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 

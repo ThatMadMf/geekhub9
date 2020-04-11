@@ -6,6 +6,7 @@ import org.geekhub.reddit.exception.DataBaseRowException;
 import org.geekhub.reddit.exception.NoRightsException;
 import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.subreddit.Subreddit;
+import org.geekhub.reddit.user.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;

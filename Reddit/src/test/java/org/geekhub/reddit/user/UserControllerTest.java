@@ -3,6 +3,8 @@ package org.geekhub.reddit.user;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.geekhub.reddit.post.Post;
 import org.geekhub.reddit.post.PostDto;
+import org.geekhub.reddit.user.dto.PrivateRedditUser;
+import org.geekhub.reddit.user.dto.RedditUser;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

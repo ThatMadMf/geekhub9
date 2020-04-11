@@ -18,6 +18,7 @@ public class PostRepository {
     private static final String INSERT_POST = getSql("insert.sql");
     private static final String UPDATE_POST_BY_ID = getSql("update_id.sql");
     private static final String DELETE_POST_CONTENT = getSql("delete_id.sql");
+    private static final String SELECT_ALL_POSTS = getSql("select-all.sql");
 
     private final BeanPropertyRowMapper<Post> postMapper;
     private final JdbcTemplate jdbcTemplate;
@@ -55,5 +56,9 @@ public class PostRepository {
 
     private static String getSql(String fileName) {
         return ResourceReader.getSql(RESOURCE_PATH + fileName);
+    }
+
+    public List<Post> getAllPosts() {
+        return jdbcTemplate.query(SELECT_ALL_POSTS, postMapper);
     }
 }

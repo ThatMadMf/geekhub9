@@ -1,4 +1,4 @@
-package org.geekhub.reddit.user;
+package org.geekhub.reddit.user.dto;
 
 public class UserDto {
 
