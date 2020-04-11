@@ -34,17 +34,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(registrationService).passwordEncoder(passwordEncoder());
-
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder())
-                .withUser("spring")
-                .password(passwordEncoder().encode("secret"))
-                .roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+        http
+                .authorizeRequests()
+                .antMatchers("api/**", "/home").hasAuthority("ROLE_USER")
+                .antMatchers("/registration", "/css/**", "/js/**", "lib/**").permitAll()
+                .and()
+                .formLogin()
                 .defaultSuccessUrl("/home", true)
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
@@ -54,13 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .and()
                 .sessionManagement()
-                .invalidSessionUrl("/login")
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-                .authorizeRequests()
-                .antMatchers("api/**").hasAuthority("ROLE_USER")
-                .antMatchers("/login", "/registration").permitAll()
-                .anyRequest().authenticated();
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
     }
 
     @Override

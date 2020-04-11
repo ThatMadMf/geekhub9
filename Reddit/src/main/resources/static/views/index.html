@@ -5,12 +5,12 @@
     <title>Main Page</title>
 </head>
 <body>
-<div ng-controller="UserController">
-    <p>Id :                 {{ user.id }}</p>
-    <p>Login :              {{ user.login }}</p>
-    <p>Email :              {{ user.email }}</p>
-    <p>Registration Date :  {{ user.registrationDate }}</p>
-    <p>Role :               {{ user.role }}</p>
+<div ng-controller="UserController" data-ng-init="getUser()">
+    <p>Id : {{ user.id }}</p>
+    <p>Login : {{ user.login }}</p>
+    <p>Email : {{ user.email }}</p>
+    <p>Registration Date : {{ user.registrationDate }}</p>
+    <p>Role : {{ user.role }}</p>
 </div>
 </body>
 <script src="../lib/angular.min.js"></script>

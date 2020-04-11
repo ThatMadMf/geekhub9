@@ -8,8 +8,17 @@ angular.module('demo.services', []).factory('UserService',
             return $http.get(url);
         };
 
-        service.getPosts = function () {
+        service.saveUser = function saveUser(user) {
+            return $http({
+                method: 'POST',
+                url: CONSTANTS.registration,
+                params: {
+                    email: user.email, password: user.password,
+                    login: user.login, matchingPassword: user.matchingPassword
+                },
+                headers: 'Accept:application/json'
+            });
+        };
 
-        }
         return service;
     }]);

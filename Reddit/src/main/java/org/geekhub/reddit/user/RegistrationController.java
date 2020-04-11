@@ -2,7 +2,6 @@ package org.geekhub.reddit.user;
 
 import org.geekhub.reddit.exception.RegistrationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,11 +20,9 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @GetMapping("registration")
-    public String showRegistrationPage(Model model) {
-        RegistrationDto registrationDto = new RegistrationDto();
-        model.addAttribute("login", registrationDto);
-        return "thymeleaf/registration";
+    @GetMapping("/registration")
+    public String getUserProfilePage() {
+        return "registrationPage";
     }
 
     @PostMapping("registration")
