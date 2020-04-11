@@ -34,9 +34,14 @@ public class RegistrationController {
                              HttpServletResponse response) throws IOException {
         if (registrationDto.getPassword().equals(registrationDto.getMatchingPassword())) {
             registrationService.register(request, registrationDto);
-            response.sendRedirect("/swagger-ui.html");
+            response.sendRedirect("/home");
         } else {
             throw new RegistrationException("Passwords not matching");
         }
+    }
+
+    @GetMapping("home")
+    public String home() {
+        return "index";
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class VoteRepository {
 
-    private static final String RESOURCE_PATH = "templates/sql/vote/";
+    private static final String RESOURCE_PATH = "static/sql/vote/";
     private static final String INSERT_VOTE = getSql("insert.sql");
     private static final String SELECT_BY_APPLIED_ID = getSql("select_appliedId.sql");
     private static final String DELETE_BY_ID = getSql("delete_id.sql");

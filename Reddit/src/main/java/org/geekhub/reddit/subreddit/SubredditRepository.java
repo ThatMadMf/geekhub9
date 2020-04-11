@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class SubredditRepository {
 
-    private static final String RESOURCE_PATH = "templates/sql/subreddit/";
+    private static final String RESOURCE_PATH = "static/sql/subreddit/";
     private static final String SELECT_ALL = getSql("select_all.sql");
     private static final String SELECT_SUBSCRIBERS = getSql("select-users_id.sql");
     private static final String SELECT_BY_ID = getSql("select_id.sql");

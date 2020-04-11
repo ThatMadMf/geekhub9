@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class CommentRepository {
 
-    private static final String RESOURCE_PATH = "templates/sql/comment/";
+    private static final String RESOURCE_PATH = "static/sql/comment/";
     private static final String INSERT_COMMENT = getSql("insert.sql");
     private static final String SELECT_BY_ID = getSql("select_id.sql");
     private static final String UPDATE_BY_ID = getSql("update_id.sql");

@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public class UserRepository {
 
-    private static final String RESOURCE_PATH = "templates/sql/user/";
+    private static final String RESOURCE_PATH = "static/sql/user/";
     private static final String SELECT_BY_ID = getSql("select_id.sql");
     private static final String SELECT_BY_LOGIN = getSql("select-safe_login.sql");
     private static final String SELECT_SUBREDDITS = getSql("select-subreddits_id.sql");
