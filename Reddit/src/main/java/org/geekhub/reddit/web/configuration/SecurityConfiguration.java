@@ -41,8 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/api/r/popular").permitAll()
-                .antMatchers("/api/**", "/home").hasAuthority("ROLE_USER")
-                .antMatchers("/registration", "/css/**", "/js/**", "lib/**").permitAll()
+                .antMatchers("/api/**").hasAuthority("ROLE_USER")
+                .antMatchers("/registration", "/css/**", "/app/**", "/", "/login").permitAll()
+                .antMatchers("/**").hasAuthority("ROLE_USER")
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/home", true)

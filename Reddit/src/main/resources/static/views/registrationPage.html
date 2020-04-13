@@ -2,19 +2,21 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Users</title>
-    <script src="../lib/angular.min.js"></script>
-    <script src="../lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <title>Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.7.9/angular-messages.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <script src="../app/app.js"></script>
-    <script src="../app/UserController.js"></script>
     <script src="../app/UserService.js"></script>
-    <script src="../lib/angular-messages.js"></script>
-    <link rel="stylesheet" type="text/css" href="../lib/bootstrap.min.css"/>
+    <script src="../app/controllers/UserController.js"></script>
+    <link rel="stylesheet" href="../css/app.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/registration.css"/>
 
 </head>
-<body ng-app="demo" ng-controller="UserController">
+<body ng-app="redditUi" ng-controller="UserController">
 <div class="form">
     <form name="userForm" method="POST" novalidate ng-class="{'form-error':submitted}" ng-submit="saveUser()">
 

@@ -1,17 +1,15 @@
-'use strict';
-
-angular.module('demo.services', []).factory('UserService',
-    ["$http", "CONSTANTS", function ($http, CONSTANTS) {
+angular.module("redditUi.services", []).factory('UserService',
+    ["$http", function ($http) {
         let service = {};
         service.getUser = function () {
-            const url = CONSTANTS.getUser;
+            const url = "api/user";
             return $http.get(url);
         };
 
-        service.saveUser = function saveUser(user) {
+        service.saveUser = function (user) {
             return $http({
                 method: 'POST',
-                url: CONSTANTS.registration,
+                url: "/registration",
                 params: {
                     email: user.email, password: user.password,
                     login: user.login, matchingPassword: user.matchingPassword
@@ -21,4 +19,8 @@ angular.module('demo.services', []).factory('UserService',
         };
 
         return service;
-    }]);
+    }]
+);
+
+
+

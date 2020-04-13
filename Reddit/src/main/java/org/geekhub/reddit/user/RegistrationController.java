@@ -21,7 +21,7 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @GetMapping("/registration")
+    @GetMapping("registration")
     public String getUserProfilePage() {
         return "registrationPage";
     }
@@ -41,10 +41,5 @@ public class RegistrationController {
     @GetMapping("home")
     public String home() {
         return "index";
-    }
-
-    @GetMapping("/")
-    public String popular() {
-        return "popular";
     }
 }

@@ -1,6 +1,4 @@
-'use strict';
-
-var module = angular.module('demo.controllers', []);
+var module = angular.module('redditUi.controllers', []);
 module.controller("UserController", ["$scope", "UserService", "$window",
     function ($scope, UserService, $window) {
 
@@ -10,7 +8,7 @@ module.controller("UserController", ["$scope", "UserService", "$window",
                         $scope.user = value.data;
                     },
                     function error(response) {
-
+                        console.log(response);
                     });
         };
 
@@ -21,12 +19,13 @@ module.controller("UserController", ["$scope", "UserService", "$window",
                         $window.location.href = "/home";
                     },
                     function error(response) {
-                        if (response.status === 409) {
-                            $scope.errorMessage = response.data.message;
-                        } else {
+                        $scope.errorMessage = response.data.message;
+                        if (response.data.messsage === undefined) {
                             $scope.errorMessage = 'Error adding user!';
                         }
                         $scope.message = '';
                     });
         }
-    }]);
+
+    }]
+);
