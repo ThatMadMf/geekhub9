@@ -11,8 +11,11 @@ redditUi.config(function ($routeProvider) {
         })
         .when("/popular", {
             templateUrl: "views/postList.html",
-            controller: "SubredditController",
-            post: '='
+            controller: "SubredditController"
+        })
+        .when("/p/:id/comments", {
+            templateUrl: "views/commentList.html",
+            controller: "PostController"
         })
         .otherwise({
             template: "<h1>Nothing</h1><p>Nothing has been selected</p>"
