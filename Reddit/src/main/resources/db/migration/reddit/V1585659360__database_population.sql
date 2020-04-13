@@ -3,7 +3,8 @@ VALUES ('dude', 'mail@mali', '$2y$12$0xtZnhhNZZw5HxRTE/R8/.cSRM404qEARMT3VFv9rnk
        ('me', 'mail@gmai.com', '$2y$12$8eBPB0SlSRh.cxjks96QdOi0jMWlXo3PgvU0dDuHYWsjkvwhhr1DW', current_date- 2),
        ('user', 'usermail@mali', '$2y$12$mt0Tuxdr2Qy4N8G8S2WUMuagcRIUTwmWTUFig2xXA5GmvlWECbP4u', current_date- 2),
        ('admin', 'admm@mali', '$2y$12$pRcmCsdZgwfKQUkaFiNnLuFILC48BaRVOp8tRZ9MoM1kgL9i5bt3G', current_date- 3),
-       ('guy', 'gymail@mali', '$2y$12$ihOc1iJVf34WcOC8ace7CO85kznOJZqdCGt18YwkDNrNFbzkRTyTa', current_date- 3);
+       ('guy', 'gymail@mali', '$2y$12$ihOc1iJVf34WcOC8ace7CO85kznOJZqdCGt18YwkDNrNFbzkRTyTa', current_date- 3),
+       ('toDelete', 'test@mail.com', '11111111111111111111111111111111111111111111111111111', current_date -3);
 
 INSERT INTO subreddits (name, creator_id, creation_date)
 VALUES ('AskReddit', 4, current_date - 3),
@@ -37,7 +38,8 @@ VALUES  (1, 3),
         (2, 3),
         (3, 3),
         (4, 1),
-        (5, 3);
+        (5, 3),
+        (6, 3);
 
 INSERT INTO subreddit_user (user_id, subreddit_id)
 VALUES (4, 1),

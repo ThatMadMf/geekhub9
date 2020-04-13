@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class PostRepository {
 
-    private static final String RESOURCE_PATH = "static/sql/post/";
+    private static final String RESOURCE_PATH = "templates/sql/post/";
     private static final String SELECT_ALL_BY_SUBREDDIT_ID = getSql("select_subredditId.sql");
     private static final String SELECT_BY_ID = getSql("select_id.sql");
     private static final String INSERT_POST = getSql("insert.sql");

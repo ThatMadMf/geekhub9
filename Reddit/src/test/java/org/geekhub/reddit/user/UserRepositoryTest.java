@@ -26,7 +26,6 @@ import static org.testng.Assert.*;
 public class UserRepositoryTest extends AbstractTestNGSpringContextTests {
 
     private static final int SUCCESS_UPDATE_STATUS = 1;
-    private static final int FAILED_UPDATE_STATUS = 0;
 
     @Autowired
     private UserRepository userRepository;
@@ -74,7 +73,7 @@ public class UserRepositoryTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testDeleteUser() {
-        int id = userRepository.getUserByLogin("dude").getId();
+        int id = userRepository.getUserByLogin("toDelete").getId();
         assertEquals(userRepository.deleteUser(id), 1);
     }
 

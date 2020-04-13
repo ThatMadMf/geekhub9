@@ -1,1 +1,0 @@
-DELETE v.* FROM votes v WHERE v.id = ?
