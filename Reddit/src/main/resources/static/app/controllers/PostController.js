@@ -11,5 +11,15 @@ module.controller("PostController", ["$scope", "PostService", "$routeParams",
                         console.log(response);
                     });
         };
+
+        $scope.getPosts = function () {
+            PostService.loadPosts($routeParams.id)
+                .then(function (value) {
+                        $scope.posts = value.data;
+                    },
+                    function error(response) {
+                        console.log(response);
+                    });
+        };
     }]
 );

@@ -11,5 +11,14 @@ module.controller("SubredditController", ["$scope", "SubredditService",
                         console.log(response);
                     });
         };
+        $scope.getAllSubreddits = function () {
+            SubredditService.getSubreddits()
+                .then(function (value) {
+                        $scope.subreddits = value.data;
+                    },
+                    function error(response) {
+                        console.log(response);
+                    });
+        };
     }]
 );

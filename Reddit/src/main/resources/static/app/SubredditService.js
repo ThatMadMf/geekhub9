@@ -5,6 +5,12 @@ angular.module("redditUi.services").factory('SubredditService',
             const url = "api/r/popular";
             return $http.get(url);
         };
+
+        service.getSubreddits = function () {
+            const url = "api/r";
+            return $http.get(url);
+        };
+
         return service;
     }]
 );
