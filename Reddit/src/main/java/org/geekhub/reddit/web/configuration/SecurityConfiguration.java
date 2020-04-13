@@ -40,8 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/api/r/popular").permitAll()
                 .antMatchers("/api/**", "/home").hasAuthority("ROLE_USER")
-                .antMatchers("/registration", "/css/**", "/js/**", "lib/**", "/api/r/popular").permitAll()
+                .antMatchers("/registration", "/css/**", "/js/**", "lib/**").permitAll()
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/home", true)
@@ -55,7 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .rememberMe().key("uniqueAndSecret");
+                .rememberMe().key("uniqueAndSecret")
+                .tokenValiditySeconds(604800);
     }
 
     @Override
