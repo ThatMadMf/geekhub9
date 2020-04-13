@@ -8,12 +8,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.7.9/angular-messages.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <script src="../app/app.js"></script>
+    <script src="../app/components/post.component.js"></script>
     <script src="../app/UserService.js"></script>
+    <script src="../app/SubredditService.js"></script>
+    <script src="../app/controllers/SubredditController.js"></script>
     <script src="../app/controllers/UserController.js"></script>
     <link rel="stylesheet" href="../css/app.css"/>
 </head>
 <body ng-app="redditUi">
+
 <a href="#!user">See private data</a>
+<br>
+<a href="#!popular">Popular</a>
+
 <div ng-view></div>
 
 </body>

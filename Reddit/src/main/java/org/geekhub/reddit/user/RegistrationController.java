@@ -38,7 +38,7 @@ public class RegistrationController {
         }
     }
 
-    @GetMapping("home")
+    @GetMapping
     public String home() {
         return "index";
     }

@@ -1,4 +1,4 @@
-var module = angular.module('redditUi.controllers', []);
+var module = angular.module('redditUi.controllers');
 module.controller("UserController", ["$scope", "UserService", "$window",
     function ($scope, UserService, $window) {
 

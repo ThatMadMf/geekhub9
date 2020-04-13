@@ -1,4 +1,4 @@
-angular.module("redditUi.services", []).factory('UserService',
+angular.module("redditUi.services").factory('UserService',
     ["$http", function ($http) {
         let service = {};
         service.getUser = function () {
