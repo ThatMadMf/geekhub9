@@ -1,6 +1,5 @@
 package org.geekhub.reddit.exception;
 
-import org.h2.jdbc.JdbcSQLDataException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, message, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
     }
 
-    @ExceptionHandler(value = {JdbcSQLDataException.class})
-    public ResponseEntity<Object> handleDataBaseException(JdbcSQLDataException ex, WebRequest webRequest) {
-        return handleExceptionInternal(ex, "Internal error", new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<Object> handleDataBaseException(Exception ex, WebRequest webRequest) {
+        return handleExceptionInternal(ex,
+                "message: Some unknown error happened",
+                new HttpHeaders(),
+                HttpStatus.BAD_REQUEST,
+                webRequest
+        );
     }
 }

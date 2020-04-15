@@ -34,10 +34,10 @@ public class RegistrationService implements UserDetailsService {
     public void register(HttpServletRequest request, RegistrationDto registrationDto) {
         try {
             userRepository.registerUser(registrationDto);
+            authWithHttpServletRequest(request, registrationDto.getLogin(), registrationDto.getPassword());
         } catch (Exception ex) {
-            throw new RegistrationException("Login or email is taken. Try another one");
+            throw new RegistrationException(ex.getMessage());
         }
-        authWithHttpServletRequest(request, registrationDto.getLogin(), registrationDto.getPassword());
     }
 
     private void authWithHttpServletRequest(HttpServletRequest request, String username, String password) {

@@ -32,7 +32,7 @@ public class RegistrationController {
                              HttpServletResponse response) throws IOException {
         if (registrationDto.getPassword().equals(registrationDto.getMatchingPassword())) {
             registrationService.register(request, registrationDto);
-            response.sendRedirect("/home");
+            response.sendRedirect("/");
         } else {
             throw new RegistrationException("Passwords not matching");
         }

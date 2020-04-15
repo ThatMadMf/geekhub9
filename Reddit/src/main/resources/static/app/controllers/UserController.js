@@ -15,12 +15,12 @@ module.controller("UserController", ["$scope", "UserService", "$window",
         $scope.saveUser = function () {
 
             UserService.saveUser($scope.user)
-                .then(function success() {
-                        $window.location.href = "/home";
+                .then(function success(response) {
+                        $window.location.href = "/";
                     },
-                    function error(response) {
-                        $scope.errorMessage = response.data.message;
-                        if (response.data.messsage === undefined) {
+                    function error(error) {
+                        $scope.errorMessage = error.data.message;
+                        if (error.data.messsage === undefined) {
                             $scope.errorMessage = 'Error adding user!';
                         }
                         $scope.message = '';
