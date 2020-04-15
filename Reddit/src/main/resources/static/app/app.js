@@ -17,14 +17,6 @@ redditUi.config(function ($routeProvider) {
             templateUrl: "views/commentList.html",
             controller: "PostController"
         })
-        .when("/r", {
-            templateUrl: "views/subredditList.html",
-            controller: "SubredditController"
-        })
-        .when("/r/:id/posts", {
-            templateUrl: "views/subredditPostList.html",
-            controller: "PostController"
-        })
         .otherwise({
             template: "<h1>Nothing</h1><p>Nothing has been selected</p>"
         });

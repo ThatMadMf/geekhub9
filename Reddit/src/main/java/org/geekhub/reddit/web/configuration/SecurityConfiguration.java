@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").hasAuthority("ROLE_USER")
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/home", true)
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
