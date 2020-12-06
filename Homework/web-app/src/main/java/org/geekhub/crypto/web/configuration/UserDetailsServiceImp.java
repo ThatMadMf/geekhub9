@@ -41,9 +41,10 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     public void changePassword(String password) {
-        User user = findUserByUsername("user");
+        String encryptedPassword = new BCryptPasswordEncoder().encode(password);
 
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        jdbcTemplate.update("UPDATE geekhub.users SET password = ?, password_uses = 0 where username = 'user'",
+                encryptedPassword);
     }
 
     private User findUserByUsername(String username) {

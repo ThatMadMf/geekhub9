@@ -19,16 +19,17 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class HomeController {
 
-    private DecoderFactory decoderFactory;
-    private EncoderFactory encoderFactory;
-    private HistoryManager historyManager;
-    private UserDetailsServiceImp userDetailsServiceImp;
+    private final DecoderFactory decoderFactory;
+    private final EncoderFactory encoderFactory;
+    private final HistoryManager historyManager;
+    private final UserDetailsServiceImp userDetailsServiceImp;
 
     public HomeController(DecoderFactory decoderFactory, EncoderFactory encoderFactory, HistoryManager historyManager,
                           UserDetailsServiceImp userDetailsServiceImp) {
         this.decoderFactory = decoderFactory;
         this.encoderFactory = encoderFactory;
         this.historyManager = historyManager;
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
 
     @GetMapping("/")
@@ -101,7 +102,7 @@ public class HomeController {
     public String updatePasswordPost(@RequestParam String password) {
         var validationResult = PasswordConstraintValidator.isValid(password);
         if (validationResult.isValid()) {
-
+            userDetailsServiceImp.changePassword(password);
             return "New password was set successfully";
         } else {
             return "There are errors<br>" + String.join("<br>", validationResult.getErrors());
