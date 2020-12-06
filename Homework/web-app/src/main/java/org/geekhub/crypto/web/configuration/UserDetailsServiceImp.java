@@ -27,10 +27,10 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     private User findUserByUsername(String username) {
         if (username.equalsIgnoreCase("user")) {
-            return new User(username, "user", "USER");
+            return new User(username, "afsd!@#fSDrf3124afa34", "USER");
         }
         if (username.equalsIgnoreCase("admin")) {
-            return new User(username, "admin", "ADMIN");
+            return new User(username, "afsd!@#fSDrf3124afa34", "ADMIN");
         }
         return null;
     }

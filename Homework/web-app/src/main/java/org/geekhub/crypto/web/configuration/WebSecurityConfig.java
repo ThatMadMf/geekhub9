@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/update-password").hasAuthority("ROLE_USER")
                 .antMatchers("/application").hasAuthority("ROLE_USER")
                 .antMatchers("/application/encode").hasAuthority("ROLE_USER")
                 .antMatchers("/application/decode").hasAuthority("ROLE_USER")

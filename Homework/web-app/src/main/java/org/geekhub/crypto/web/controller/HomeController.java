@@ -6,6 +6,7 @@ import org.geekhub.crypto.coders.EncoderFactory;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.web.util.PasswordConstraintValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -51,6 +54,12 @@ public class HomeController {
         return "menus/analytics";
     }
 
+    @GetMapping("update-password")
+    public String updatePassword(Model model) {
+        model.addAttribute("link", "update-password");
+        return "menus/update-password";
+    }
+
     @GetMapping("application/decode")
     public String decode(Model model) {
         model.addAttribute("link", "decode");
@@ -82,7 +91,18 @@ public class HomeController {
 
         HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, algorithm);
         historyManager.addToHistory(record);
-        var res =  encoderFactory.getEncoder(algorithm).encode(text);
+        var res = encoderFactory.getEncoder(algorithm).encode(text);
         return res;
+    }
+
+    @PostMapping("update-password")
+    @ResponseBody
+    public String updatePasswordPost(@RequestParam String password) {
+        var validationResult = PasswordConstraintValidator.isValid(password);
+        if (validationResult.isValid()) {
+            return "New password was set successfully";
+        } else {
+            return "There are errors<br>" + String.join("<br>", validationResult.getErrors());
+        }
     }
 }
