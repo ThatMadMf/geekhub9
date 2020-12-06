@@ -61,11 +61,6 @@ public class HomeController {
         return "menus/update-password";
     }
 
-    @GetMapping("intersection")
-    public String intersection() {
-        return "dsaf";
-    }
-
     @GetMapping("application/decode")
     public String decode(Model model) {
         model.addAttribute("link", "decode");
