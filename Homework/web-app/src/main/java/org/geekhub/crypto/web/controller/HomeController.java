@@ -6,6 +6,7 @@ import org.geekhub.crypto.coders.EncoderFactory;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.web.configuration.UserDetailsServiceImp;
 import org.geekhub.crypto.web.util.PasswordConstraintValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.stream.Collectors;
-
 @Controller
 public class HomeController {
 
     private DecoderFactory decoderFactory;
     private EncoderFactory encoderFactory;
     private HistoryManager historyManager;
+    private UserDetailsServiceImp userDetailsServiceImp;
 
-    public HomeController(DecoderFactory decoderFactory, EncoderFactory encoderFactory, HistoryManager historyManager) {
+    public HomeController(DecoderFactory decoderFactory, EncoderFactory encoderFactory, HistoryManager historyManager,
+                          UserDetailsServiceImp userDetailsServiceImp) {
         this.decoderFactory = decoderFactory;
         this.encoderFactory = encoderFactory;
         this.historyManager = historyManager;
@@ -58,6 +59,11 @@ public class HomeController {
     public String updatePassword(Model model) {
         model.addAttribute("link", "update-password");
         return "menus/update-password";
+    }
+
+    @GetMapping("intersection")
+    public String intersection() {
+        return "dsaf";
     }
 
     @GetMapping("application/decode")
@@ -100,6 +106,7 @@ public class HomeController {
     public String updatePasswordPost(@RequestParam String password) {
         var validationResult = PasswordConstraintValidator.isValid(password);
         if (validationResult.isValid()) {
+
             return "New password was set successfully";
         } else {
             return "There are errors<br>" + String.join("<br>", validationResult.getErrors());
