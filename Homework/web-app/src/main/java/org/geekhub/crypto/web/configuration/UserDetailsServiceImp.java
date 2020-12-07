@@ -48,7 +48,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     private User findUserByUsername(String username) {
-        String query = "select * from geekhub.users where username = ?";
-        return jdbcTemplate.queryForObject(query, new Object[]{username}, userMapper);
+        String query = "select * from geekhub.users where username = 'user'";
+        return jdbcTemplate.queryForObject(query, userMapper);
     }
 }

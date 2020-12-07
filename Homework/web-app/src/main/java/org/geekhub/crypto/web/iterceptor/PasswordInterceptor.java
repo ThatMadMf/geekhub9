@@ -20,13 +20,27 @@ public class PasswordInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        if (request.getRequestURI().toString().equals("/update-password")) {
+        String invalidQuery = "SELECT invalid_inputs FROM geekhub.users where username = 'user'";
+
+        int invalids = jdbcTemplate.queryForObject(invalidQuery, Integer.class);
+
+        if (invalids > 4) {
+            try {
+                response.getWriter().println("System is blocked due to multiple failed authentication attempts. " +
+                        "Contact developer in order to unblock system.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        if (request.getRequestURI().equals("/update-password")) {
             return true;
         }
 
-        String query = "SELECT password_uses FROM geekhub.users where username = 'user'";
+        String usesQuery = "SELECT password_uses FROM geekhub.users where username = 'user'";
 
-        int uses = jdbcTemplate.queryForObject(query, Integer.class);
+        int uses = jdbcTemplate.queryForObject(usesQuery, Integer.class);
 
         try {
             if (uses < 6) {
