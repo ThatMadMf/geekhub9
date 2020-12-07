@@ -6,6 +6,8 @@ import org.geekhub.crypto.coders.EncoderFactory;
 import org.geekhub.crypto.history.HistoryManager;
 import org.geekhub.crypto.history.HistoryRecord;
 import org.geekhub.crypto.history.Operation;
+import org.geekhub.crypto.web.configuration.UserDetailsServiceImp;
+import org.geekhub.crypto.web.util.PasswordConstraintValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +19,17 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class HomeController {
 
-    private DecoderFactory decoderFactory;
-    private EncoderFactory encoderFactory;
-    private HistoryManager historyManager;
+    private final DecoderFactory decoderFactory;
+    private final EncoderFactory encoderFactory;
+    private final HistoryManager historyManager;
+    private final UserDetailsServiceImp userDetailsServiceImp;
 
-    public HomeController(DecoderFactory decoderFactory, EncoderFactory encoderFactory, HistoryManager historyManager) {
+    public HomeController(DecoderFactory decoderFactory, EncoderFactory encoderFactory, HistoryManager historyManager,
+                          UserDetailsServiceImp userDetailsServiceImp) {
         this.decoderFactory = decoderFactory;
         this.encoderFactory = encoderFactory;
         this.historyManager = historyManager;
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
 
     @GetMapping("/")
@@ -49,6 +54,12 @@ public class HomeController {
     @GetMapping("application/analytics")
     public String analytics() {
         return "menus/analytics";
+    }
+
+    @GetMapping("update-password")
+    public String updatePassword(Model model) {
+        model.addAttribute("link", "update-password");
+        return "menus/update-password";
     }
 
     @GetMapping("application/decode")
@@ -82,7 +93,19 @@ public class HomeController {
 
         HistoryRecord record = new HistoryRecord(Operation.ENCODE, text, algorithm);
         historyManager.addToHistory(record);
-        var res =  encoderFactory.getEncoder(algorithm).encode(text);
+        var res = encoderFactory.getEncoder(algorithm).encode(text);
         return res;
+    }
+
+    @PostMapping("update-password")
+    @ResponseBody
+    public String updatePasswordPost(@RequestParam String password) {
+        var validationResult = PasswordConstraintValidator.isValid(password);
+        if (validationResult.isValid()) {
+            userDetailsServiceImp.changePassword(password);
+            return "New password was set successfully";
+        } else {
+            return "There are errors<br>" + String.join("<br>", validationResult.getErrors());
+        }
     }
 }

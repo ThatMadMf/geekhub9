@@ -2,6 +2,7 @@ package org.geekhub.crypto.web.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,10 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImp();
+    private final UserDetailsServiceImp userDetailsServiceImp;
+
+    public WebSecurityConfig(UserDetailsServiceImp userDetailsServiceImp) {
+
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
 
     @Bean
@@ -27,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsServiceImp).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -36,9 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/application/encode").permitAll()
-                .antMatchers("/application/decode").permitAll()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/update-password").hasAuthority("ROLE_USER")
+                .antMatchers("/application").hasAuthority("ROLE_USER")
+                .antMatchers("/application/encode").hasAuthority("ROLE_USER")
+                .antMatchers("/application/decode").hasAuthority("ROLE_USER")
+                .antMatchers("/api/**").hasAuthority("ROLE_USER")
                 .antMatchers("/login").permitAll()
                 .antMatchers("/application/analytics/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/application/history/show-history").hasAuthority("ROLE_USER")

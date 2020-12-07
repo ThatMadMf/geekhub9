@@ -1,5 +1,6 @@
 package org.geekhub.crypto.web.configuration;
 
+import org.geekhub.crypto.web.iterceptor.PasswordInterceptor;
 import org.geekhub.crypto.web.iterceptor.RequestLogger;
 import org.geekhub.crypto.web.util.StringToAlgorithm;
 import org.springframework.context.annotation.Configuration;
@@ -11,15 +12,18 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private RequestLogger requestLogger;
+    private final RequestLogger requestLogger;
+    private PasswordInterceptor passwordInterceptor;
 
-    public WebConfig(RequestLogger requestLogger) {
+    public WebConfig(RequestLogger requestLogger, PasswordInterceptor passwordInterceptor) {
         this.requestLogger = requestLogger;
+        this.passwordInterceptor = passwordInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestLogger);
+        registry.addInterceptor(passwordInterceptor);
     }
 
     @Override
