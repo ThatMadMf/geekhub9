@@ -24,10 +24,7 @@ router.post('/status', (request, response) => {
         response.send(system)
     } else {
         response.send(systems[index])
-
-        if (systems[index].status === 'unblocked') {
-            systems.slice(index, 1);
-        }
+        systems = systems.filter(s => s.status === 'blocked');
     }
 })
 
